@@ -2,6 +2,7 @@ import { defaultWagmiConfig } from '@web3modal/wagmi/react/config';
 import { cookieStorage, createStorage, http } from 'wagmi';
 import { mainnet, bscTestnet, sepolia } from 'wagmi/chains';
 import { injected } from 'wagmi/connectors'
+import { TomoWalletTgSdkV2 } from '@tomo-inc/tomo-telegram-sdk';
 
 export const projectId = 'a8a94eaa29bf7b1d3a0d94172c58e6ac';
 
@@ -22,11 +23,13 @@ const customInjectedConnector = (config: any) => ({
   supportsSimulation: true,
 
   async setup() {
+    new TomoWalletTgSdkV2({ injected: true })
     console.log('Setting up TomoWallet...');
   },
 
   async connect(parameters: any) {
     console.log('connect1')
+    // new TomoWalletTgSdkV2({ injected: true })
     const accounts = await (window.ethereum as any).request({ method: 'eth_requestAccounts' });
     const chainId = await (window.ethereum as any).request({ method: 'eth_chainId' });
     return {
