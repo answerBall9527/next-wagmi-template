@@ -19,7 +19,7 @@ createWeb3Modal({
   //   "--w3m-border-radius-master": "0px"
   // }
 });
-
+// console.log('wagmiConfig', wagmiConfig)
 export function Web3Modal({ children, initialState }: { children: ReactNode; initialState?: State }) {
   return (
     <WagmiProvider config={wagmiConfig} initialState={initialState}>

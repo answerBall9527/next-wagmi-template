@@ -55,7 +55,7 @@ export default function Home() {
             </p>
           </div>
         ) : (
-          <p className="text-red-500">Connect Your Wallet</p>
+          <p className="text-red-500">Connect Your Wallet1</p>
         )}
 
         <div className="flex gap-5">
