@@ -4,6 +4,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
 
+
 const queryClient = new QueryClient();
 
 export const dynamic = 'force-dynamic';
