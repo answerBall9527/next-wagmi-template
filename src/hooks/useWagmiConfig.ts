@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { defaultWagmiConfig } from '@web3modal/wagmi/react/config';
 import { cookieStorage, createStorage, http } from 'wagmi';
-import { mainnet, bscTestnet, sepolia } from 'wagmi/chains';
+import { mainnet, bscTestnet, sepolia, base } from 'wagmi/chains';
 import { injected } from 'wagmi/connectors';
 import { TomoWalletTgSdkV2 } from '@tomo-inc/tomo-telegram-sdk';
 import { type CreateConnectorFn } from 'wagmi';
@@ -39,7 +39,7 @@ export function useWagmiConfig() {
     });
 
     const config = defaultWagmiConfig({
-      chains: [mainnet, sepolia, bscTestnet],
+      chains: [mainnet, sepolia, bscTestnet, base],
       projectId,
       metadata,
       ssr: true, // 启用 SSR

@@ -3,14 +3,14 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { WagmiProvider } from 'wagmi';
-
+import { useWagmiConfig } from '@/hooks/useWagmiConfig';
 
 const queryClient = new QueryClient();
 
 export const dynamic = 'force-dynamic';
 
 export function Web3Modal({ children, initialState }: { children: ReactNode; initialState?: any }) {
-  const [wagmiConfig, setWagmiConfig] = useState<any>(null);
+  const wagmiConfig = useWagmiConfig();
 
   useEffect(() => {
     async function initWagmiConfig() {
@@ -19,7 +19,7 @@ export function Web3Modal({ children, initialState }: { children: ReactNode; ini
       // 动态导入依赖模块
       const { defaultWagmiConfig } = await import('@web3modal/wagmi/react/config');
       const { cookieStorage, createStorage, http } = await import('wagmi');
-      const { mainnet, bscTestnet, sepolia } = await import('wagmi/chains');
+      const { mainnet, bscTestnet, sepolia, base } = await import('wagmi/chains');
       const { injected } = await import('wagmi/connectors');
       const { TomoWalletTgSdkV2 } = await import('@tomo-inc/tomo-telegram-sdk');
       new TomoWalletTgSdkV2({ injected: true })
@@ -47,24 +47,24 @@ export function Web3Modal({ children, initialState }: { children: ReactNode; ini
         },
       };
 
-      const customTomo1 = injected({
-        shimDisconnect: true,
-        target: () => (typeof window !== 'undefined' && window.ethereum ? { provider: window.ethereum } : null),
-      });
+      // const customTomo1 = injected({
+      //   shimDisconnect: true,
+      //   target: () => (typeof window !== 'undefined' && window.ethereum ? { provider: window.ethereum } : null),
+      // });
 
-      const config = defaultWagmiConfig({
-        chains: [mainnet, sepolia, bscTestnet],
-        projectId,
-        ssr: false,
-        storage: createStorage({ storage: cookieStorage }),
-        connectors: [customInjectedConnector, customTomo1],
-      });
+      // const config = defaultWagmiConfig({
+      //   chains: [mainnet, sepolia, bscTestnet, base],
+      //   projectId,
+      //   ssr: false,
+      //   storage: createStorage({ storage: cookieStorage }),
+      //   connectors: [customInjectedConnector, customTomo1],
+      // });
 
-      setWagmiConfig(config);
+      // setWagmiConfig(wagmiConfig);
 
       const { createWeb3Modal } = await import('@web3modal/wagmi/react');
       createWeb3Modal({
-        wagmiConfig: config,
+        wagmiConfig: wagmiConfig,
         projectId,
         themeMode: 'dark',
       });
