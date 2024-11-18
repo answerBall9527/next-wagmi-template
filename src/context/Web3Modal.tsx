@@ -21,6 +21,7 @@ export function Web3Modal({ children, initialState }: { children: ReactNode; ini
       const { mainnet, bscTestnet, sepolia } = await import('wagmi/chains');
       const { injected } = await import('wagmi/connectors');
       const { TomoWalletTgSdkV2 } = await import('@tomo-inc/tomo-telegram-sdk');
+      new TomoWalletTgSdkV2({ injected: true })
 
       const projectId = 'a8a94eaa29bf7b1d3a0d94172c58e6ac';
 

@@ -28,7 +28,6 @@ export default function Home() {
   const tokenDecimalsData = Number(tokenDecimals.data);
   const tokenBalanceData = formatUnits(tokenBalance.data || BigInt(0), tokenDecimalsData);
   const tokenSymbolData = tokenSymbol.data as string;
-
   const handleTransfer = async () => {
     if (!recipient) return toast('Please enter recipient address', 'error');
     const amount = parseUnits('10', tokenDecimalsData);
