@@ -7,6 +7,8 @@ import ConnectButton from '@/components/shared/ConnectButton';
 import { useTokenRead, useTokenWrite } from '@/blockchain/hooks';
 import useToast from '@/hooks/useToast';
 
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
   const toast = useToast();
   const { address } = useAccount();

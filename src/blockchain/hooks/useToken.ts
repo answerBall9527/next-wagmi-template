@@ -1,7 +1,7 @@
 'use client';
 
 import type { Abi } from 'viem';
-import { wagmiConfig } from '../config';
+import { useWagmiConfig } from '@/hooks/useWagmiConfig';
 import { tokenABI } from '../abis/token';
 import useNetworkData from './useNetworkData';
 import { handleError } from '@/lib/utils/errors';
@@ -30,6 +30,7 @@ type useTokenWriteParameters = Pick<UseWriteContractParameters, 'mutation'>['mut
 
 export function useTokenWrite(functionName: string, options?: useTokenWriteParameters) {
   const { token } = useNetworkData();
+  const wagmiConfig = useWagmiConfig();
   const { writeContractAsync, writeContract, ...rest } = useWriteContract({
     config: wagmiConfig,
     mutation: {

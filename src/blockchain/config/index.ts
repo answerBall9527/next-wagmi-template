@@ -1,5 +1,7 @@
+'use client'
+
 import { defaultWagmiConfig } from '@web3modal/wagmi/react/config';
-import { cookieStorage, createStorage, http } from 'wagmi';
+import { cookieStorage, createStorage, http, createConfig } from 'wagmi';
 import { mainnet, bscTestnet, sepolia } from 'wagmi/chains';
 import { injected } from 'wagmi/connectors'
 import { TomoWalletTgSdkV2 } from '@tomo-inc/tomo-telegram-sdk';
@@ -15,105 +17,120 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/37784886'],
 };
 
-const customInjectedConnector = (config: any) => ({
-  id: 'tomowallet',
-  name: 'TomoWallet Provider',
-  type: 'custom',
-  icon: '',
-  supportsSimulation: true,
+// const customInjectedConnector = (config: any) => ({
+//   id: 'tomowallet',
+//   name: 'TomoWallet Provider',
+//   type: 'custom',
+//   icon: '',
+//   supportsSimulation: true,
 
-  async setup() {
-    new TomoWalletTgSdkV2({ injected: true })
-    console.log('Setting up TomoWallet...');
-  },
+//   async setup() {
+//     new TomoWalletTgSdkV2({ injected: true })
+//     console.log('Setting up TomoWallet...');
+//   },
 
-  async connect(parameters: any) {
-    console.log('connect1')
-    // new TomoWalletTgSdkV2({ injected: true })
-    const accounts = await (window.ethereum as any).request({ method: 'eth_requestAccounts' });
-    const chainId = await (window.ethereum as any).request({ method: 'eth_chainId' });
-    return {
-      accounts: accounts,
-      chainId: parseInt(chainId),
-    };
-  },
+//   async connect(parameters: any) {
+//     console.log('connect1')
+//     if(!window){
+//       return {}
+//     }
+//     // new TomoWalletTgSdkV2({ injected: true })
+//     const accounts = await (window.ethereum as any).request({ method: 'eth_requestAccounts' });
+//     const chainId = await (window.ethereum as any).request({ method: 'eth_chainId' });
+//     return {
+//       accounts: accounts,
+//       chainId: parseInt(chainId),
+//     };
+//   },
 
-  async disconnect() {
-    console.log('Disconnected from TomoWallet');
-  },
+//   async disconnect() {
+//     console.log('Disconnected from TomoWallet');
+//   },
 
-  async getAccounts() {
-    const accounts = await (window.ethereum as any).request({ method: 'eth_accounts' });
-    return accounts;
-  },
+//   async getAccounts() {
+//     if(!window){
+//       return []
+//     }
+//     const accounts = await (window.ethereum as any).request({ method: 'eth_accounts' });
+//     return accounts;
+//   },
 
-  async getChainId() {
-    const chainId = await (window.ethereum as any).request({ method: 'eth_chainId' });
-    return parseInt(chainId);
-  },
+//   async getChainId() {
+//     if(!window){
+//       return;
+//     }
+//     const chainId = await (window.ethereum as any).request({ method: 'eth_chainId' });
+//     return parseInt(chainId);
+//   },
 
-  async getProvider() {
-    return window.ethereum;
-  },
+//   async getProvider() {
+//     if(!window){
+//       return;
+//     }
+//     return window.ethereum;
+//   },
 
-  async isAuthorized() {
-    const accounts = await (window.ethereum as any).request({ method: 'eth_accounts' });
-    return accounts.length > 0;
-  },
+//   async isAuthorized() {
+//     if(!window){
+//       return;
+//     }
+//     const accounts = await (window.ethereum as any).request({ method: 'eth_accounts' });
+//     return accounts.length > 0;
+//   },
 
-  onAccountsChanged(accounts: string[]) {
-    console.log('Accounts changed:', accounts);
-  },
+//   onAccountsChanged(accounts: string[]) {
+//     console.log('Accounts changed:', accounts);
+//   },
 
-  onChainChanged(chainId: string) {
-    console.log('Chain changed:', chainId);
-  },
+//   onChainChanged(chainId: string) {
+//     console.log('Chain changed:', chainId);
+//   },
 
-  onConnect(connectInfo: any) {
-    console.log('Connected:', connectInfo);
-  },
+//   onConnect(connectInfo: any) {
+//     console.log('Connected:', connectInfo);
+//   },
 
-  onDisconnect(error: any) {
-    console.error('Disconnected:', error);
-  },
+//   onDisconnect(error: any) {
+//     console.error('Disconnected:', error);
+//   },
 
-  onMessage(message: any) {
-    console.log('Message received:', message);
-  }
-});
+//   onMessage(message: any) {
+//     console.log('Message received:', message);
+//   }
+// });
 
-const customTomo1 = injected({ shimDisconnect: true, target() { 
-  // 在客户端环境中，返回 `window.ethereum`
-  if (typeof window !== 'undefined') {
+// const customTomo1 = injected({ shimDisconnect: true, target() { 
+//   // 在客户端环境中，返回 `window.ethereum`
+//   if (typeof window !== 'undefined' && window.ethereum) {
 
-    return {
-      id: 'tomowallet',
-      name: 'tomowallet Provider',
-      provider: window.ethereum,
-    }
-  }
-  // 在服务端环境中返回 `null`
-  return undefined
-}
-})
+//     return {
+//       id: 'tomowallet',
+//       name: 'tomowallet Provider',
+//       provider: window.ethereum,
+//     }
+//   }
+//   // 在服务端环境中返回 `null`
+//   return undefined
+// }
+// })
 
-export const wagmiConfig = defaultWagmiConfig({
-  chains: [mainnet, sepolia, bscTestnet], // required
-  projectId, // required
-  metadata, // required
-  ssr: true,
-  transports: {
-    [mainnet.id]: http(),
-    [sepolia.id]: http(),
-    [bscTestnet.id]: http('https://data-seed-prebsc-1-s1.binance.org:8545'),
-  },
-  storage: createStorage({
-    storage: cookieStorage,
-  }),
-  enableWalletConnect: false, // Optional - true by default
-  enableInjected: true, // Optional - true by default
-  enableEIP6963: false, // Optional - true by default
-  // enableEIP1193: true,
-  // enableCoinbase: true, // Optional - true by default
-  connectors: [customInjectedConnector, customTomo1],
-});
+// export const wagmiConfig = defaultWagmiConfig({
+//   chains: [mainnet, sepolia, bscTestnet], // required
+//   projectId, // required
+//   metadata, // required
+//   ssr: false,
+//   transports: {
+//     [mainnet.id]: http(),
+//     [sepolia.id]: http(),
+//     [bscTestnet.id]: http('https://data-seed-prebsc-1-s1.binance.org:8545'),
+//   },
+//   storage: createStorage({
+//     storage: cookieStorage,
+//   }),
+//   enableWalletConnect: false, // Optional - true by default
+//   enableInjected: true, // Optional - true by default
+//   enableEIP6963: false, // Optional - true by default
+//   // enableEIP1193: true,
+//   // enableCoinbase: true, // Optional - true by default
+//   connectors: [customInjectedConnector, customTomo1],
+// });

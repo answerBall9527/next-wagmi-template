@@ -1,11 +1,13 @@
 'use client';
 
 import type { Abi } from 'viem';
-import { wagmiConfig } from '../config';
+import { useWagmiConfig } from '@/hooks/useWagmiConfig';
 import useNetworkData from './useNetworkData';
 import { contractABI } from '../abis/contract';
 import { handleError } from '@/lib/utils/errors';
 import { useReadContract, useWriteContract } from 'wagmi';
+import dynamic from 'next/dynamic';
+
 import type { Config, UseReadContractParameters, UseWriteContractParameters } from 'wagmi';
 
 type UseContractReadParameters = Omit<UseReadContractParameters, 'abi' | 'address' | 'functionName' | 'args'>;
@@ -30,6 +32,8 @@ type useContractWriteParameters = Pick<UseWriteContractParameters, 'mutation'>['
 
 export function useContractWrite(functionName: string, options?: useContractWriteParameters) {
   const { contract } = useNetworkData();
+  const wagmiConfig = useWagmiConfig();
+
   const { writeContractAsync, writeContract, ...rest } = useWriteContract({
     config: wagmiConfig,
     mutation: {

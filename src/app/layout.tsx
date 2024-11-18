@@ -1,3 +1,5 @@
+'use client';
+
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -7,7 +9,7 @@ import { ReactNode } from 'react';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: 'Wagmi',
   description: 'This is a description of the site.',
 };
