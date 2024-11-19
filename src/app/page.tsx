@@ -23,11 +23,15 @@ export default function Home() {
   const tokenTransfer = useTokenWrite('transfer', {
     onSuccess(data) {
       console.log('data: transfer write ', data);
-      toast('Transfer successful', 'success');
+      const message = 'Transfer successful';
+      console.log('Toast message:', message);
+      toast(message, 'success');
     },
     onError(error: Error) {
       console.error('Transfer error:', error);
-      toast(error?.message || 'Transfer failed', 'error');
+      const message = error?.message || 'Transfer failed';
+      console.log('Toast error message:', message);
+      toast(message, 'error');
     },
   });
 
@@ -37,12 +41,16 @@ export default function Home() {
   const tokenSymbolData = tokenSymbol.data as string;
   const handleTransfer = async () => {
     if (!isConnected) {
-      toast('Please connect your wallet first', 'error');
+      const message = 'Please connect your wallet first';
+      console.log('Toast message:', message);
+      toast(message, 'error');
       return;
     }
     
     if (!recipient) {
-      toast('Please enter recipient address', 'error');
+      const message = 'Please enter recipient address';
+      console.log('Toast message:', message);
+      toast(message, 'error');
       return;
     }
 
@@ -52,7 +60,9 @@ export default function Home() {
       await tokenTransfer.write([recipient, amount]);
     } catch (error: any) {
       console.error('Transfer error:', error);
-      toast(error?.message || 'Transfer failed', 'error');
+      const message = error?.message || 'Transfer failed';
+      console.log('Toast error message:', message);
+      toast(message, 'error');
     } finally {
       setIsTransferring(false);
     }
