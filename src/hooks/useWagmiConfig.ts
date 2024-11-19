@@ -4,9 +4,8 @@ import { useEffect, useState } from 'react';
 import { defaultWagmiConfig } from '@web3modal/wagmi/react/config';
 import { cookieStorage, createStorage, http } from 'wagmi';
 import { mainnet, bscTestnet, sepolia, base } from 'wagmi/chains';
-import { injected } from 'wagmi/connectors';
-import { TomoWalletTgSdkV2 } from '@tomo-inc/tomo-telegram-sdk';
-import { type CreateConnectorFn } from 'wagmi';
+import { tomoConnector } from '@/connectors/tomoConnector';
+import { type Chain } from 'wagmi/chains';
 
 export const projectId = 'a8a94eaa29bf7b1d3a0d94172c58e6ac';
 
@@ -24,25 +23,24 @@ export function useWagmiConfig() {
     // 检查是否在客户端环境
     if (typeof window === 'undefined') return;
 
-    const customTomoConnector = injected({
-      shimDisconnect: true,
-      target() {
-        if (typeof window !== 'undefined' && window.ethereum) {
-          return {
-            id: 'tomowallet',
-            name: 'TomoWallet Provider',
-            provider: window.ethereum,
-          };
-        }
-        return undefined;
+    // 定义为只读数组类型
+    const chains = [mainnet, sepolia, bscTestnet, base] as const;
+    
+    // 转换为普通数组传递给 tomoConnector
+    const chainArray: Chain[] = Array.from(chains);
+
+    const connector = tomoConnector({
+      chains: chainArray,
+      options: {
+        shimDisconnect: true,
       },
     });
 
     const config = defaultWagmiConfig({
-      chains: [mainnet, sepolia, bscTestnet, base],
+      chains, // 这里使用只读数组
       projectId,
       metadata,
-      ssr: true, // 启用 SSR
+      ssr: true,
       transports: {
         [mainnet.id]: http(),
         [sepolia.id]: http(),
@@ -53,7 +51,7 @@ export function useWagmiConfig() {
       enableWalletConnect: false,
       enableInjected: true,
       enableEIP6963: false,
-      connectors: [customTomoConnector], // 只使用 customTomoConnector
+      connectors: [connector],
     });
 
     setWagmiConfig(config);
