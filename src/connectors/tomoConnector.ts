@@ -21,6 +21,8 @@ export function tomoConnector({
   chains = [],
   options: options_ = {},
 }: TomoConnectorOptions = {}) {
+  console.log('📦 tomoConnector 被创建', { chains: chains.map(c => c.id) });
+  
   const options = {
     shimDisconnect: true,
     ...options_,
@@ -38,6 +40,89 @@ export function tomoConnector({
   let chainChangedListener: ((chainId: string) => void) | undefined
   let disconnectListener: (() => void) | undefined
 
+  return createConnector<Provider, Properties>((config) => {
+    console.log('🔨 createConnector 被调用');
+    
+    return {
+      id: 'tomoWallet',
+      name: 'TomoWallet',
+      type: 'injected',
+      
+      async connect({ chainId } = {}) {
+        console.log('🚀 开始连接钱包', { chainId });
+        console.log('📱 Window 对象状态:', {
+          hasWindow: typeof window !== 'undefined',
+          hasEthereum: typeof window !== 'undefined' && !!window.ethereum,
+        });
+        
+        try {
+          if (!tomoWallet && typeof window !== 'undefined') {
+            console.log('📱 初始化 TomoWallet SDK');
+            const { TomoWalletTgSdkV2 } = await import('@tomo-inc/tomo-telegram-sdk')
+            tomoWallet = new TomoWalletTgSdkV2({ injected: true })
+            console.log('✅ TomoWallet SDK 初始化成功', tomoWallet);
+          }
+
+          const provider = await this.getProvider()
+          console.log('🔌 获取到 provider:', provider);
+          if (!provider) throw new Error('Provider not found')
+
+          console.log('🎧 开始设置事件监听器');
+          // 设置事件监听器
+          if (!accountsChangedListener) {
+            accountsChangedListener = this.onAccountsChanged.bind(this)
+            provider.on('accountsChanged', accountsChangedListener)
+            console.log('✅ accountsChanged 监听器设置成功');
+          }
+          if (!chainChangedListener) {
+            chainChangedListener = this.onChainChanged.bind(this)
+            provider.on('chainChanged', chainChangedListener)
+            console.log('✅ chainChanged 监听器设置成功');
+          }
+          if (!disconnectListener) {
+            disconnectListener = this.onDisconnect.bind(this)
+            provider.on('disconnect', disconnectListener)
+            console.log('✅ disconnect 监听器设置成功');
+          }
+
+          try {
+            console.log('🔑 请求用户授权');
+            const accounts = await provider.request({
+              method: 'eth_requestAccounts'
+            }) as string[]
+            console.log('✅ 获取到账户:', accounts);
+
+            const currentChainId = await this.getChainId()
+            console.log('⛓️ 当前链 ID:', currentChainId);
+
+            if (chainId && currentChainId !== chainId) {
+              console.log('🔄 需要切换链', { 当前链: currentChainId, 目标链: chainId });
+              const chain = await this.switchChain?.({ chainId })
+              if (chain) {
+                console.log('✅ 切换链成功', chain);
+                return {
+                  accounts: accounts.map(getAddress),
+                  chainId: chain.id
+                }
+              }
+            }
+
+            return {
+              accounts: accounts.map(getAddress),
+              chainId: currentChainId
+            }
+          } catch (error: any) {
+            console.error('❌ 连接过程出错:', error);
+            if (error.code === 4001) {
+              throw new UserRejectedRequestError(error)
+            }
+            if (error.code === -32002) {
+              throw new ResourceUnavailableRpcError(error)
+            }
+            throw error
+          }
+        } catch (error) {
+          console.error('❌ 连接失败:', error);
   return createConnector<Provider, Properties>((config) => ({
     id: 'tomoWallet',
     name: 'TomoWallet',
