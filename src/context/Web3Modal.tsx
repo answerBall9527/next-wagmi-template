@@ -21,43 +21,6 @@ export function Web3Modal({ children, initialState }: { children: ReactNode; ini
       // 动态导入依赖模块
       const { TomoWalletTgSdkV2 } = await import('@tomo-inc/tomo-telegram-sdk');
       new TomoWalletTgSdkV2({ injected: true })
-
-
-      const customInjectedConnector = {
-        id: 'tomowallet',
-        name: 'TomoWallet Provider',
-        type: 'custom',
-        supportsSimulation: true,
-
-        async connect() {
-          if (typeof window === 'undefined' || !window.ethereum) return {};
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-          return {
-            accounts,
-            chainId: parseInt(chainId),
-          };
-        },
-
-        async getProvider() {
-          return typeof window !== 'undefined' ? window.ethereum : null;
-        },
-      };
-
-      // const customTomo1 = injected({
-      //   shimDisconnect: true,
-      //   target: () => (typeof window !== 'undefined' && window.ethereum ? { provider: window.ethereum } : null),
-      // });
-
-      // const config = defaultWagmiConfig({
-      //   chains: [mainnet, sepolia, bscTestnet, base],
-      //   projectId,
-      //   ssr: false,
-      //   storage: createStorage({ storage: cookieStorage }),
-      //   connectors: [customInjectedConnector, customTomo1],
-      // });
-
-      // setWagmiConfig(wagmiConfig);
     }
 
     initWagmiConfig();

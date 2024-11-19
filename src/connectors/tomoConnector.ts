@@ -44,9 +44,10 @@ export function tomoConnector({
     console.log('🔨 createConnector 被调用');
     
     return {
-      id: 'tomoWallet',
-      name: 'TomoWallet',
-      type: 'injected',
+      id: 'tomoWallet-tg',
+      name: 'TomoWallet-tg',
+      type: 'tomoWallet-tg',
+      rdns: 'io.tomowallet-tg',
       
       async connect({ chainId } = {}) {
         console.log('🚀 开始连接钱包', { chainId });

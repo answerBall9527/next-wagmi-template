@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { defaultWagmiConfig } from '@web3modal/wagmi/react/config';
-import { cookieStorage, createStorage, http } from 'wagmi';
+import { cookieStorage, createStorage, http, createConfig } from 'wagmi';
 import { mainnet, bscTestnet, sepolia, base, arbitrum } from 'wagmi/chains';
 import { tomoConnector } from '@/connectors/tomoConnector';
 import { type Chain } from 'wagmi/chains';
+import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
 
 export const projectId = 'a8a94eaa29bf7b1d3a0d94172c58e6ac';
 
@@ -36,10 +37,10 @@ export function useWagmiConfig() {
       },
     });
 
-    const config = defaultWagmiConfig({
+    const config = createConfig({
       chains, // 这里使用只读数组
-      projectId,
-      metadata,
+      // projectId,
+      // metadata,
       ssr: true,
       transports: {
         [mainnet.id]: http(),
@@ -49,12 +50,12 @@ export function useWagmiConfig() {
         [arbitrum.id]: http(),
       },
       storage: createStorage({ storage: cookieStorage }),
-      enableWalletConnect: false,
-      enableInjected: true,
-      enableEIP6963: false,
-      connectors: [connector],
+      // enableWalletConnect: false,
+      // enableInjected: true,
+      // enableEIP6963: false,
+      connectors: [connector, metaMask()],
     });
-
+    console.log('config', config)
     setWagmiConfig(config);
   }, []);
 
