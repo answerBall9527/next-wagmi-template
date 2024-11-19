@@ -44,39 +44,52 @@ export function tomoConnector({
     type: 'injected',
     
     async connect({ chainId } = {}) {
+      console.log('🚀 开始连接钱包', { chainId });
       try {
         if (!tomoWallet && typeof window !== 'undefined') {
+          console.log('📱 初始化 TomoWallet SDK');
           const { TomoWalletTgSdkV2 } = await import('@tomo-inc/tomo-telegram-sdk')
           tomoWallet = new TomoWalletTgSdkV2({ injected: true })
+          console.log('✅ TomoWallet SDK 初始化成功', tomoWallet);
         }
 
         const provider = await this.getProvider()
+        console.log('🔌 获取到 provider:', provider);
         if (!provider) throw new Error('Provider not found')
 
+        console.log('🎧 开始设置事件监听器');
         // 设置事件监听器
         if (!accountsChangedListener) {
           accountsChangedListener = this.onAccountsChanged.bind(this)
           provider.on('accountsChanged', accountsChangedListener)
+          console.log('✅ accountsChanged 监听器设置成功');
         }
         if (!chainChangedListener) {
           chainChangedListener = this.onChainChanged.bind(this)
           provider.on('chainChanged', chainChangedListener)
+          console.log('✅ chainChanged 监听器设置成功');
         }
         if (!disconnectListener) {
           disconnectListener = this.onDisconnect.bind(this)
           provider.on('disconnect', disconnectListener)
+          console.log('✅ disconnect 监听器设置成功');
         }
 
         try {
+          console.log('🔑 请求用户授权');
           const accounts = await provider.request({
             method: 'eth_requestAccounts'
           }) as string[]
+          console.log('✅ 获取到账户:', accounts);
 
           const currentChainId = await this.getChainId()
+          console.log('⛓️ 当前链 ID:', currentChainId);
 
           if (chainId && currentChainId !== chainId) {
+            console.log('🔄 需要切换链', { 当前链: currentChainId, 目标链: chainId });
             const chain = await this.switchChain?.({ chainId })
             if (chain) {
+              console.log('✅ 切换链成功', chain);
               return {
                 accounts: accounts.map(getAddress),
                 chainId: chain.id
@@ -89,6 +102,7 @@ export function tomoConnector({
             chainId: currentChainId
           }
         } catch (error: any) {
+          console.error('❌ 连接过程出错:', error);
           if (error.code === 4001) {
             throw new UserRejectedRequestError(error)
           }
@@ -98,28 +112,34 @@ export function tomoConnector({
           throw error
         }
       } catch (error) {
+        console.error('❌ 连接失败:', error);
         await this.disconnect()
         throw error
       }
     },
 
     async disconnect() {
+      console.log('🔌 开始断开连接');
       const provider = await this.getProvider()
       if (!provider) return
 
-      // 移除所有事件监听器
+      console.log('🎧 移除事件监听器');
       if (accountsChangedListener) {
         provider.removeListener('accountsChanged', accountsChangedListener)
         accountsChangedListener = undefined
+        console.log('✅ 移除 accountsChanged 监听器');
       }
       if (chainChangedListener) {
         provider.removeListener('chainChanged', chainChangedListener)
         chainChangedListener = undefined
+        console.log('✅ 移除 chainChanged 监听器');
       }
       if (disconnectListener) {
         provider.removeListener('disconnect', disconnectListener)
         disconnectListener = undefined
+        console.log('✅ 移除 disconnect 监听器');
       }
+      console.log('✅ 断开连接完成');
     },
 
     async getAccounts() {
@@ -159,19 +179,31 @@ export function tomoConnector({
     },
 
     async switchChain({ chainId }) {
+      console.log('🔄 开始切换链', { chainId });
       const provider = await this.getProvider()
       if (!provider) throw new Error('Provider not found')
-
+      
+      console.log('🔍 查找链配置', { 可用链: chains, 目标链ID: chainId });
       const chain = chains.find((x) => x.id === chainId)
-      if (!chain) throw new SwitchChainError(new Error('Chain not found'))
+      if (!chain) {
+        console.error('❌ 未找到链配置');
+        throw new SwitchChainError(new Error('Chain not found'))
+      }
 
       try {
+        console.log('🚀 发送切换链请求', {
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: `0x${chainId.toString(16)}` }]
+        });
+        
         await provider.request({
           method: 'wallet_switchEthereumChain',
           params: [{ chainId: `0x${chainId.toString(16)}` }],
         })
+        console.log('✅ 切换链成功');
         return chain
       } catch (error: any) {
+        console.error('❌ 切换链失败:', error);
         throw new SwitchChainError(error)
       }
     },
