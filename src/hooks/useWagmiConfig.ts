@@ -47,6 +47,7 @@ export function useWagmiConfig() {
         [mainnet.id]: http(),
         [sepolia.id]: http(),
         [bscTestnet.id]: http('https://data-seed-prebsc-1-s1.binance.org:8545'),
+        [base.id]: http(),
       },
       storage: createStorage({ storage: cookieStorage }),
       enableWalletConnect: false,
