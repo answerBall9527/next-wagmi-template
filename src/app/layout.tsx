@@ -6,6 +6,7 @@ import { Inter } from 'next/font/google';
 import { Web3Modal } from '@/context/Web3Modal';
 import { Toaster } from 'react-hot-toast';
 import { ReactNode } from 'react';
+import { useVConsole } from '@/hooks/useVConsole';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,6 +16,8 @@ const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+  useVConsole();
+
   return (
     <html lang="en">
       <body className={inter.className}>
