@@ -30,7 +30,7 @@ export default function Home() {
     onError(error: Error) {
       console.error('Transfer error:', error);
       const message = error?.message || 'Transfer failed';
-      console.log('Toast error message:', message);
+      console.log('Toast error message1:', message);
       toast(message, 'error');
     },
   });
@@ -61,7 +61,7 @@ export default function Home() {
     } catch (error: any) {
       console.error('Transfer error:', error);
       const message = error?.message || 'Transfer failed';
-      console.log('Toast error message:', message);
+      console.log('Toast error message2:', message);
       toast(message, 'error');
     } finally {
       setIsTransferring(false);
