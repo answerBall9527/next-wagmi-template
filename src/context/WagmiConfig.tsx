@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import { cookieStorage, createStorage, http, createConfig, Config } from 'wagmi';
-import { mainnet, bscTestnet, sepolia, base, arbitrum } from 'wagmi/chains';
+import { mainnet, bscTestnet, sepolia, base, arbitrum, bsc } from 'wagmi/chains';
 import { tomoConnector } from '@/connectors/tomoConnector';
 import { type Chain } from 'wagmi/chains';
 import { metaMask } from 'wagmi/connectors';
@@ -17,7 +17,7 @@ export function WagmiConfigProvider({ children }: { children: ReactNode }) {
     if (typeof window === 'undefined') return;
 
     try {
-      const chains = [mainnet, sepolia, bscTestnet, base, arbitrum] as const;
+      const chains = [mainnet, sepolia, bscTestnet, base, arbitrum, bsc] as const;
       const chainArray: Chain[] = Array.from(chains);
 
       const connector = tomoConnector({
@@ -36,6 +36,7 @@ export function WagmiConfigProvider({ children }: { children: ReactNode }) {
           [bscTestnet.id]: http('https://data-seed-prebsc-1-s1.binance.org:8545'),
           [base.id]: http(),
           [arbitrum.id]: http(),
+          [bsc.id]: http(),
         },
         storage: createStorage({ storage: cookieStorage }),
         connectors: [connector, metaMask()],
