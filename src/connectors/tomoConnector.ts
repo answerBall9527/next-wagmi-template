@@ -166,9 +166,11 @@ export function tomoConnector({
 
       async getChainId() {
         const provider = await this.getProvider()
+        console.log('getChainId in wagmiconfig1', provider)
         if (!provider) return 1 // 默认返回 mainnet chainId
         try {
           const chainId = await provider.request({ method: 'eth_chainId' }) as string
+          console.log('getChainId in wagmiconfig2', chainId)
           return normalizeChainId(chainId)
         } catch {
           return 1
@@ -211,7 +213,8 @@ export function tomoConnector({
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: `0x${chainId.toString(16)}` }],
           })
-          console.log('✅ 切换链成功');
+          config.emitter.emit('change', { chainId })
+          console.log('✅ 切换链成功 in connector config', chain);
           return chain
         } catch (error: any) {
           console.error('❌ 切换链失败:', error);
