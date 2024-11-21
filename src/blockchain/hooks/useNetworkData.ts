@@ -6,7 +6,7 @@ import { useChainId } from 'wagmi'
 
 const useNetworkData = (): Network => {
   const chainId = useChainId();
-  console.log('chainId', chainId)
+  console.log('chainId1', chainId)
   const networkData = getNetwork(chainId);
   return networkData as Network;
 };
