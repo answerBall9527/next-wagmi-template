@@ -4,10 +4,19 @@ import {
 } from 'wagmi'
 import { type Chain } from 'wagmi/chains'
 import { 
-  getAddress,
-  UserRejectedRequestError,
+  type AddEthereumChainParameter,
+  type Address,
+  type EIP1193Provider,
+  type ProviderConnectInfo,
+  type ProviderRpcError,
   ResourceUnavailableRpcError,
+  type RpcError,
   SwitchChainError,
+  UserRejectedRequestError,
+  getAddress,
+  numberToHex,
+  withRetry,
+  withTimeout,
 } from 'viem'
 
 export type TomoConnectorOptions = {
@@ -191,37 +200,113 @@ export function tomoConnector({
         }
       },
 
-      async switchChain({ chainId }) {
-        console.log('🔄 开始切换链', { chainId });
+      async switchChain({ addEthereumChainParameter, chainId }) {
         const provider = await this.getProvider()
-        if (!provider) throw new Error('Provider not found')
-        
-        console.log('🔍 查找链配置', { 可用链: chains, 目标链ID: chainId });
-        const chain = chains.find((x) => x.id === chainId)
-        if (!chain) {
-          console.error('❌ 未找到链配置');
-          throw new SwitchChainError(new Error('Chain not found'))
-        }
-
+        if (!provider) throw new Error('找不到 provider')
+  
+        const chain = config.chains.find((x) => x.id === chainId)
+        if (!chain) throw new Error('找不到chainid')
+  
+        const promise = new Promise<void>((resolve) => {
+          const listener = ((data) => {
+            if ('chainId' in data && data.chainId === chainId) {
+              config.emitter.off('change', listener)
+              resolve()
+            }
+          }) satisfies Parameters<typeof config.emitter.on>[1]
+          config.emitter.on('change', listener)
+        })
+  
         try {
-          console.log('🚀 发送切换链请求', {
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: `0x${chainId.toString(16)}` }]
-          });
-          
-          await provider.request({
-            method: 'wallet_switchEthereumChain',
-            params: [{ chainId: `0x${chainId.toString(16)}` }],
-          })
-          // 这里很坑，必须要emit change才可以
-          config.emitter.emit('change', { chainId })
-          console.log('✅ 切换链成功 in connector config', chain);
+          await Promise.all([
+            provider
+              .request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: numberToHex(chainId) }],
+              })
+              // During `'wallet_switchEthereumChain'`, MetaMask makes a `'net_version'` RPC call to the target chain.
+              // If this request fails, MetaMask does not emit the `'chainChanged'` event, but will still switch the chain.
+              // To counter this behavior, we request and emit the current chain ID to confirm the chain switch either via
+              // this callback or an externally emitted `'chainChanged'` event.
+              // https://github.com/MetaMask/metamask-extension/issues/24247
+              .then(async () => {
+                const currentChainId = await this.getChainId()
+                if (currentChainId === chainId)
+                  config.emitter.emit('change', { chainId })
+              }),
+            promise,
+          ])
           return chain
-        } catch (error: any) {
-          console.error('❌ 切换链失败:', error);
+        } catch (err) {
+          const error = err as RpcError
+  
+          // Indicates chain is not added to provider
+          if (
+            error.code === 4902 ||
+            // Unwrapping for MetaMask Mobile
+            // https://github.com/MetaMask/metamask-mobile/issues/2944#issuecomment-976988719
+            (error as ProviderRpcError<{ originalError?: { code: number } }>)
+              ?.data?.originalError?.code === 4902
+          ) {
+            try {
+              const { default: blockExplorer, ...blockExplorers } =
+                chain.blockExplorers ?? {}
+              let blockExplorerUrls: string[] | undefined
+              if (addEthereumChainParameter?.blockExplorerUrls)
+                blockExplorerUrls = addEthereumChainParameter.blockExplorerUrls
+              else if (blockExplorer)
+                blockExplorerUrls = [
+                  blockExplorer.url,
+                  ...Object.values(blockExplorers).map((x) => x.url),
+                ]
+  
+              let rpcUrls: readonly string[]
+              if (addEthereumChainParameter?.rpcUrls?.length)
+                rpcUrls = addEthereumChainParameter.rpcUrls
+              else rpcUrls = [chain.rpcUrls.default?.http[0] ?? '']
+  
+              const addEthereumChain = {
+                blockExplorerUrls,
+                chainId: numberToHex(chainId),
+                chainName: addEthereumChainParameter?.chainName ?? chain.name,
+                iconUrls: addEthereumChainParameter?.iconUrls,
+                nativeCurrency:
+                  addEthereumChainParameter?.nativeCurrency ??
+                  chain.nativeCurrency,
+                rpcUrls,
+              } satisfies AddEthereumChainParameter
+  
+              await Promise.all([
+                provider
+                  .request({
+                    method: 'wallet_addEthereumChain',
+                    params: [addEthereumChain],
+                  })
+                  .then(async () => {
+                    const currentChainId = await this.getChainId()
+                    if (currentChainId === chainId)
+                      config.emitter.emit('change', { chainId })
+                    else
+                      throw new UserRejectedRequestError(
+                        new Error('User rejected switch after adding network.'),
+                      )
+                  }),
+                promise,
+              ])
+  
+              return chain
+            } catch (error) {
+              throw new UserRejectedRequestError(error as Error)
+            }
+          }
+  
+          if (error.code === UserRejectedRequestError.code)
+            throw new UserRejectedRequestError(error)
           throw new SwitchChainError(error)
         }
       },
+
+
 
       onAccountsChanged(accounts) {
         if (accounts.length === 0) {
