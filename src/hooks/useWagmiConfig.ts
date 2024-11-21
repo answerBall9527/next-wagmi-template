@@ -37,6 +37,16 @@ export function useWagmiConfig() {
       },
     });
 
+    const tomoInjectedConnector = injected({
+      target() { 
+        return { 
+          id: 'tomoInjectedProvider', 
+          name: 'tomo Injected Provider', 
+          provider: window.ethereum, 
+        } 
+      }, 
+    })
+
     const config = createConfig({
       chains, // 这里使用只读数组
       // projectId,
@@ -53,7 +63,7 @@ export function useWagmiConfig() {
       // enableWalletConnect: false,
       // enableInjected: true,
       // enableEIP6963: false,
-      connectors: [connector, metaMask()],
+      connectors: [connector, metaMask(), tomoInjectedConnector],
     });
     console.log('config', config)
     setWagmiConfig(config);
