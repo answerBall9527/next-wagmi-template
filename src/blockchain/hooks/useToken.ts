@@ -59,8 +59,9 @@ export function useTokenWrite(functionName: string, options?: useTokenWriteParam
 }
 
 export function useToken(address?: string) {
-  const chainId = useChainId();
-  
+  const wagmiConfig = useWagmiConfig();
+  const chainId = useChainId(wagmiConfig as any);
+  console.log('chainId in useToken', chainId)
   const tokenInfo = useMemo(() => {
     // 根据 chainId 和 address 获取对应的 token 信息
     return getTokenInfo(chainId, address);
