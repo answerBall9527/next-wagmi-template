@@ -1,7 +1,7 @@
 'use client';
 
 import type { Abi } from 'viem';
-import { useWagmiConfig } from '@/hooks/useWagmiConfig';
+import { useWagmiConfig } from '@/context/WagmiConfig';
 import useNetworkData from './useNetworkData';
 import { contractABI } from '../abis/contract';
 import { handleError } from '@/lib/utils/errors';

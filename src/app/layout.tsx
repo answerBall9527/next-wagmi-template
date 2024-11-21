@@ -7,6 +7,7 @@ import { Web3Modal } from '@/context/Web3Modal';
 import { Toaster } from 'react-hot-toast';
 import { ReactNode, useEffect } from 'react';
 import { useVConsole } from '@/hooks/useVConsole';
+import { WagmiConfigProvider } from '@/context/WagmiConfig';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -29,24 +30,18 @@ if (typeof window !== 'undefined') {
   });
 }
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-  useEffect(() => {
-    // 添加一些初始日志来测试 vConsole 是否正常工作
-    console.log('🌟 应用启动');
-    console.log('📱 当前环境:', {
-      userAgent: window.navigator.userAgent,
-      platform: window.navigator.platform,
-      language: window.navigator.language,
-    });
-  }, []);
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Web3Modal>
-          {children}
-          <Toaster position="bottom-right" reverseOrder={false} />
-        </Web3Modal>
+        <WagmiConfigProvider>
+          <Web3Modal>
+            <main className="min-h-screen">
+              {children}
+              <Toaster position="top-center" reverseOrder={false} />
+            </main>
+          </Web3Modal>
+        </WagmiConfigProvider>
       </body>
     </html>
   );
