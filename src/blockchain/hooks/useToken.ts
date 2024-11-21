@@ -30,6 +30,7 @@ type useTokenWriteParameters = Pick<UseWriteContractParameters, 'mutation'>['mut
 
 export function useTokenWrite(functionName: string, options?: useTokenWriteParameters) {
   const { token } = useNetworkData();
+  console.log('useTokenWirte', token)
   const wagmiConfig = useWagmiConfig();
   const { writeContractAsync, writeContract, ...rest } = useWriteContract({
     config: wagmiConfig,
