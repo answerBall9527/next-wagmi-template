@@ -34,6 +34,7 @@ export function useTokenWrite(functionName: string, options?: useTokenWriteParam
   const { token } = useNetworkData();
   console.log('useTokenWirte', token)
   const wagmiConfig = useWagmiConfig();
+  console.log('wagmiConfig', wagmiConfig)
   const { writeContractAsync, writeContract, ...rest } = useWriteContract({
     config: wagmiConfig,
     mutation: {
