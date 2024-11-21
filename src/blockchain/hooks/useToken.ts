@@ -7,6 +7,8 @@ import useNetworkData from './useNetworkData';
 import { handleError } from '@/lib/utils/errors';
 import { useReadContract, useWriteContract } from 'wagmi';
 import type { Config, UseReadContractParameters, UseWriteContractParameters } from 'wagmi';
+import { useChainId } from 'wagmi';
+import { useEffect, useMemo } from 'react';
 
 type UseTokenReadParameters = Omit<UseReadContractParameters, 'abi' | 'address' | 'functionName' | 'args'>;
 
@@ -54,4 +56,24 @@ export function useTokenWrite(functionName: string, options?: useTokenWriteParam
     });
   };
   return { write, ...rest };
+}
+
+export function useToken(address?: string) {
+  const chainId = useChainId();
+  
+  const tokenInfo = useMemo(() => {
+    // 根据 chainId 和 address 获取对应的 token 信息
+    return getTokenInfo(chainId, address);
+  }, [chainId, address]);
+
+  useEffect(() => {
+    console.log('Token info updated for chain:', chainId);
+  }, [chainId, tokenInfo]);
+
+  return tokenInfo;
+}
+
+function getTokenInfo(chainId: number, address?: string) {
+  // 实现根据 chainId 返回对应的 token 信息的逻辑
+  // ...
 }

@@ -38,8 +38,15 @@ export function WagmiConfigProvider({ children }: { children: ReactNode }) {
           [arbitrum.id]: http(),
           [bsc.id]: http(),
         },
-        storage: createStorage({ storage: cookieStorage }),
+        storage: createStorage({ 
+          storage: cookieStorage,
+          key: 'wagmi.wallet',
+        }),
         connectors: [connector, metaMask()],
+        syncConnectedChain: true,
+        // logger: {
+        //   warn: (message) => console.warn(message),
+        // },
       });
 
       setWagmiConfig(config);
