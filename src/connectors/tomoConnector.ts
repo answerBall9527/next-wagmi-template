@@ -209,10 +209,11 @@ export function tomoConnector({
             params: [{ chainId: `0x${chainId.toString(16)}` }]
           });
           
-          await provider.request({
+          const result = await provider.request({
             method: 'wallet_switchEthereumChain',
             params: [{ chainId: `0x${chainId.toString(16)}` }],
           })
+          console.log('切链参数：', result, `0x${chainId.toString(16)}`)
           // 这里很坑，必须要emit change才可以
           config.emitter.emit('change', { chainId })
           console.log('✅ 切换链成功 in connector config', chain);
