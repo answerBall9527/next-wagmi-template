@@ -214,6 +214,8 @@ export function tomoConnector({
             params: [{ chainId: `0x${chainId.toString(16)}` }],
           })
           console.log('切链参数：', result, `0x${chainId.toString(16)}`)
+          const chainIdFromProvider = await provider.request({ method: 'eth_chainId' }) as string
+          console.log('切链之后立即获取一次：', chainIdFromProvider)
           // 这里很坑，必须要emit change才可以
           config.emitter.emit('change', { chainId })
           console.log('✅ 切换链成功 in connector config', chain);
