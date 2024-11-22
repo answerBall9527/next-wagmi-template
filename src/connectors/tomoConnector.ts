@@ -225,6 +225,7 @@ export function tomoConnector({
           throw new SwitchChainError(error)
         }
       },
+      
 
       onAccountsChanged(accounts) {
         if (accounts.length === 0) {
