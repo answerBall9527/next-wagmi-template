@@ -5,7 +5,7 @@ import { cookieStorage, createStorage, http, createConfig, Config } from 'wagmi'
 import { mainnet, bscTestnet, sepolia, base, arbitrum, bsc } from 'wagmi/chains';
 import { tomoConnector } from '@/connectors/tomoConnector';
 import { type Chain } from 'wagmi/chains';
-import { metaMask } from 'wagmi/connectors';
+import { metaMask, walletConnect, injected } from 'wagmi/connectors';
 
 const WagmiConfigContext = createContext<Config | null>(null);
 
@@ -27,6 +27,16 @@ export function WagmiConfigProvider({ children }: { children: ReactNode }) {
         },
       });
 
+      const tomoInjectedConnector = injected({
+        target() { 
+          return { 
+            id: 'tomoInjectedProvider', 
+            name: 'tomo Injected Provider', 
+            provider: window.ethereum, 
+          } 
+        }, 
+      })
+
       const config = createConfig({
         chains,
         ssr: true,
@@ -42,7 +52,9 @@ export function WagmiConfigProvider({ children }: { children: ReactNode }) {
           storage: cookieStorage,
           key: 'wagmi.wallet',
         }),
-        connectors: [connector, metaMask()],
+        connectors: [connector, metaMask(), walletConnect({
+          projectId: '002c4d9f5a9cadecca899c835682d52b',
+        }), tomoInjectedConnector],
         syncConnectedChain: true,
         // logger: {
         //   warn: (message) => console.warn(message),
