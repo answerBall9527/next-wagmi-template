@@ -63,7 +63,9 @@ export function useWagmiConfig() {
       // enableWalletConnect: false,
       // enableInjected: true,
       // enableEIP6963: false,
-      connectors: [connector, metaMask(), tomoInjectedConnector],
+      connectors: [connector, metaMask(), tomoInjectedConnector, walletConnect({
+        projectId: '002c4d9f5a9cadecca899c835682d52b',
+      }),],
     });
     console.log('config', config)
     setWagmiConfig(config);

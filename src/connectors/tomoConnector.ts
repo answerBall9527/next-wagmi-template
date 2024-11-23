@@ -192,14 +192,14 @@ export function tomoConnector({
       },
 
       async switchChain({ chainId }) {
-        console.log('🔄 开始切换链', { chainId });
+        // console.log('🔄 开始切换链', { chainId });
         const provider = await this.getProvider()
         if (!provider) throw new Error('Provider not found')
         
-        console.log('🔍 查找链配置', { 可用链: chains, 目标链ID: chainId });
+        // console.log('🔍 查找链配置', { 可用链: chains, 目标链ID: chainId });
         const chain = chains.find((x) => x.id === chainId)
         if (!chain) {
-          console.error('❌ 未找到链配置');
+          // console.error('❌ 未找到链配置');
           throw new SwitchChainError(new Error('Chain not found'))
         }
 
