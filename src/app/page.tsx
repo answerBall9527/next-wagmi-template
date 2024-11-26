@@ -6,10 +6,12 @@ import { formatUnits, parseUnits } from 'viem';
 import ConnectButton from '@/components/shared/ConnectButton';
 import { useTokenRead, useTokenWrite } from '@/blockchain/hooks';
 import useToast from '@/hooks/useToast';
+import { useRouter } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
 export default function Home() {
+  const router = useRouter();
   const toast = useToast();
   const { address, isConnected } = useAccount();
   const [recipient, setRecipient] = useState('');
@@ -71,6 +73,16 @@ export default function Home() {
   return (
     <main className="h-screen w-full flex justify-center items-center bg-black text-white">
       <div className="flex flex-col gap-5 items-center">
+        <button 
+          onClick={() => router.push('/home')}
+          className="bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-lg shadow-lg transition-colors duration-200 flex items-center space-x-2"
+        >
+          <span>Go to Home</span>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd" />
+          </svg>
+        </button>
+
         <ConnectButton />
 
         {address ? (

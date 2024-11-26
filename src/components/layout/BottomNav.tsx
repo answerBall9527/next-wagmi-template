@@ -33,22 +33,24 @@ const BottomNav: FC = () => {
   const pathname = usePathname()
 
   return (
-    <div className="rounded-large shadow-card w-full max-w-[345px] mx-auto mt-6 bg-background p-4 flex justify-around">
-      {navItems.map((item) => (
-        <Link key={item.path} href={item.path}>
-          <div className="flex flex-col items-center">
-            <Image 
-              src={item.icon} 
-              width={24} 
-              height={24} 
-              alt={item.label} 
-            />
-            <span className={`text-xs mt-2 ${pathname === item.path ? 'text-secondary font-bold' : 'text-secondary'}`}>
-              {item.label}
-            </span>
-          </div>
-        </Link>
-      ))}
+    <div className="fixed bottom-[30px] left-0 right-0 flex justify-center">
+      <div className="rounded-large shadow-card w-full max-w-[345px] bg-background p-4 flex justify-around">
+        {navItems.map((item) => (
+          <Link key={item.path} href={item.path}>
+            <div className="flex flex-col items-center">
+              <Image 
+                src={item.icon} 
+                width={24} 
+                height={24} 
+                alt={item.label} 
+              />
+              <span className={`text-xs mt-2 ${pathname === item.path ? 'text-secondary font-bold' : 'text-secondary'}`}>
+                {item.label}
+              </span>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
   )
 }
