@@ -2,7 +2,7 @@
 import Image from "next/image";
 import icon42 from '@/assets/42x42.png';
 import styles from './styles.module.scss'
-import BottomNav from '@/components/layout/BottomNav'
+// import BottomNav from '@/components/layout/BottomNav'
 
 export default function HomePage() {
     return (
@@ -100,7 +100,7 @@ export default function HomePage() {
                 </span>
             </div>
             {/* Bottom Navigation Section */}
-            <BottomNav />
+            {/* <BottomNav /> */}
         </div>
     );
 }

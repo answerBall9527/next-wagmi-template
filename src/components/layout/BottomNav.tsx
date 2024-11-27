@@ -32,7 +32,7 @@ const BottomNav: FC = () => {
   const pathname = usePathname()
 
   return (
-    <div className="fixed bottom-[30px] left-0 right-0 flex justify-center">
+    <div className="flex justify-center">
       <div className="rounded-large shadow-card w-full max-w-[345px] bg-background p-4 flex justify-around">
         {navItems.map((item) => (
           <Link key={item.path} href={item.path}>
