@@ -1,6 +1,5 @@
 'use client'
-
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -31,29 +30,9 @@ const navItems = [
 
 const BottomNav: FC = () => {
   const pathname = usePathname()
-  const [viewportHeight, setViewportHeight] = useState(0)
-
-  useEffect(() => {
-    // 获取实际视口高度
-    const updateViewportHeight = () => {
-      setViewportHeight(window.innerHeight)
-    }
-
-    updateViewportHeight()
-    window.addEventListener('resize', updateViewportHeight)
-
-    return () => window.removeEventListener('resize', updateViewportHeight)
-  }, [])
 
   return (
-    <div 
-      className="fixed left-0 right-0 flex justify-center"
-      style={{ 
-        bottom: '30px',
-        // 确保不会超出实际视口
-        maxHeight: viewportHeight ? `${viewportHeight - 30}px` : 'auto'
-      }}
-    >
+    <div className="fixed bottom-[30px] left-0 right-0 flex justify-center">
       <div className="rounded-large shadow-card w-full max-w-[345px] bg-background p-4 flex justify-around">
         {navItems.map((item) => (
           <Link key={item.path} href={item.path}>
