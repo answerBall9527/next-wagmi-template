@@ -53,7 +53,8 @@ export function WagmiConfigProvider({ children }: { children: ReactNode }) {
           key: 'wagmi.wallet',
         }),
         connectors: [connector, metaMask(), walletConnect({
-          projectId: '002c4d9f5a9cadecca899c835682d52b',
+          projectId: '3fcc6bba6f1de962d911bb5b5c3dba68',
+          showQrModal: true,
         }), tomoInjectedConnector],
         syncConnectedChain: true,
         // logger: {
