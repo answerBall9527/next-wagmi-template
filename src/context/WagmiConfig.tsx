@@ -52,7 +52,16 @@ export function WagmiConfigProvider({ children }: { children: ReactNode }) {
           storage: cookieStorage,
           key: 'wagmi.wallet',
         }),
-        connectors: [connector, metaMask(), tomoInjectedConnector],
+        connectors: [connector, metaMask(), walletConnect({
+          projectId: '3fcc6bba6f1de962d911bb5b5c3dba68',
+          relayUrl: 'wss://relay.walletconnect.com',  // WalletConnect 的官方中继服务器
+          metadata: {
+            name: 'pebbles',
+            description: 'pebbles',
+            url: 'https://next-wagmi-template.vercel.app/',
+            icons: ['https://static.stakestone.io/btc/babylon.png'],
+          },
+        }), tomoInjectedConnector],
         syncConnectedChain: true,
         // logger: {
         //   warn: (message) => console.warn(message),
