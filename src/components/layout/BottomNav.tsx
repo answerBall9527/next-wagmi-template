@@ -1,9 +1,22 @@
 'use client'
-import { FC } from 'react'
+
+import { FC, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import icon42 from '@/assets/42x42.png'
+
+declare global {
+  interface Window {
+    Telegram?: {
+      WebApp?: {
+        viewportHeight: number;
+        isExpanded: boolean;
+        expand: () => void;
+      }
+    }
+  }
+}
 
 const navItems = [
   {
@@ -30,9 +43,37 @@ const navItems = [
 
 const BottomNav: FC = () => {
   const pathname = usePathname()
+  const [viewportHeight, setViewportHeight] = useState(0)
+
+  useEffect(() => {
+    const updateViewportHeight = () => {
+      // 优先使用 Telegram WebApp API 获取视口高度
+      if (window.Telegram?.WebApp) {
+        setViewportHeight(window.Telegram.WebApp.viewportHeight)
+        // 确保 Mini App 展开
+        if (!window.Telegram.WebApp.isExpanded) {
+          window.Telegram.WebApp.expand()
+        }
+      } else {
+        setViewportHeight(window.innerHeight)
+      }
+    }
+
+    updateViewportHeight()
+    window.addEventListener('resize', updateViewportHeight)
+
+    return () => window.removeEventListener('resize', updateViewportHeight)
+  }, [])
 
   return (
-    <div className="fixed bottom-[30px] left-0 right-0 flex justify-center">
+    <div 
+      className="fixed left-0 right-0 flex justify-center"
+      style={{ 
+        bottom: '30px',
+        maxHeight: viewportHeight ? `${viewportHeight - 30}px` : 'auto',
+        zIndex: 50
+      }}
+    >
       <div className="rounded-large shadow-card w-full max-w-[345px] bg-background p-4 flex justify-around">
         {navItems.map((item) => (
           <Link key={item.path} href={item.path}>
