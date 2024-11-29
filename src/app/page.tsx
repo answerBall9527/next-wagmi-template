@@ -21,6 +21,7 @@ export default function Home() {
   const tokenDecimals = useTokenRead<bigint>('decimals');
   const tokenSymbol = useTokenRead<string>('symbol');
   const [isTransferring, setIsTransferring] = useState(false);
+  const [amount, setAmount] = useState('');
 
   const tokenTransfer = useTokenWrite('transfer', {
     onSuccess(data) {
@@ -56,10 +57,17 @@ export default function Home() {
       return;
     }
 
+    if (!amount || Number(amount) <= 0) {
+      const message = '请输入有效的转账金额';
+      console.log('Toast message:', message);
+      toast(message, 'error');
+      return;
+    }
+
     try {
       setIsTransferring(true);
-      const amount = parseUnits('10', tokenDecimalsData);
-      await tokenTransfer.write([recipient, amount]);
+      const transferAmount = parseUnits(amount, tokenDecimalsData);
+      await tokenTransfer.write([recipient, transferAmount]);
     } catch (error: any) {
       console.error('Transfer error:', error);
       const message = error?.message || 'Transfer failed';
@@ -111,6 +119,14 @@ export default function Home() {
             className="p-2 border-none rounded-md focus:outline-cyan-300 text-black"
             value={recipient}
             onChange={(e) => setRecipient(e.target.value)}
+            disabled={!isConnected}
+          />
+          <input
+            type="number"
+            placeholder="输入转账数量"
+            className="p-2 border-none rounded-md focus:outline-cyan-300 text-black"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
             disabled={!isConnected}
           />
           <button 
