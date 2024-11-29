@@ -6,16 +6,16 @@ import { mainnet, bscTestnet, sepolia } from 'wagmi/chains';
 import { injected } from 'wagmi/connectors'
 import { TomoWalletTgSdkV2 } from '@tomo-inc/tomo-telegram-sdk';
 
-export const projectId = 'a8a94eaa29bf7b1d3a0d94172c58e6ac';
+// export const projectId = 'a8a94eaa29bf7b1d3a0d94172c58e6ac';
 
-if (!projectId) throw new Error('Project ID is not defined');
+// if (!projectId) throw new Error('Project ID is not defined');
 
-const metadata = {
-  name: 'Web3Modal',
-  description: 'Web3Modal Example',
-  url: 'https://web3modal.com', // origin must match your domain & subdomain
-  icons: ['https://avatars.githubusercontent.com/u/37784886'],
-};
+// const metadata = {
+//   name: 'Web3Modal',
+//   description: 'Web3Modal Example',
+//   url: 'https://web3modal.com', // origin must match your domain & subdomain
+//   icons: ['https://avatars.githubusercontent.com/u/37784886'],
+// };
 
 // const customInjectedConnector = (config: any) => ({
 //   id: 'tomowallet',
