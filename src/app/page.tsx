@@ -71,7 +71,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen w-full flex justify-center items-center bg-white text-white">
+    <main className="min-h-screen w-full flex justify-center items-center bg-black text-white">
       <div className="flex flex-col gap-5 items-center">
         <button 
           onClick={() => router.push('/home')}
