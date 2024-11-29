@@ -15,21 +15,22 @@ const ConnectButton = () => {
   return (
     <div>
       <w3m-button />
-      {'isConnected: ' + isConnected}
+      <div>{'isConnected: ' + isConnected}</div>
       {connectors.map((connector, i) => (
-        <button 
-          key={connector.uid}
-          onClick={() => {
-            console.log('🚀 点击连接钱包', {
-              id: connector.id,
-              name: connector.name,
-              type: connector.type
-            });
-            connect({ connector });
-          }}
-        >
-          #{i} {connector.name}
-        </button>
+        <div key={connector.uid}>
+          <button 
+            onClick={() => {
+              console.log('🚀 点击连接钱包', {
+                id: connector.id,
+                name: connector.name,
+                type: connector.type
+              });
+              connect({ connector });
+            }}
+          >
+            #{i} {connector.name}
+          </button>
+        </div>
       ))}
     </div>
   );

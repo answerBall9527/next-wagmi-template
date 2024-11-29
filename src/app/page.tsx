@@ -112,7 +112,7 @@ export default function Home() {
           <p className="text-red-500">Connect Your Wallet1</p>
         )}
 
-        <div className="flex gap-5">
+        <div className="flex flex-col gap-5">
           <input
             type="text"
             placeholder="Enter recipient address"
