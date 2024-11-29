@@ -35,7 +35,7 @@ export function Web3Modal({ children }: { children: ReactNode }) {
     try {
       createWeb3Modal({
         wagmiConfig,
-        // projectId,
+        projectId: '972c11857d9ca138663e5ca130e6fe63',
         themeMode: 'dark',
       });
     } catch (error) {
