@@ -6,6 +6,15 @@ interface ScanQrPopupParams {
     text?: string
   }
 
+interface ShareUrlParams {
+    url: string;
+    text?: string;
+    button?: {
+        text: string;
+        url: string;
+    };
+}
+
 declare global {
     interface Window {
         Telegram: {
@@ -15,6 +24,8 @@ declare global {
                 expand: () => void;
                 showScanQrPopup(params: ScanQrPopupParams, callback?: (data: string) => boolean): void
                 closeScanQrPopup: () => void;
+                shareUrl(params: ShareUrlParams): void;
+                sendData(data: string): void
             };
         };
     }

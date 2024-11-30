@@ -48,6 +48,43 @@ export default function HomePage() {
         }
     };
 
+    const handleShareClick = () => {
+        if (window?.Telegram?.WebApp) {
+            window.Telegram.WebApp.shareUrl({
+                url: 'https://your-domain.com', // 替换为实际的URL
+                text: '发现了一个超棒的Web3钱包！\n\n' + 
+                      '💰 支持多链资产管理\n' +
+                      '🔄 便捷的跨链交易\n' +
+                      '🔒 安全可靠的存储\n' +
+                      '💎 丰富的DeFi功能\n\n' +
+                      '预览图片：https://your-domain.com/preview.jpg\n\n' + // 添加一个高质量的预览图片链接
+                      '快来体验吧！👇',
+                button: {
+                    text: '立即体验',
+                    url: 'https://your-domain.com'
+                }
+            });
+        }
+    };
+
+    function sendFormattedMessage() {
+        if (window.Telegram && window.Telegram.WebApp) {
+          const message = {
+            text: '欢迎使用我的应用！点击按钮以继续操作。',
+            reply_markup: {
+              inline_keyboard: [
+                [
+                  { text: '点击我', callback_data: 'button_click' }
+                ]
+              ]
+            }
+          };
+      
+          // 发送消息到 Telegram 频道或用户
+          window.Telegram.WebApp.sendData(message);
+        }
+      }
+
     return (
         <div className="w-full h-full bg-background overflow-hidden relative flex flex-col p-[37px_15px_30px]">
             {/* Header section */}
@@ -72,7 +109,22 @@ export default function HomePage() {
                             onClick={handleScanClick}
                             className="cursor-pointer hover:opacity-80 transition-opacity"
                         />
-                        <Image src="https://via.placeholder.com/36x36?text=Share" width={36} height={36} alt="Icon" />
+                        <Image 
+                            src="https://via.placeholder.com/36x36?text=Share" 
+                            width={36} 
+                            height={36} 
+                            alt="Share Icon" 
+                            onClick={sendFormattedMessage}
+                            className="cursor-pointer hover:opacity-80 transition-opacity"
+                        />
+                                                <Image 
+                            src="https://via.placeholder.com/36x36?text=Share" 
+                            width={36} 
+                            height={36} 
+                            alt="Share Icon" 
+                            onClick={handleShareClick}
+                            className="cursor-pointer hover:opacity-80 transition-opacity"
+                        />
                         <Image src="https://via.placeholder.com/36x36?text=Wallet" width={36} height={36} alt="Icon" />
                     </div>
                 </div>
