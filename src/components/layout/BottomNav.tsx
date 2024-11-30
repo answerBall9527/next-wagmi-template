@@ -6,17 +6,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import icon42 from '@/assets/42x42.png'
 
-declare global {
-  interface Window {
-    Telegram?: {
-      WebApp?: {
-        viewportHeight: number;
-        isExpanded: boolean;
-        expand: () => void;
-      }
-    }
-  }
-}
 
 const navItems = [
   {

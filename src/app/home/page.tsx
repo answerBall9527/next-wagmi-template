@@ -1,10 +1,44 @@
+'use client'
+
 // Updated Tailwind styles for your components in index.js
 import Image from "next/image";
 import icon42 from '@/assets/42x42.png';
 import styles from './styles.module.scss'
 // import BottomNav from '@/components/layout/BottomNav'
+import { useEffect, useState } from 'react';
+
+// declare global {
+//     interface Window {
+//         Telegram: {
+//             WebApp: {
+//                 viewportHeight: number;
+//                 isExpanded: boolean;
+//                 expand: () => void;
+//                 showScanQrPopup: (params: {
+//                     text?: string;
+//                 }) => Promise<string>;
+//                 closeScanQrPopup: () => void;
+//             };
+//         };
+//     }
+// }
 
 export default function HomePage() {
+    const handleScanClick = async () => {
+        try {
+            const result = await window?.Telegram?.WebApp.showScanQrPopup({
+                text: "请将二维码对准扫描框"
+            });
+            // 处理扫描结果
+            console.log('扫描结果:', result);
+            
+            // 这里可以添加扫描成功后的业务逻辑
+            
+        } catch (error) {
+            console.error('扫描错误:', error);
+        }
+    };
+
     return (
         <div className="w-full h-full bg-background overflow-hidden relative flex flex-col p-[37px_15px_30px]">
             {/* Header section */}
@@ -21,7 +55,16 @@ export default function HomePage() {
                         <span className="ml-2 text-secondary text-lg font-medium">@Charles</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <Image src="https://via.placeholder.com/36x36?text=Visit" width={36} height={36} alt="Icon" />
+                        <Image 
+                            src="https://via.placeholder.com/36x36?text=Scan" 
+                            width={36} 
+                            height={36} 
+                            alt="Icon"
+                            onClick={handleScanClick}
+                            className="cursor-pointer hover:opacity-80 transition-opacity"
+                        />
+                        <Image src="https://via.placeholder.com/36x36?text=Share" width={36} height={36} alt="Icon" />
+                        <Image src="https://via.placeholder.com/36x36?text=Wallet" width={36} height={36} alt="Icon" />
                     </div>
                 </div>
             </div>
