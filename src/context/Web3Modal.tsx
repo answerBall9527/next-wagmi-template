@@ -25,8 +25,15 @@ export function Web3Modal({ children }: { children: ReactNode }) {
       }
     }
 
+    // if (window.Telegram && Telegram && Telegram.WebApp) {
+    //   console.log('really in telegram');
+    //   // Telegram Web App is available
+    // }
+
     initWagmiConfig();
   }, []);
+
+
 
   useEffect(() => {
     if (!wagmiConfig) return;

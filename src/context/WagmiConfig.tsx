@@ -54,7 +54,7 @@ export function WagmiConfigProvider({ children }: { children: ReactNode }) {
         }),
         connectors: [connector, metaMask(), walletConnect({
           projectId: '972c11857d9ca138663e5ca130e6fe63',
-          relayUrl: 'wss://relay.walletconnect.com',  // WalletConnect 的官方中继服务器
+          relayUrl: 'wss://relay.walletconnect.com', 
           metadata: {
             name: 'pebbles',
             description: 'pebbles',
@@ -63,9 +63,6 @@ export function WagmiConfigProvider({ children }: { children: ReactNode }) {
           },
         }), tomoInjectedConnector],
         syncConnectedChain: true,
-        // logger: {
-        //   warn: (message) => console.warn(message),
-        // },
       });
 
       setWagmiConfig(config);
@@ -77,7 +74,7 @@ export function WagmiConfigProvider({ children }: { children: ReactNode }) {
   }, []);
 
   if (isLoading) {
-    return null; // 或者返回一个加载指示器
+    return null;
   }
 
   return (
