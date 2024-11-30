@@ -9,7 +9,6 @@ import { createWeb3Modal } from '@web3modal/wagmi/react';
 const queryClient = new QueryClient();
 
 export const dynamic = 'force-dynamic';
-const projectId = process.env.NEXT_PUBLIC_WC_PROJECT_ID || 'a8a94eaa29bf7b1d3a0d94172c58e6ac';
 
 export function Web3Modal({ children }: { children: ReactNode }) {
   const wagmiConfig = useWagmiConfig();
