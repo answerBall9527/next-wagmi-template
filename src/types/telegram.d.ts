@@ -1,3 +1,11 @@
+import telegram from 'telegram-webapps'
+interface ScanQrPopupParams {
+    /**
+     * The text to be displayed under the 'Scan QR' heading, 0-64 characters.
+     */
+    text?: string
+  }
+
 declare global {
     interface Window {
         Telegram: {
@@ -5,9 +13,7 @@ declare global {
                 viewportHeight: number;
                 isExpanded: boolean;
                 expand: () => void;
-                showScanQrPopup: (params: {
-                    text?: string;
-                },  callback?: (result: any) => void) => Promise<string>;
+                showScanQrPopup(params: ScanQrPopupParams, callback?: (data: string) => boolean): void
                 closeScanQrPopup: () => void;
             };
         };

@@ -28,8 +28,15 @@ export default function HomePage() {
         try {
             const result = await window?.Telegram?.WebApp.showScanQrPopup({
                 text: "请将二维码对准扫描框"
-            }, (result: any) => {
-                console.log('扫描结果1: ', result)
+            }, (data: string) => {
+                console.log('扫描结果: ', data);
+                try {
+                    new URL(data);
+                    window.location.href = data;
+                    return true;
+                } catch {
+                    return false;
+                }
             });
             // 处理扫描结果
             console.log('扫描结果:', result);
