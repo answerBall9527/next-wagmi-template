@@ -39,14 +39,28 @@ export default function Home() {
   });
   console.log('9527 before in telegram')
   if (window.Telegram && window.Telegram.WebApp) {
-    console.log('9527 really in telegram');
-    window.Telegram.WebApp.onEvent('webview_state_changed', () => {
-      const currentUrl = window.location.href;
+    console.log('当前运行在 Telegram WebView 中');
   
-      alert(currentUrl)
+    // 替换 history.pushState 方法
+    const originalPushState = history.pushState;
+    history.pushState = function (state, title, url) {
+      console.log('拦截到试图跳转的新 URL:', url);
+  
+      // 阻止跳转：不调用原始的 pushState 方法
+      // 如果你需要打印，可以在这里处理
+      alert(`拦截的新 URL: ${url}`);
+    };
+  
+    // 监听 popstate 事件（如用户点击后退按钮）
+    window.addEventListener('popstate', (event) => {
+      console.log('拦截到浏览器返回操作的新 URL:', window.location.href);
+  
+      // 阻止进一步的跳转
+      event.preventDefault();
+      alert(`当前 URL: ${window.location.href}`);
     });
-    // Telegram Web App is available
   }
+  
 
   const tokenNameData = tokenName.data;
   const tokenDecimalsData = Number(tokenDecimals.data);
