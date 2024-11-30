@@ -50,20 +50,19 @@ export default function HomePage() {
 
     const handleShareClick = () => {
         if (window?.Telegram?.WebApp) {
-            window.Telegram.WebApp.shareUrl({
-                url: 'https://your-domain.com', // 替换为实际的URL
-                text: '发现了一个超棒的Web3钱包！\n\n' + 
-                      '💰 支持多链资产管理\n' +
-                      '🔄 便捷的跨链交易\n' +
-                      '🔒 安全可靠的存储\n' +
-                      '💎 丰富的DeFi功能\n\n' +
-                      '预览图片：https://your-domain.com/preview.jpg\n\n' + // 添加一个高质量的预览图片链接
-                      '快来体验吧！👇',
-                button: {
-                    text: '立即体验',
-                    url: 'https://your-domain.com'
+            const shareData = {
+                type: 'share',
+                data: {
+                    text: '发现了一个超棒的Web3钱包！\n\n' + 
+                          '💰 支持多链资产管理\n' +
+                          '🔄 便捷的跨链交易\n' +
+                          '🔒 安全可靠的存储\n' +
+                          '💎 丰富的DeFi功能\n\n' +
+                          '快来体验吧！👇\n' +
+                          'https://your-domain.com',
                 }
-            });
+            };
+            window.Telegram.WebApp.sendData(JSON.stringify(shareData));
         }
     };
 
@@ -81,7 +80,7 @@ export default function HomePage() {
           };
       
           // 发送消息到 Telegram 频道或用户
-          window.Telegram.WebApp.sendData(message);
+          window.Telegram.WebApp.sendData(JSON.stringify(message));
         }
       }
 

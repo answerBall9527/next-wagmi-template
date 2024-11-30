@@ -24,7 +24,6 @@ declare global {
                 expand: () => void;
                 showScanQrPopup(params: ScanQrPopupParams, callback?: (data: string) => boolean): void
                 closeScanQrPopup: () => void;
-                shareUrl(params: ShareUrlParams): void;
                 sendData(data: string): void
             };
         };
