@@ -7,7 +7,7 @@ declare global {
                 expand: () => void;
                 showScanQrPopup: (params: {
                     text?: string;
-                }) => Promise<string>;
+                },  callback?: (result: any) => void) => Promise<string>;
                 closeScanQrPopup: () => void;
             };
         };
