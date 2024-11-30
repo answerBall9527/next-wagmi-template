@@ -25,15 +25,6 @@ export function Web3Modal({ children }: { children: ReactNode }) {
       }
     }
 
-    if (window.Telegram && window.Telegram.WebApp) {
-      console.log('really in telegram');
-      window.Telegram.WebApp.onEvent('webview_state_changed', () => {
-        const currentUrl = window.location.href;
-    
-        alert(currentUrl)
-      });
-      // Telegram Web App is available
-    }
 
     initWagmiConfig();
   }, []);

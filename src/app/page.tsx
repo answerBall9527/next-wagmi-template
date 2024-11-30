@@ -37,6 +37,16 @@ export default function Home() {
       toast(message, 'error');
     },
   });
+  console.log('9527 before in telegram')
+  if (window.Telegram && window.Telegram.WebApp) {
+    console.log('9527 really in telegram');
+    window.Telegram.WebApp.onEvent('webview_state_changed', () => {
+      const currentUrl = window.location.href;
+  
+      alert(currentUrl)
+    });
+    // Telegram Web App is available
+  }
 
   const tokenNameData = tokenName.data;
   const tokenDecimalsData = Number(tokenDecimals.data);
