@@ -49,21 +49,14 @@ export default function HomePage() {
     };
 
     const handleShareClick = () => {
-        if (window?.Telegram?.WebApp) {
-            const shareData = {
-                type: 'share',
-                data: {
-                    text: '发现了一个超棒的Web3钱包！\n\n' + 
-                          '💰 支持多链资产管理\n' +
-                          '🔄 便捷的跨链交易\n' +
-                          '🔒 安全可靠的存储\n' +
-                          '💎 丰富的DeFi功能\n\n' +
-                          '快来体验吧！👇\n' +
-                          'https://your-domain.com',
-                }
-            };
-            window.Telegram.WebApp.sendData(JSON.stringify(shareData));
-        }
+        const shareUrl = 'https://next-wagmi-template.vercel.app/';
+        const shareText = '11111';
+        const encodedUrl = encodeURIComponent(shareUrl);
+        const encodedText = encodeURIComponent(shareText);
+        
+        window.Telegram.WebApp.openTelegramLink(
+            `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`
+        );
     };
 
     function sendFormattedMessage() {

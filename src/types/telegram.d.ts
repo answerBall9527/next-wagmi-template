@@ -24,7 +24,8 @@ declare global {
                 expand: () => void;
                 showScanQrPopup(params: ScanQrPopupParams, callback?: (data: string) => boolean): void
                 closeScanQrPopup: () => void;
-                sendData(data: string): void
+                sendData(data: string): void;
+                openTelegramLink(url: string): void;
             };
         };
     }
