@@ -49,8 +49,8 @@ export default function HomePage() {
     };
 
     const handleShareClick = () => {
-        const shareUrl = 'https://next-wagmi-template.vercel.app/';
-        const shareText = '11111';
+        const shareUrl = 'https://t.me/stakestone_activity_bot/pebbles_short_name';
+        const shareText = 'shareText11111';
         const encodedUrl = encodeURIComponent(shareUrl);
         const encodedText = encodeURIComponent(shareText);
         
@@ -109,7 +109,7 @@ export default function HomePage() {
                             onClick={sendFormattedMessage}
                             className="cursor-pointer hover:opacity-80 transition-opacity"
                         />
-                                                <Image 
+                        <Image 
                             src="https://via.placeholder.com/36x36?text=Share" 
                             width={36} 
                             height={36} 
