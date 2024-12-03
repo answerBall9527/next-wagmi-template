@@ -11,6 +11,7 @@ interface DonatorInfo {
 
 export default function RedPacketPage() {
     useEffect(() => {
+        console.log('window?.Telegram?.WebApp', window?.Telegram?.WebApp)
         if (window?.Telegram?.WebApp) {
             const webApp = window.Telegram.WebApp;
             const viewportHeight = webApp.viewportHeight;
