@@ -11,6 +11,27 @@ interface DonatorInfo {
 }
 
 export default function RedPacketPage() {
+    useEffect(() => {
+        // 打印视口信息
+        console.log('Viewport Height:', window.innerHeight);
+        console.log('Viewport Width:', window.innerWidth);
+        
+        // 打印 body 高度
+        console.log('Body Height:', document.body.clientHeight);
+        console.log('Body Scroll Height:', document.body.scrollHeight);
+        
+        // 打印设备屏幕信息
+        console.log('Screen Height:', window.screen.height);
+        console.log('Screen Width:', window.screen.width);
+        console.log('Screen Available Height:', window.screen.availHeight);
+        
+        // 如果有 Telegram WebApp，打印其视口高度
+        if (window?.Telegram?.WebApp) {
+            console.log('Telegram WebApp Viewport Height:', window.Telegram.WebApp.viewportHeight);
+            console.log('Telegram WebApp Is Expanded:', window.Telegram.WebApp.isExpanded);
+        }
+    }, []);
+
     const [isDark, setIsDark] = useState(false);
 
     const donator = {
