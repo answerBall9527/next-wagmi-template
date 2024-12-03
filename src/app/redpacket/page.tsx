@@ -11,15 +11,23 @@ interface DonatorInfo {
 
 export default function RedPacketPage() {
     useEffect(() => {
-        // 设置初始高度为半屏
         if (window?.Telegram?.WebApp) {
             const webApp = window.Telegram.WebApp;
-            // 设置展开按钮
-            webApp.expand();
+            // 获取视口高度
+            const viewportHeight = webApp.viewportHeight;
+            // 设置为半屏高度
+            const halfScreenHeight = Math.floor(viewportHeight * 0.6);
+            
             // 设置主题背景色
             webApp.setBackgroundColor("#ffffff");
             // 设置标题栏颜色
             webApp.setHeaderColor("#ffffff");
+            
+            // 设置容器高度
+            const container = document.querySelector('.redpacket-container');
+            if (container) {
+                (container as HTMLElement).style.height = `${halfScreenHeight}px`;
+            }
         }
     }, []);
 
@@ -40,59 +48,61 @@ export default function RedPacketPage() {
     ];
 
     return (
-        <div className="flex flex-col p-6 max-w-md mx-auto">
-            <div className="text-center mb-8">
-                <h1 className="text-xl font-medium mb-2">Donate/Tip For</h1>
-                <div className="flex items-center justify-center gap-3 mb-4">
-                    <Image
-                        src="https://via.placeholder.com/40x40"
-                        width={40}
-                        height={40}
-                        alt="Profile"
-                        className="rounded-full"
-                    />
-                    <div className="text-left">
-                        <div className="font-medium">{donator.username}</div>
-                        <div className="text-sm text-gray-500">{donator.handle}</div>
+        <div className="redpacket-container overflow-y-auto">
+            <div className="flex flex-col p-6 max-w-md mx-auto">
+                <div className="text-center mb-8">
+                    <h1 className="text-xl font-medium mb-2">Donate/Tip For</h1>
+                    <div className="flex items-center justify-center gap-3 mb-4">
+                        <Image
+                            src="https://via.placeholder.com/40x40"
+                            width={40}
+                            height={40}
+                            alt="Profile"
+                            className="rounded-full"
+                        />
+                        <div className="text-left">
+                            <div className="font-medium">{donator.username}</div>
+                            <div className="text-sm text-gray-500">{donator.handle}</div>
+                        </div>
                     </div>
+                    
+                    <div className="text-center mb-4">
+                        <span className="text-4xl font-bold">{amount.value}</span>
+                        <span className="text-lg ml-2">{amount.currency}</span>
+                    </div>
+                    <p className="text-sm text-gray-500">To help stop the climate change</p>
                 </div>
-                
-                <div className="text-center mb-4">
-                    <span className="text-4xl font-bold">{amount.value}</span>
-                    <span className="text-lg ml-2">{amount.currency}</span>
-                </div>
-                <p className="text-sm text-gray-500">To help stop the climate change</p>
-            </div>
 
-            <div className="mb-8">
-                <h2 className="text-lg font-medium mb-4">Members who already donated</h2>
-                <div className="space-y-4">
-                    {donators.map((donator, index) => (
-                        <div key={index} className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <Image
-                                    src="https://via.placeholder.com/36x36"
-                                    width={36}
-                                    height={36}
-                                    alt="Donator"
-                                    className="rounded-full"
-                                />
-                                <div>
-                                    <div className="font-medium">{donator.username}</div>
-                                    <div className="text-sm text-gray-500">{donator.timestamp}</div>
+                <div className="mb-8">
+                    <h2 className="text-lg font-medium mb-4">Members who already donated</h2>
+                    <div className="space-y-4">
+                        {donators.map((donator, index) => (
+                            <div key={index} className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <Image
+                                        src="https://via.placeholder.com/36x36"
+                                        width={36}
+                                        height={36}
+                                        alt="Donator"
+                                        className="rounded-full"
+                                    />
+                                    <div>
+                                        <div className="font-medium">{donator.username}</div>
+                                        <div className="text-sm text-gray-500">{donator.timestamp}</div>
+                                    </div>
+                                </div>
+                                <div className="font-medium">
+                                    {donator.amount} {amount.currency}
                                 </div>
                             </div>
-                            <div className="font-medium">
-                                {donator.amount} {amount.currency}
-                            </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-            </div>
 
-            <button className="w-full bg-[#7C5CFC] text-white py-4 rounded-xl text-lg font-medium">
-                Donate
-            </button>
+                <button className="w-full bg-[#7C5CFC] text-white py-4 rounded-xl text-lg font-medium">
+                    Donate
+                </button>
+            </div>
         </div>
     );
 } 
