@@ -49,7 +49,7 @@ export default function HomePage() {
     };
 
     const handleShareClick = () => {
-        const shareUrl = 'https://t.me/stakestone_activity_bot/pebbles_short_name';
+        const shareUrl = 't.me/stakestone_activity_bot/redpacket';
         const shareText = 'shareText11111';
         const encodedUrl = encodeURIComponent(shareUrl);
         const encodedText = encodeURIComponent(shareText);
