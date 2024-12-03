@@ -12,24 +12,19 @@ interface DonatorInfo {
 
 export default function RedPacketPage() {
     useEffect(() => {
-        // 打印视口信息
-        console.log('Viewport Height:', window.innerHeight);
-        console.log('Viewport Width:', window.innerWidth);
-        
-        // 打印 body 高度
-        console.log('Body Height:', document.body.clientHeight);
-        console.log('Body Scroll Height:', document.body.scrollHeight);
-        
-        // 打印设备屏幕信息
-        console.log('Screen Height:', window.screen.height);
-        console.log('Screen Width:', window.screen.width);
-        console.log('Screen Available Height:', window.screen.availHeight);
-        
-        // 如果有 Telegram WebApp，打印其视口高度
-        if (window?.Telegram?.WebApp) {
-            console.log('Telegram WebApp Viewport Height:', window.Telegram.WebApp.viewportHeight);
-            console.log('Telegram WebApp Is Expanded:', window.Telegram.WebApp.isExpanded);
-        }
+        const setHeight = () => {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+            
+            const container = document.querySelector('.redpacket-container');
+            if (container) {
+                (container as HTMLElement).style.height = `${window.innerHeight}px`;
+            }
+        };
+
+        setHeight();
+        window.addEventListener('resize', setHeight);
+        return () => window.removeEventListener('resize', setHeight);
     }, []);
 
     const [isDark, setIsDark] = useState(false);
@@ -51,7 +46,7 @@ export default function RedPacketPage() {
     ];
     console.log('tgapp', tgapp);
     return (
-        <div className="redpacket-container overflow-y-auto bg-white text-[var(--text-color)]">
+        <div className="redpacket-container overflow-y-auto bg-white text-[var(--text-color)] min-h-screen h-full">
             <div className="fixed top-4 right-4 z-50">
                 <div className="mt-2 text-sm">
                     Theme: {isDark ? 'Dark' : 'Light'}
