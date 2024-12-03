@@ -19,9 +19,9 @@ export default function RedPacketPage() {
             const halfScreenHeight = Math.floor(viewportHeight * 0.6);
             
             // 设置主题背景色
-            webApp.setBackgroundColor("#ffffff");
-            // 设置标题栏颜色
-            webApp.setHeaderColor("#ffffff");
+            // webApp.setBackgroundColor("#ffffff");
+            // // 设置标题栏颜色
+            // webApp.setHeaderColor("#ffffff");
             
             // 设置容器高度
             const container = document.querySelector('.redpacket-container');
