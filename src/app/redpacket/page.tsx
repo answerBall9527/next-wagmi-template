@@ -30,7 +30,7 @@ export default function RedPacketPage() {
     ];
     console.log('tgapp', tgapp);
     return (
-        <div className="redpacket-container overflow-y-auto bg-[var(--bg-color)] text-[var(--text-color)]">
+        <div className="redpacket-container overflow-y-auto bg-white text-[var(--text-color)]">
             <div className="fixed top-4 right-4 z-50">
                 <div className="mt-2 text-sm">
                     Theme: {isDark ? 'Dark' : 'Light'}
