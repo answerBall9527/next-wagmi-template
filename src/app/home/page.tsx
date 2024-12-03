@@ -7,7 +7,51 @@ import styles from './styles.module.scss'
 // import BottomNav from '@/components/layout/BottomNav'
 import { useEffect, useState } from 'react';
 
+interface TelegramUser {
+    id: number;
+    first_name: string;
+    last_name?: string;
+    username?: string;
+    photo_url?: string;
+}
+
 export default function HomePage() {
+    const [user, setUser] = useState<TelegramUser | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const initTelegram = async () => {
+            try {
+                let attempts = 0;
+                const maxAttempts = 10;
+                
+                while (!window?.Telegram?.WebApp && attempts < maxAttempts) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    attempts++;
+                }
+
+                if (!window?.Telegram?.WebApp) {
+                    console.error('Telegram WebApp not found after waiting');
+                    setIsLoading(false);
+                    return;
+                }
+
+                const webApp = window.Telegram.WebApp;
+                const initData = webApp.initDataUnsafe;
+                if (initData.user) {
+                    console.log('Telegram user:', initData.user);
+                    setUser(initData.user);
+                }
+            } catch (error) {
+                console.error('Error initializing Telegram WebApp:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        initTelegram();
+    }, []);
+
     const handleScanClick = async () => {
         try {
             const result = await window?.Telegram?.WebApp.showScanQrPopup({
@@ -70,13 +114,15 @@ export default function HomePage() {
                 <div className="flex justify-between items-center">
                     <div className="flex items-center w-[122px]">
                         <Image
-                            src="https://via.placeholder.com/36x36?text=Visit"
+                            src={user?.photo_url || "https://via.placeholder.com/36x36"}
                             width={36}
                             height={36}
                             alt="Profile Picture"
                             className="rounded-full"
                         />
-                        <span className="ml-2 text-secondary text-lg font-medium">@Charles</span>
+                        <span className="ml-2 text-secondary text-lg font-medium">
+                            {user?.username ? `@${user.username}` : user?.first_name || '@User'}
+                        </span>
                     </div>
                     <div className="flex items-center gap-2">
                         <Image 
