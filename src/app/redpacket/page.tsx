@@ -12,32 +12,6 @@ interface DonatorInfo {
 export default function RedPacketPage() {
     const [isDark, setIsDark] = useState(false);
 
-    const initWebApp = () => {
-        console.log('Initializing WebApp...');
-        console.log('window?.Telegram?.WebApp:', window?.Telegram?.WebApp);
-        
-        if (window?.Telegram?.WebApp) {
-            const webApp = window.Telegram.WebApp;
-            const viewportHeight = webApp.viewportHeight;
-            const halfScreenHeight = Math.floor(viewportHeight * 0.6);
-            
-            const isDarkTheme = webApp.colorScheme === 'dark';
-            console.log("webApp.colorScheme:", webApp.colorScheme);
-            setIsDark(isDarkTheme);
-            
-            const bgColor = isDarkTheme ? '#1f1f1f' : '#ffffff';
-            const textColor = isDarkTheme ? '#ffffff' : '#000000';
-            
-            document.documentElement.style.setProperty('--bg-color', bgColor);
-            document.documentElement.style.setProperty('--text-color', textColor);
-            
-            const container = document.querySelector('.redpacket-container');
-            if (container) {
-                (container as HTMLElement).style.height = `${halfScreenHeight}px`;
-            }
-        }
-    };
-
     const donator = {
         username: '@Tristan',
         handle: 'tristan@stakestone.io'
@@ -57,12 +31,6 @@ export default function RedPacketPage() {
     return (
         <div className="redpacket-container overflow-y-auto bg-[var(--bg-color)] text-[var(--text-color)]">
             <div className="fixed top-4 right-4 z-50">
-                <button 
-                    onClick={initWebApp}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-lg"
-                >
-                    Init WebApp
-                </button>
                 <div className="mt-2 text-sm">
                     Theme: {isDark ? 'Dark' : 'Light'}
                 </div>
