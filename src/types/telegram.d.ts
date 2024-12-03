@@ -22,6 +22,8 @@ declare global {
                 viewportHeight: number;
                 isExpanded: boolean;
                 expand: () => void;
+                setBackgroundColor: (color: string) => void;
+                setHeaderColor: (color: string) => void;
                 showScanQrPopup(params: ScanQrPopupParams, callback?: (data: string) => boolean): void
                 closeScanQrPopup: () => void;
                 sendData(data: string): void;

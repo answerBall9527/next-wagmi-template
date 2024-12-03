@@ -1,6 +1,7 @@
 'use client'
 
 import Image from "next/image";
+import { useEffect } from "react";
 
 interface DonatorInfo {
     username: string;
@@ -9,6 +10,19 @@ interface DonatorInfo {
 }
 
 export default function RedPacketPage() {
+    useEffect(() => {
+        // 设置初始高度为半屏
+        if (window?.Telegram?.WebApp) {
+            const webApp = window.Telegram.WebApp;
+            // 设置展开按钮
+            webApp.expand();
+            // 设置主题背景色
+            webApp.setBackgroundColor("#ffffff");
+            // 设置标题栏颜色
+            webApp.setHeaderColor("#ffffff");
+        }
+    }, []);
+
     const donator = {
         username: '@Tristan',
         handle: 'tristan@stakestone.io'
