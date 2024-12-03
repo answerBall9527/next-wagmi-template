@@ -7,22 +7,6 @@ import styles from './styles.module.scss'
 // import BottomNav from '@/components/layout/BottomNav'
 import { useEffect, useState } from 'react';
 
-// declare global {
-//     interface Window {
-//         Telegram: {
-//             WebApp: {
-//                 viewportHeight: number;
-//                 isExpanded: boolean;
-//                 expand: () => void;
-//                 showScanQrPopup: (params: {
-//                     text?: string;
-//                 }) => Promise<string>;
-//                 closeScanQrPopup: () => void;
-//             };
-//         };
-//     }
-// }
-
 export default function HomePage() {
     const handleScanClick = async () => {
         try {
@@ -55,8 +39,10 @@ export default function HomePage() {
         const encodedText = encodeURIComponent(shareText);
         
         window.Telegram.WebApp.openTelegramLink(
-            `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`
+            `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}?startapp=command&mode=compact`
         );
+
+        
     };
 
     function sendFormattedMessage() {
