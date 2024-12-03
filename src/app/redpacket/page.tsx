@@ -116,7 +116,7 @@ export default function RedPacketPage() {
                             <div className="font-medium">
                                 {user?.username ? `@${user.username}` : `${user?.first_name || 'User'}`}
                             </div>
-                            <div className="text-sm text-gray-500">{user?.username ? user?.username : donator.handle }</div>
+                            <div className="text-sm text-gray-500">{user?.username ? user?.id : donator.handle }</div>
                         </div>
                     </div>
                     
