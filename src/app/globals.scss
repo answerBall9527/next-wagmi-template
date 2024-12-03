@@ -2,6 +2,17 @@ body {
     background-color: #FFFFFF !important;
 }
 
+html, body {
+    height: 100vh;
+    min-height: 100vh;
+}
+
+#__next {
+    height: 100%;
+}
+
 .redpacket-container {
     background-color: #FFFFFF;
+    min-height: 100vh;
+    height: 100%;
 } 
