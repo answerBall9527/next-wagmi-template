@@ -47,6 +47,13 @@ const config: Config = {
       fontFamily: {
         gilroy: ['Gilroy', 'sans-serif'],
       },
+      height: {
+        screen: '100vh',
+        full: '100%',
+      },
+      minHeight: {
+        screen: '100vh',
+      },
     },
   },
   plugins: [],
