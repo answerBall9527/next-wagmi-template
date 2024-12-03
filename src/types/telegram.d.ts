@@ -29,6 +29,16 @@ declare global {
                 sendData(data: string): void;
                 openTelegramLink(url: string): void;
                 colorScheme: 'dark' | 'light';
+                initDataUnsafe: {
+                    user?: {
+                        id: number;
+                        first_name: string;
+                        last_name?: string;
+                        username?: string;
+                        photo_url?: string;
+                    };
+                    // ... 其他 initData 属性
+                };
             };
         };
     }
