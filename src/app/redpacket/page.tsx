@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import tgapp from '@telegram-apps/sdk-react';
 
 interface DonatorInfo {
     username: string;
@@ -27,7 +28,7 @@ export default function RedPacketPage() {
         { username: '@BeeBee', amount: 5, timestamp: 'Today 07:33' },
         { username: '@sunshaine', amount: 5, timestamp: '2024-09-06 13:21' }
     ];
-
+    console.log('tgapp', tgapp);
     return (
         <div className="redpacket-container overflow-y-auto bg-[var(--bg-color)] text-[var(--text-color)]">
             <div className="fixed top-4 right-4 z-50">
