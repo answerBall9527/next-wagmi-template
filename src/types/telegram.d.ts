@@ -28,6 +28,7 @@ declare global {
                 closeScanQrPopup: () => void;
                 sendData(data: string): void;
                 openTelegramLink(url: string): void;
+                colorScheme: 'dark' | 'light';
             };
         };
     }

@@ -13,17 +13,18 @@ export default function RedPacketPage() {
     useEffect(() => {
         if (window?.Telegram?.WebApp) {
             const webApp = window.Telegram.WebApp;
-            // 获取视口高度
             const viewportHeight = webApp.viewportHeight;
-            // 设置为半屏高度
             const halfScreenHeight = Math.floor(viewportHeight * 0.6);
             
-            // 设置主题背景色
-            // webApp.setBackgroundColor("#ffffff");
-            // // 设置标题栏颜色
-            // webApp.setHeaderColor("#ffffff");
+            // 根据 Telegram 主题设置背景色
+            const isDarkTheme = webApp.colorScheme === 'dark';
+            console.log("webApp.colorScheme:", webApp.colorScheme)
+            const bgColor = isDarkTheme ? '#1f1f1f' : '#ffffff';
+            const textColor = isDarkTheme ? '#ffffff' : '#000000';
             
-            // 设置容器高度
+            document.documentElement.style.setProperty('--bg-color', bgColor);
+            document.documentElement.style.setProperty('--text-color', textColor);
+            
             const container = document.querySelector('.redpacket-container');
             if (container) {
                 (container as HTMLElement).style.height = `${halfScreenHeight}px`;
@@ -48,10 +49,10 @@ export default function RedPacketPage() {
     ];
 
     return (
-        <div className="redpacket-container overflow-y-auto">
+        <div className="redpacket-container overflow-y-auto bg-[var(--bg-color)] text-[var(--text-color)]">
             <div className="flex flex-col p-6 max-w-md mx-auto">
                 <div className="text-center mb-8">
-                    <h1 className="text-xl font-medium mb-2">Donate/Tip For</h1>
+                    <h1 className="text-xl font-medium mb-2 text-[var(--text-color)]">Donate/Tip For</h1>
                     <div className="flex items-center justify-center gap-3 mb-4">
                         <Image
                             src="https://via.placeholder.com/40x40"
@@ -74,7 +75,7 @@ export default function RedPacketPage() {
                 </div>
 
                 <div className="mb-8">
-                    <h2 className="text-lg font-medium mb-4">Members who already donated</h2>
+                    <h2 className="text-lg font-medium mb-4 text-[var(--text-color)]">Members who already donated</h2>
                     <div className="space-y-4">
                         {donators.map((donator, index) => (
                             <div key={index} className="flex items-center justify-between">
