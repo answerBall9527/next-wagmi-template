@@ -85,8 +85,6 @@ export default function HomePage() {
         window.Telegram.WebApp.openTelegramLink(
             `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact`
         );
-
-        
     };
 
     function sendFormattedMessage() {
