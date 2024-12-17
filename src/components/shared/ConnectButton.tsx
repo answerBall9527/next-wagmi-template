@@ -6,7 +6,7 @@ import { Connector, useConnect, useAccount } from 'wagmi'
 
 const ConnectButton = () => {
   const { connectors, connect } = useConnect()
-  const { address, isConnected } = useAccount();
+  const { address, isConnected, connector } = useAccount();
   console.log('🔌 可用的 connectors:', connectors.map(c => ({
     id: c.id,
     name: c.name,
@@ -19,6 +19,7 @@ const ConnectButton = () => {
     <div>
       <w3m-button />
       <div>{'isConnected: ' + isConnected}</div>
+      <div>{'connector: ' + connector}</div>
       {connectors.map((connector, i) => (
         <div key={connector.uid}>
           <button 
