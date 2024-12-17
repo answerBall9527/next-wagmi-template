@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic';
 
 export function Web3Modal({ children }: { children: ReactNode }) {
   const wagmiConfig = useWagmiConfig();
-
+  console.log('wagmiConfig in web3modal', wagmiConfig)
   useEffect(() => {
     async function initWagmiConfig() {
       if (typeof window === 'undefined') return;
