@@ -19,7 +19,7 @@ const ConnectButton = () => {
     <div>
       <w3m-button />
       <div>{'isConnected: ' + isConnected}</div>
-      <div>{'connector: ' + connector}</div>
+      <div>{'connector: ' + connector?.name}</div>
       {connectors.map((connector, i) => (
         <div key={connector.uid}>
           <button 
