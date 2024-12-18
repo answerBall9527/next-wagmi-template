@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { defaultWagmiConfig } from '@web3modal/wagmi/react/config';
 import { cookieStorage, createStorage, http, createConfig } from 'wagmi';
 import { mainnet, bscTestnet, sepolia, base, arbitrum } from 'wagmi/chains';
-import { tomoConnector } from '@/connectors/tomoConnector';
+// import { tomoConnector } from '@/connectors/tomoConnector';
 import { type Chain } from 'wagmi/chains';
 import { injected, metaMask, safe, walletConnect } from 'wagmi/connectors'
 
