@@ -53,7 +53,7 @@ export function WagmiConfigProvider({ children }: { children: ReactNode }) {
           storage: cookieStorage,
           key: 'wagmi.wallet',
         }),
-        connectors: [tomoconnectorMyself, tomoWalletConnector, metaMask(), walletConnect({
+        connectors: [tomoconnectorMyself, metaMask(), walletConnect({
           projectId: '972c11857d9ca138663e5ca130e6fe63',
           relayUrl: 'wss://relay.walletconnect.com', 
           metadata: {
@@ -62,7 +62,7 @@ export function WagmiConfigProvider({ children }: { children: ReactNode }) {
             url: 'https://next-wagmi-template.vercel.app/',
             icons: ['https://static.stakestone.io/btc/babylon.png'],
           },
-        }), tomoInjectedConnector],
+        })],
         syncConnectedChain: true,
       });
 
