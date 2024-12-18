@@ -9,6 +9,7 @@ import { useVConsole } from '@/hooks/useVConsole';
 import { WagmiConfigProvider } from '@/context/WagmiConfig';
 import BottomNav from '@/components/layout/BottomNav';
 import { usePathname } from 'next/navigation';
+import Script from 'next/script';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -34,6 +35,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="en">
+      <head>
+        <Script
+          src="https://telegram.org/js/telegram-web-app.js" // 你的CDN链接
+          strategy="beforeInteractive" // 在渲染页面前加载
+        />
+      </head>
       <body className={inter.className}>
         <WagmiConfigProvider>
           <Web3Modal>
