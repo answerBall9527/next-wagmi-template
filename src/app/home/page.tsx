@@ -6,6 +6,7 @@ import icon42 from '@/assets/42x42.png';
 import styles from './styles.module.scss'
 // import BottomNav from '@/components/layout/BottomNav'
 import { useEffect, useState } from 'react';
+import { useAccount } from 'wagmi'
 
 interface TelegramUser {
     id: number;
@@ -16,6 +17,7 @@ interface TelegramUser {
 }
 
 export default function HomePage() {
+    const { isConnected } = useAccount()
     const [user, setUser] = useState<TelegramUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -105,6 +107,17 @@ export default function HomePage() {
         }
       }
 
+    const WalletIcon = () => {
+        if (isConnected) {
+            return <Image src="/images/eth.svg" width={36} height={36} alt="Connected Wallet" />
+        }
+        return (
+            <div className="w-[36px] h-[36px] rounded-full border-2 border-[#6D56F2] border-dashed flex items-center justify-center animate-pulse">
+                <div className="w-[18px] h-[18px] rounded-full border-2 border-[#6D56F2] bg-[#6D56F2]/10" />
+            </div>
+        )
+    }
+
     return (
         <div className="w-full h-full bg-background overflow-hidden relative flex flex-col p-[37px_15px_30px]">
             {/* Header section */}
@@ -131,14 +144,6 @@ export default function HomePage() {
                             onClick={handleScanClick}
                             className="cursor-pointer hover:opacity-80 transition-opacity"
                         />
-                        {/* <Image 
-                            src="/images/share.svg" 
-                            width={36} 
-                            height={36} 
-                            alt="Share Icon" 
-                            onClick={sendFormattedMessage}
-                            className="cursor-pointer hover:opacity-80 transition-opacity"
-                        /> */}
                         <Image 
                             src="/images/share.svg" 
                             width={36} 
@@ -147,7 +152,7 @@ export default function HomePage() {
                             onClick={handleShareClick}
                             className="cursor-pointer hover:opacity-80 transition-opacity"
                         />
-                        <Image src="/images/eth.svg" width={36} height={36} alt="Icon" />
+                        <WalletIcon />
                     </div>
                 </div>
             </div>

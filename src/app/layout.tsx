@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const pathname = usePathname();
   console.log('pathname', pathname)
   // 判断是否需要显示底部导航
-  const shouldShowBottomNav = ['/home', '/dashboard', '/activity', '/me'].includes(pathname);
+  const shouldShowBottomNav = ['/home', '/rewards', '/activity', '/me'].includes(pathname);
   console.log('shouldShowBottomNav', shouldShowBottomNav, pathname)
   return (
     <html lang="en">
