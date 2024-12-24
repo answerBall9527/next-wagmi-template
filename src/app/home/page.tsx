@@ -131,14 +131,14 @@ export default function HomePage() {
                             onClick={handleScanClick}
                             className="cursor-pointer hover:opacity-80 transition-opacity"
                         />
-                        <Image 
+                        {/* <Image 
                             src="/images/share.svg" 
                             width={36} 
                             height={36} 
                             alt="Share Icon" 
                             onClick={sendFormattedMessage}
                             className="cursor-pointer hover:opacity-80 transition-opacity"
-                        />
+                        /> */}
                         <Image 
                             src="/images/share.svg" 
                             width={36} 
