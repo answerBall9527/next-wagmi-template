@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useConnect, useAccount } from 'wagmi'
 import { useRouter } from 'next/navigation'
 import { message } from 'antd'
+import { useGlobalStore } from '@/store'
 
 const detailText = 'By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use. By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use. By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.'
 
@@ -13,16 +14,18 @@ const LoginPage = () => {
   const [showTerms, setShowTerms] = useState(false)
   const { connectors, connect } = useConnect()
   const router = useRouter()
-  const [isAgreed, setIsAgreed] = useState(false)
+  
+  const { isTermsAgreed, setTermsAgreed, setWalletConnected } = useGlobalStore()
 
   const handleConnect = async () => {
-    if (!isAgreed) {
+    if (!isTermsAgreed) {
       message.warning('请先同意服务条款')
       return
     }
     try {
       await connect({ connector: connectors[0] })
       message.success('钱包连接成功')
+      setWalletConnected(true)
       router.push('/home')
     } catch (error) {
       message.error('钱包连接失败，请重试')
@@ -94,8 +97,8 @@ const LoginPage = () => {
           <input 
             type="checkbox" 
             id="terms" 
-            checked={isAgreed}
-            onChange={(e) => setIsAgreed(e.target.checked)}
+            checked={isTermsAgreed}
+            onChange={(e) => setTermsAgreed(e.target.checked)}
             className="relative w-[14px] h-[14px] mt-0.5 rounded-full appearance-none border border-[#6A5CFE] checked:bg-[#6A5CFE] cursor-pointer transition-colors checked:after:content-['✓'] checked:after:absolute checked:after:text-white checked:after:text-[10px] checked:after:top-1/2 checked:after:left-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2"
           />
           <label 
