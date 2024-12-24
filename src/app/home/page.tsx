@@ -124,7 +124,7 @@ export default function HomePage() {
                     </div>
                     <div className="flex items-center gap-2">
                         <Image 
-                            src="https://via.placeholder.com/36x36?text=Scan" 
+                            src="/images/scan.svg" 
                             width={36} 
                             height={36} 
                             alt="Icon"
@@ -132,7 +132,7 @@ export default function HomePage() {
                             className="cursor-pointer hover:opacity-80 transition-opacity"
                         />
                         <Image 
-                            src="https://via.placeholder.com/36x36?text=Share" 
+                            src="/images/share.svg" 
                             width={36} 
                             height={36} 
                             alt="Share Icon" 
@@ -140,14 +140,14 @@ export default function HomePage() {
                             className="cursor-pointer hover:opacity-80 transition-opacity"
                         />
                         <Image 
-                            src="https://via.placeholder.com/36x36?text=Share" 
+                            src="/images/share.svg" 
                             width={36} 
                             height={36} 
                             alt="Share Icon" 
                             onClick={handleShareClick}
                             className="cursor-pointer hover:opacity-80 transition-opacity"
                         />
-                        <Image src="https://via.placeholder.com/36x36?text=Wallet" width={36} height={36} alt="Icon" />
+                        <Image src="/images/eth.svg" width={36} height={36} alt="Icon" />
                     </div>
                 </div>
             </div>

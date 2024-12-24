@@ -65,20 +65,20 @@ const LoginPage = () => {
   )
 
   return (
-    <div className="h-[100vh] w-[100vw] bg-white px-5 py-[120px] flex flex-col items-center">
+    <div className="h-[100vh] w-[100vw] bg-white px-5 py-[120px] flex flex-col items-center overflow-hidden">
       {/* Logo 部分 */}
       <div className="flex flex-col items-center">
         <Image
-          src="/images/logo.png"
+          src="/images/logo.svg"
           alt="Pebbles Logo"
-          width={92}
-          height={80}
+          width={170}
+          height={143}
           priority
           className="mb-[25px]"
         />
-        <h1 className="text-[34px] font-bold mb-[41px] leading-none">
+        {/* <h1 className="text-[34px] font-bold mb-[41px] leading-none">
           Pebbles
-        </h1>
+        </h1> */}
         <p className="text-[#9CA3AF] text-[19px]">
           Smart Saving among Friends
         </p>
