@@ -3,13 +3,25 @@
 import React, { useState } from 'react'
 import Image from 'next/image'
 import { useConnect, useAccount } from 'wagmi'
+import { useRouter } from 'next/navigation'
+
 const detailText = 'By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use. By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use. By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.'
 
 const LoginPage = () => {
   const { isConnected } = useAccount()
   const [showTerms, setShowTerms] = useState(false)
   const { connectors, connect } = useConnect()
-  console.log('connectors', connectors)
+  const router = useRouter()
+
+  const handleConnect = async () => {
+    try {
+      await connect({ connector: connectors[0] })
+      router.push('/home')
+    } catch (error) {
+      console.error('连接失败:', error)
+    }
+  }
+
   const TermsModal = () => (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="w-full max-w-[375px] mx-auto bg-white h-screen flex flex-col">
@@ -65,9 +77,7 @@ const LoginPage = () => {
       <div className="w-full mt-[325px] space-y-5">
         <button 
           className="w-full bg-[#6D56F2] text-white py-[15px] rounded-lg text-base font-medium whitespace-nowrap font-['Gilroy-Medium']"
-          onClick={() => {
-            connect({ connector: connectors[0] })
-          }}
+          onClick={handleConnect}
         >
           Connect Wallet To Start
         </button>
