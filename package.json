@@ -25,7 +25,8 @@
     "sass": "^1.81.0",
     "vconsole": "^3.15.1",
     "viem": "^2.5.0",
-    "wagmi": "^2.5.2"
+    "wagmi": "^2.5.2",
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@types/node": "^20",
