@@ -65,7 +65,7 @@ const LoginPage = () => {
   )
 
   return (
-    <div className="min-h-screen w-full max-w-[375px] mx-auto bg-white px-5 py-[120px] flex flex-col items-center">
+    <div className="h-[100vh] w-[100vw] bg-white px-5 py-[120px] flex flex-col items-center">
       {/* Logo 部分 */}
       <div className="flex flex-col items-center">
         <Image
@@ -111,7 +111,13 @@ const LoginPage = () => {
       </div>
 
       {/* Terms Modal */}
-      {showTerms && <TermsModal />}
+      {showTerms && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="w-[100vw] h-[100vh] bg-white flex flex-col">
+            {/* Modal 内容保持不变 */}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
