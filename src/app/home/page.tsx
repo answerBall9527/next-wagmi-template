@@ -72,7 +72,7 @@ export default function HomePage() {
                 }
             });
             // 处理扫描结果
-            console.log('扫描结果:', result);
+            // console.log('扫描结果:', result);
             
             // 这里可以添加扫描成功后的业务逻辑
             
@@ -167,6 +167,14 @@ export default function HomePage() {
                                 className="cursor-pointer hover:opacity-80 transition-opacity"
                             />
                             <Image 
+                                src="/images/money.svg" 
+                                width={36} 
+                                height={36} 
+                                alt="Share Icon" 
+                                onClick={handleShareClick}
+                                className="cursor-pointer hover:opacity-80 transition-opacity"
+                            />
+                            <Image 
                                 src="/images/share.svg" 
                                 width={36} 
                                 height={36} 
@@ -179,25 +187,34 @@ export default function HomePage() {
                     </div>
                 </div>
                 {/* send & request */}
-                <div className="flex justify-center items-center mt-[] gap-[58px] mb-[40px]">
-                    <div className="flex flex-col items-center">
-                        <Image
-                            src="https://lanhu-oss.lanhuapp.com/SketchPng1e28a1e494501a6ccee0be170375512a7b1a520cd3e67eb10858221837935d62"
-                            width={30}
-                            height={30}
-                            alt="Send Icon"
-                        />
-                        <span className="text-secondary text-16px font-bold mt-2">Send</span>
+                <div className="flex justify-between items-stretch mt-[] mb-[40px] relative">
+                    {/* Send section - 50% width */}
+                    <div className="flex-1 flex justify-center items-center">
+                        <div className="flex flex-col items-center">
+                            <Image
+                                src="https://lanhu-oss.lanhuapp.com/SketchPng1e28a1e494501a6ccee0be170375512a7b1a520cd3e67eb10858221837935d62"
+                                width={30}
+                                height={30}
+                                alt="Send Icon"
+                            />
+                            <span className="text-secondary text-16px font-bold mt-2">Send</span>
+                        </div>
                     </div>
-                    <div className="h-10 w-px bg-[#E7E4E8]"></div>
-                    <div className="flex flex-col items-center">
-                        <Image
-                            src="https://lanhu-oss.lanhuapp.com/SketchPngf4ac3a7970cf56c2fc89e6718e14ca49de41da9bab4883dd293a7b6defd21765"
-                            width={30}
-                            height={30}
-                            alt="Request Icon"
-                        />
-                        <span className="text-secondary text-16px font-bold mt-2">Request</span>
+                    
+                    {/* Divider - Absolute positioned */}
+                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-10 w-px bg-[#E7E4E8]"></div>
+                    
+                    {/* Request section - 50% width */}
+                    <div className="flex-1 flex justify-center items-center">
+                        <div className="flex flex-col items-center">
+                            <Image
+                                src="https://lanhu-oss.lanhuapp.com/SketchPngf4ac3a7970cf56c2fc89e6718e14ca49de41da9bab4883dd293a7b6defd21765"
+                                width={30}
+                                height={30}
+                                alt="Request Icon"
+                            />
+                            <span className="text-secondary text-16px font-bold mt-2">Request</span>
+                        </div>
                     </div>
                 </div>
                 {/* Main Balance Card Section */}
@@ -214,37 +231,46 @@ export default function HomePage() {
                         </div>
                         <span className="text-white text-sm mt-1">$58848.99</span>
                     </div>
-                    <div className="flex justify-between items-center mt-6">
-                        <div className="flex flex-col items-center">
-                            <span className="text-secondary text-2xl font-medium">10.73%</span>
-                            <span className="text-grayText text-xs">APY</span>
+                    <div className="flex justify-between items-stretch mt-6 relative">
+                        {/* APY section - 50% width */}
+                        <div className="flex-1 flex justify-center items-center">
+                            <div className="flex flex-col items-center">
+                                <span className="text-secondary text-2xl font-medium">10.73%</span>
+                                <span className="text-grayText text-xs">APY</span>
+                            </div>
                         </div>
-                        <div className="h-10 w-px bg-[#E7E4E8]"></div>
-                        <div className="relative flex flex-col items-center">
-                            <div className="relative flex items-center justify-center">
-                                <div className="flex relative">
-                                    <div className="w-[28px] h-[28px] rounded-full overflow-hidden">
-                                        <Image src={icon42} width={42} height={42} alt="Icon" />
-                                    </div>
-                                    <div className="w-[28px] h-[28px] rounded-full overflow-hidden relative -left-2">
-                                        <Image src={icon42} width={42} height={42} alt="Icon" />
-                                    </div>
-                                    <div className="w-[28px] h-[28px] rounded-full overflow-hidden relative -left-4">
-                                        <Image src={icon42} width={42} height={42} alt="Icon" />
-                                    </div>
-                                    <div className="w-[28px] h-[28px] rounded-full overflow-hidden relative -left-6">
-                                        <Image src={icon42} width={42} height={42} alt="Icon" />
+
+                        {/* Divider - Absolute positioned */}
+                        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-10 w-px bg-[#E7E4E8]"></div>
+
+                        {/* More Rewards section - 50% width */}
+                        <div className="flex-1 flex justify-center items-center">
+                            <div className="relative flex flex-col items-center">
+                                <div className="flex justify-center">
+                                    <div className="grid grid-cols-[repeat(4,20px)] w-[78px]">
+                                        <div className="w-[28px] h-[28px] rounded-full overflow-hidden col-start-1 col-end-2 z-40">
+                                            <Image src={icon42} width={42} height={42} alt="Icon" />
+                                        </div>
+                                        <div className="w-[28px] h-[28px] rounded-full overflow-hidden col-start-2 col-end-3 -ml-2 z-30">
+                                            <Image src={icon42} width={42} height={42} alt="Icon" />
+                                        </div>
+                                        <div className="w-[28px] h-[28px] rounded-full overflow-hidden col-start-3 col-end-4 -ml-2 z-20">
+                                            <Image src={icon42} width={42} height={42} alt="Icon" />
+                                        </div>
+                                        <div className="w-[28px] h-[28px] rounded-full overflow-hidden col-start-4 col-end-5 -ml-2 z-10">
+                                            <Image src={icon42} width={42} height={42} alt="Icon" />
+                                        </div>
                                     </div>
                                 </div>
+                                <span className="text-grayText mt-2 text-[12px]">More Rewards with</span>
                             </div>
-                            <span className="text-grayText mt-2 text-[12px]">More Rewards with</span>
                         </div>
                     </div>
-                    <div className="flex justify-between mt-10">
-                        <button className="w-[145px] rounded-small border border-primary px-[45px] py-3 text-primary text-lg font-medium">
+                    <div className="flex justify-between gap-[5%] mt-10">
+                        <button className="w-[47.5%] rounded-small border border-primary py-3 text-primary text-lg font-medium">
                             Deposit
                         </button>
-                        <button className="w-[145px] bg-primary text-white rounded-small px-[33px] py-3 text-lg font-medium">
+                        <button className="w-[47.5%] bg-primary text-white rounded-small py-3 text-lg font-medium">
                             Withdraw
                         </button>
                     </div>
