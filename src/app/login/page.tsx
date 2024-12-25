@@ -122,8 +122,8 @@ const LoginPage = () => {
         {showTerms && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="w-[100vw] h-[100vh] bg-white flex flex-col">
-              {detailText}
-              {/* Modal 内容保持不变 */}
+              {/* {detailText} */}
+              <TermsModal />
             </div>
           </div>
         )}
