@@ -6,8 +6,9 @@ import { useConnect, useAccount } from 'wagmi'
 import { useRouter } from 'next/navigation'
 import { message } from 'antd'
 import { useGlobalStore } from '@/store'
+import { motion } from 'framer-motion'
 
-const detailText = 'By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use. By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use. By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.'
+const detailText = 'By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use. By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use. By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.'
 
 const LoginPage = () => {
   const { isConnected } = useAccount()
@@ -65,61 +66,68 @@ const LoginPage = () => {
   )
 
   return (
-    <div className="h-[100vh] w-[100vw] bg-white px-5 py-[120px] flex flex-col items-center overflow-hidden">
-      {/* Logo 部分 */}
-      <div className="flex flex-col items-center">
-        <Image
-          src="/images/logo.svg"
-          alt="Pebbles Logo"
-          width={170}
-          height={143}
-          priority
-          className="mb-[25px]"
-        />
-        {/* <h1 className="text-[34px] font-bold mb-[41px] leading-none">
-          Pebbles
-        </h1> */}
-        <p className="text-[#9CA3AF] text-[19px]">
-          Smart Saving among Friends
-        </p>
-      </div>
-
-      {/* 底部按钮区域 */}
-      <div className="w-full mt-[325px] space-y-5">
-        <button 
-          className="w-full bg-[#6D56F2] text-white py-[15px] rounded-lg text-base font-medium whitespace-nowrap font-['Gilroy-Medium']"
-          onClick={handleConnect}
-        >
-          Connect Wallet To Start
-        </button>
-        
-        <div className="flex items-center justify-center gap-2">
-          <input 
-            type="checkbox" 
-            id="terms" 
-            checked={isTermsAgreed}
-            onChange={(e) => setTermsAgreed(e.target.checked)}
-            className="relative w-[14px] h-[14px] mt-0.5 rounded-full appearance-none border border-[#6A5CFE] checked:bg-[#6A5CFE] cursor-pointer transition-colors checked:after:content-['✓'] checked:after:absolute checked:after:text-white checked:after:text-[10px] checked:after:top-1/2 checked:after:left-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2"
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="h-[100vh] w-[100vw] bg-white px-5 py-[120px] flex flex-col items-center overflow-hidden">
+        {/* Logo 部分 */}
+        <div className="flex flex-col items-center">
+          <Image
+            src="/images/logo.svg"
+            alt="Pebbles Logo"
+            width={170}
+            height={143}
+            priority
+            className="mb-[25px]"
           />
-          <span 
-            className="text-[#867B8A] text-[15px] font-bold leading-[18px] font-['Gilroy-Bold'] cursor-pointer"
-            onClick={() => setShowTerms(true)}
-          >
-            Term of Use
-          </span>
+          {/* <h1 className="text-[34px] font-bold mb-[41px] leading-none">
+            Pebbles
+          </h1> */}
+          <p className="text-[#9CA3AF] text-[19px]">
+            Smart Saving among Friends
+          </p>
         </div>
-      </div>
 
-      {/* Terms Modal */}
-      {showTerms && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="w-[100vw] h-[100vh] bg-white flex flex-col">
-            {detailText}
-            {/* Modal 内容保持不变 */}
+        {/* 底部按钮区域 */}
+        <div className="w-full mt-[325px] space-y-5">
+          <button 
+            className="w-full bg-[#6D56F2] text-white py-[15px] rounded-lg text-base font-medium whitespace-nowrap font-['Gilroy-Medium']"
+            onClick={handleConnect}
+          >
+            Connect Wallet To Start
+          </button>
+          
+          <div className="flex items-center justify-center gap-2">
+            <input 
+              type="checkbox" 
+              id="terms" 
+              checked={isTermsAgreed}
+              onChange={(e) => setTermsAgreed(e.target.checked)}
+              className="relative w-[14px] h-[14px] mt-0.5 rounded-full appearance-none border border-[#6A5CFE] checked:bg-[#6A5CFE] cursor-pointer transition-colors checked:after:content-['✓'] checked:after:absolute checked:after:text-white checked:after:text-[10px] checked:after:top-1/2 checked:after:left-1/2 checked:after:-translate-x-1/2 checked:after:-translate-y-1/2"
+            />
+            <span 
+              className="text-[#867B8A] text-[15px] font-bold leading-[18px] font-['Gilroy-Bold'] cursor-pointer"
+              onClick={() => setShowTerms(true)}
+            >
+              Term of Use
+            </span>
           </div>
         </div>
-      )}
-    </div>
+
+        {/* Terms Modal */}
+        {showTerms && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+            <div className="w-[100vw] h-[100vh] bg-white flex flex-col">
+              {detailText}
+              {/* Modal 内容保持不变 */}
+            </div>
+          </div>
+        )}
+      </div>
+    </motion.div>
   )
 }
 

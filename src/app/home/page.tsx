@@ -7,6 +7,7 @@ import styles from './styles.module.scss'
 // import BottomNav from '@/components/layout/BottomNav'
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi'
+import { motion } from 'framer-motion'
 
 interface TelegramUser {
     id: number;
@@ -119,120 +120,127 @@ export default function HomePage() {
     }
 
     return (
-        <div className="w-full h-full bg-background overflow-hidden relative flex flex-col p-[37px_15px_30px]">
-            {/* Header section */}
-            <div className="flex flex-col pb-10">
-                <div className="flex justify-between items-center">
-                    <div className="flex items-center w-[122px]">
-                        <Image
-                            src={user?.photo_url || "https://via.placeholder.com/36x36"}
-                            width={36}
-                            height={36}
-                            alt="Profile Picture"
-                            className="rounded-full"
-                        />
-                        <span className="ml-2 text-secondary text-lg font-medium">
-                            {user?.username ? `@${user.username}` : user?.first_name || '@User'}
-                        </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Image 
-                            src="/images/scan.svg" 
-                            width={36} 
-                            height={36} 
-                            alt="Icon"
-                            onClick={handleScanClick}
-                            className="cursor-pointer hover:opacity-80 transition-opacity"
-                        />
-                        <Image 
-                            src="/images/share.svg" 
-                            width={36} 
-                            height={36} 
-                            alt="Share Icon" 
-                            onClick={handleShareClick}
-                            className="cursor-pointer hover:opacity-80 transition-opacity"
-                        />
-                        <WalletIcon />
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+        >
+            <div className="w-full h-full bg-background overflow-hidden relative flex flex-col p-[37px_15px_30px]">
+                {/* Header section */}
+                <div className="flex flex-col pb-10">
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center w-[122px]">
+                            <Image
+                                src={user?.photo_url || "https://via.placeholder.com/36x36"}
+                                width={36}
+                                height={36}
+                                alt="Profile Picture"
+                                className="rounded-full"
+                            />
+                            <span className="ml-2 text-secondary text-lg font-medium">
+                                {user?.username ? `@${user.username}` : user?.first_name || '@User'}
+                            </span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Image 
+                                src="/images/scan.svg" 
+                                width={36} 
+                                height={36} 
+                                alt="Icon"
+                                onClick={handleScanClick}
+                                className="cursor-pointer hover:opacity-80 transition-opacity"
+                            />
+                            <Image 
+                                src="/images/share.svg" 
+                                width={36} 
+                                height={36} 
+                                alt="Share Icon" 
+                                onClick={handleShareClick}
+                                className="cursor-pointer hover:opacity-80 transition-opacity"
+                            />
+                            <WalletIcon />
+                        </div>
                     </div>
                 </div>
-            </div>
-            {/* send & request */}
-            <div className="flex justify-center items-center mt-[] gap-[58px] mb-[40px]">
-                <div className="flex flex-col items-center">
-                    <Image
-                        src="https://lanhu-oss.lanhuapp.com/SketchPng1e28a1e494501a6ccee0be170375512a7b1a520cd3e67eb10858221837935d62"
-                        width={30}
-                        height={30}
-                        alt="Send Icon"
-                    />
-                    <span className="text-secondary text-16px font-bold mt-2">Send</span>
-                </div>
-                <div className="h-10 w-px bg-[#E7E4E8]"></div>
-                <div className="flex flex-col items-center">
-                    <Image
-                        src="https://lanhu-oss.lanhuapp.com/SketchPngf4ac3a7970cf56c2fc89e6718e14ca49de41da9bab4883dd293a7b6defd21765"
-                        width={30}
-                        height={30}
-                        alt="Request Icon"
-                    />
-                    <span className="text-secondary text-16px font-bold mt-2">Request</span>
-                </div>
-            </div>
-            {/* Main Balance Card Section */}
-            <div className="rounded-large shadow-card w-full bg-background p-[30px_20px] mt-[-1px]">
-                <div className="relative flex flex-col items-start bg-lightPurple rounded-large p-[30px_39px_30px_20px]">
-                    <span className="w-[54px] h-[16px] font-gilroy font-normal text-[14px] text-white leading-[16px] text-left text-opacity-70">Balance</span>
-                    <div className="absolute top-[73px] right-[45px] bg-purple-700 px-2 py-1 rounded-full text-xs flex items-center">
-                        <span className="ml-1 text-green-300">24H: </span>
-                        <span className="ml-1 text-green-300">+0.34</span>
-                    </div>
-                    <div className="flex items-baseline mt-2">
-                        <span className="text-white text-4xl font-medium">566.99</span>
-                        <span className="text-white text-sm ml-1">ETH</span>
-                    </div>
-                    <span className="text-white text-sm mt-1">$58848.99</span>
-                </div>
-                <div className="flex justify-between items-center mt-6">
+                {/* send & request */}
+                <div className="flex justify-center items-center mt-[] gap-[58px] mb-[40px]">
                     <div className="flex flex-col items-center">
-                        <span className="text-secondary text-2xl font-medium">10.73%</span>
-                        <span className="text-grayText text-xs">APY</span>
+                        <Image
+                            src="https://lanhu-oss.lanhuapp.com/SketchPng1e28a1e494501a6ccee0be170375512a7b1a520cd3e67eb10858221837935d62"
+                            width={30}
+                            height={30}
+                            alt="Send Icon"
+                        />
+                        <span className="text-secondary text-16px font-bold mt-2">Send</span>
                     </div>
                     <div className="h-10 w-px bg-[#E7E4E8]"></div>
-                    <div className="relative flex flex-col items-center">
-                        <div className="relative flex items-center justify-center">
-                            <div className="flex relative">
-                                <div className="w-[28px] h-[28px] rounded-full overflow-hidden">
-                                    <Image src={icon42} width={42} height={42} alt="Icon" />
-                                </div>
-                                <div className="w-[28px] h-[28px] rounded-full overflow-hidden relative -left-2">
-                                    <Image src={icon42} width={42} height={42} alt="Icon" />
-                                </div>
-                                <div className="w-[28px] h-[28px] rounded-full overflow-hidden relative -left-4">
-                                    <Image src={icon42} width={42} height={42} alt="Icon" />
-                                </div>
-                                <div className="w-[28px] h-[28px] rounded-full overflow-hidden relative -left-6">
-                                    <Image src={icon42} width={42} height={42} alt="Icon" />
-                                </div>
-                            </div>
-                        </div>
-                        <span className="text-grayText mt-2 text-[12px]">More Rewards with</span>
+                    <div className="flex flex-col items-center">
+                        <Image
+                            src="https://lanhu-oss.lanhuapp.com/SketchPngf4ac3a7970cf56c2fc89e6718e14ca49de41da9bab4883dd293a7b6defd21765"
+                            width={30}
+                            height={30}
+                            alt="Request Icon"
+                        />
+                        <span className="text-secondary text-16px font-bold mt-2">Request</span>
                     </div>
                 </div>
-                <div className="flex justify-between mt-10">
-                    <button className="w-[145px] rounded-small border border-primary px-[45px] py-3 text-primary text-lg font-medium">
-                        Deposit
-                    </button>
-                    <button className="w-[145px] bg-primary text-white rounded-small px-[33px] py-3 text-lg font-medium">
-                        Withdraw
-                    </button>
+                {/* Main Balance Card Section */}
+                <div className="rounded-large shadow-card w-full bg-background p-[30px_20px] mt-[-1px]">
+                    <div className="relative flex flex-col items-start bg-lightPurple rounded-large p-[30px_39px_30px_20px]">
+                        <span className="w-[54px] h-[16px] font-gilroy font-normal text-[14px] text-white leading-[16px] text-left text-opacity-70">Balance</span>
+                        <div className="absolute top-[73px] right-[45px] bg-purple-700 px-2 py-1 rounded-full text-xs flex items-center">
+                            <span className="ml-1 text-green-300">24H: </span>
+                            <span className="ml-1 text-green-300">+0.34</span>
+                        </div>
+                        <div className="flex items-baseline mt-2">
+                            <span className="text-white text-4xl font-medium">566.99</span>
+                            <span className="text-white text-sm ml-1">ETH</span>
+                        </div>
+                        <span className="text-white text-sm mt-1">$58848.99</span>
+                    </div>
+                    <div className="flex justify-between items-center mt-6">
+                        <div className="flex flex-col items-center">
+                            <span className="text-secondary text-2xl font-medium">10.73%</span>
+                            <span className="text-grayText text-xs">APY</span>
+                        </div>
+                        <div className="h-10 w-px bg-[#E7E4E8]"></div>
+                        <div className="relative flex flex-col items-center">
+                            <div className="relative flex items-center justify-center">
+                                <div className="flex relative">
+                                    <div className="w-[28px] h-[28px] rounded-full overflow-hidden">
+                                        <Image src={icon42} width={42} height={42} alt="Icon" />
+                                    </div>
+                                    <div className="w-[28px] h-[28px] rounded-full overflow-hidden relative -left-2">
+                                        <Image src={icon42} width={42} height={42} alt="Icon" />
+                                    </div>
+                                    <div className="w-[28px] h-[28px] rounded-full overflow-hidden relative -left-4">
+                                        <Image src={icon42} width={42} height={42} alt="Icon" />
+                                    </div>
+                                    <div className="w-[28px] h-[28px] rounded-full overflow-hidden relative -left-6">
+                                        <Image src={icon42} width={42} height={42} alt="Icon" />
+                                    </div>
+                                </div>
+                            </div>
+                            <span className="text-grayText mt-2 text-[12px]">More Rewards with</span>
+                        </div>
+                    </div>
+                    <div className="flex justify-between mt-10">
+                        <button className="w-[145px] rounded-small border border-primary px-[45px] py-3 text-primary text-lg font-medium">
+                            Deposit
+                        </button>
+                        <button className="w-[145px] bg-primary text-white rounded-small px-[33px] py-3 text-lg font-medium">
+                            Withdraw
+                        </button>
+                    </div>
+                    <span className="text-grayText text-xs mt-4 block text-center">
+                        Smart Saving for Everyone
+                    </span>
                 </div>
-                <span className="text-grayText text-xs mt-4 block text-center">
-                    Smart Saving for Everyone
-                </span>
+                {/* Bottom Navigation Section */}
+                {/* <BottomNav /> */}
             </div>
-            {/* Bottom Navigation Section */}
-            {/* <BottomNav /> */}
-        </div>
+        </motion.div>
     );
 }
 

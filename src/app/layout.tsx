@@ -10,6 +10,7 @@ import { WagmiConfigProvider } from '@/context/WagmiConfig';
 import BottomNav from '@/components/layout/BottomNav';
 import { usePathname } from 'next/navigation';
 import Script from 'next/script';
+import { motion, AnimatePresence } from 'framer-motion';
 const inter = Inter({ subsets: ['latin'] });
 
 // 在组件外初始化 vConsole
@@ -44,7 +45,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <WagmiConfigProvider>
           <Web3Modal>
             <main className="min-h-screen relative pb-[100px]">
-              {children}
+              <AnimatePresence mode="wait">
+                {children}
+              </AnimatePresence>
               {shouldShowBottomNav && <BottomNav />}
               <Toaster position="top-center" reverseOrder={false} />
             </main>
