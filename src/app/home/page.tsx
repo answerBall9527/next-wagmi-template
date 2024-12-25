@@ -6,8 +6,9 @@ import icon42 from '@/assets/42x42.png';
 import styles from './styles.module.scss'
 // import BottomNav from '@/components/layout/BottomNav'
 import { useEffect, useState } from 'react';
-import { useAccount } from 'wagmi'
+import { useAccount, useConnect } from 'wagmi'
 import { motion } from 'framer-motion'
+import { message } from 'antd'
 
 interface TelegramUser {
     id: number;
@@ -21,6 +22,7 @@ export default function HomePage() {
     const { isConnected } = useAccount()
     const [user, setUser] = useState<TelegramUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const { connectors, connect } = useConnect()
 
     useEffect(() => {
         const initTelegram = async () => {
@@ -108,12 +110,25 @@ export default function HomePage() {
         }
       }
 
+    const handleConnectWallet = async () => {
+        try {
+            await connect({ connector: connectors[0] })
+            message.success('钱包连接成功')
+        } catch (error) {
+            console.error('钱包连接失败:', error)
+            message.error('钱包连接失败，请重试')
+        }
+    }
+
     const WalletIcon = () => {
         if (isConnected) {
             return <Image src="/images/eth.svg" width={36} height={36} alt="Connected Wallet" />
         }
         return (
-            <div className="w-[36px] h-[36px] rounded-full border-2 border-[#6D56F2] border-dashed flex items-center justify-center animate-pulse">
+            <div 
+                className="w-[36px] h-[36px] rounded-full border-2 border-[#6D56F2] border-dashed flex items-center justify-center animate-pulse cursor-pointer hover:opacity-80 transition-opacity"
+                onClick={handleConnectWallet}
+            >
                 <div className="w-[18px] h-[18px] rounded-full border-2 border-[#6D56F2] bg-[#6D56F2]/10" />
             </div>
         )
@@ -124,7 +139,7 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 1.3 }}
         >
             <div className="w-full h-full bg-background overflow-hidden relative flex flex-col p-[37px_15px_30px]">
                 {/* Header section */}

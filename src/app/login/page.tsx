@@ -24,6 +24,7 @@ const LoginPage = () => {
       return
     }
     try {
+      // TODO 这块无法正确判断出来链接是否成功
       await connect({ connector: connectors[0] })
       message.success('钱包连接成功')
       setWalletConnected(true)
@@ -70,7 +71,7 @@ const LoginPage = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 1.3 }}
     >
       <div className="h-[100vh] w-[100vw] bg-white px-5 py-[120px] flex flex-col items-center overflow-hidden">
         {/* Logo 部分 */}
