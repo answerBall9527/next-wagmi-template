@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import { useAccount, useConnect } from 'wagmi'
 import { motion } from 'framer-motion'
 import { message } from 'antd'
+import { useRouter } from 'next/navigation'
 
 interface TelegramUser {
     id: number;
@@ -23,6 +24,7 @@ export default function HomePage() {
     const [user, setUser] = useState<TelegramUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const { connectors, connect } = useConnect()
+    const router = useRouter()
 
     useEffect(() => {
         const initTelegram = async () => {
@@ -60,7 +62,7 @@ export default function HomePage() {
     const handleScanClick = async () => {
         try {
             const result = await window?.Telegram?.WebApp.showScanQrPopup({
-                text: "请将二维码对准扫描框"
+                text: "��将二维码对准扫描框"
             }, (data: string) => {
                 console.log('扫描结果: ', data);
                 try {
@@ -120,6 +122,10 @@ export default function HomePage() {
         }
     }
 
+    const handleMoneyClick = () => {
+        router.push('/receive')
+    }
+
     const WalletIcon = () => {
         if (isConnected) {
             return <Image src="/images/eth.svg" width={36} height={36} alt="Connected Wallet" />
@@ -171,7 +177,7 @@ export default function HomePage() {
                                 width={36} 
                                 height={36} 
                                 alt="Share Icon" 
-                                onClick={handleShareClick}
+                                onClick={handleMoneyClick}
                                 className="cursor-pointer hover:opacity-80 transition-opacity"
                             />
                             <Image 
