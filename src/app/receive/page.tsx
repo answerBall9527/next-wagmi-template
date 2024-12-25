@@ -3,13 +3,52 @@
 import Image from "next/image"
 import { useAccount } from 'wagmi'
 import { motion } from 'framer-motion'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { message } from 'antd'
+
+interface TelegramUser {
+    id: number;
+    first_name: string;
+    last_name?: string;
+    username?: string;
+    photo_url?: string;
+}
 
 export default function ReceivePage() {
     const { address } = useAccount()
     const [copied, setCopied] = useState(false)
-    
+    const [user, setUser] = useState<TelegramUser | null>(null);
+
+    useEffect(() => {
+        const initTelegram = async () => {
+            try {
+                let attempts = 0;
+                const maxAttempts = 10;
+                
+                while (!window?.Telegram?.WebApp && attempts < maxAttempts) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    attempts++;
+                }
+
+                if (!window?.Telegram?.WebApp) {
+                    console.error('Telegram WebApp not found after waiting');
+                    return;
+                }
+
+                const webApp = window.Telegram.WebApp;
+                const initData = webApp.initDataUnsafe;
+                if (initData.user) {
+                    console.log('Telegram user:', initData.user);
+                    setUser(initData.user);
+                }
+            } catch (error) {
+                console.error('Error initializing Telegram WebApp:', error);
+            }
+        };
+
+        initTelegram();
+    }, []);
+
     // 处理复制地址
     const handleCopyAddress = async () => {
         if (!address) return
@@ -77,7 +116,7 @@ export default function ReceivePage() {
                 {/* Left side - Avatar */}
                 <div className="w-[36px] h-[36px] rounded-full overflow-hidden bg-[#F3F4F6]">
                     <Image
-                        src="https://via.placeholder.com/80x80"
+                        src={user?.photo_url || "https://via.placeholder.com/36x36"}
                         width={36}
                         height={36}
                         alt="Profile"
@@ -86,7 +125,9 @@ export default function ReceivePage() {
                 </div>
                 {/* Right side - Name and Address */}
                 <div className="flex flex-col ml-[10px]">
-                    <h2 className="text-[18px] font-medium text-black mb-[2px]">@Tristan</h2>
+                    <h2 className="text-[18px] font-medium text-black mb-[2px]">
+                        {user?.username ? `@${user.username}` : user?.first_name || '@User'}
+                    </h2>
                     <p className="text-[#9CA3AF] text-[12px]">
                         Address: {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'Not connected'}
                     </p>
