@@ -71,7 +71,7 @@ const LoginPage = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1.3 }}
+      transition={{ duration: 1 }}
     >
       <div className="h-[100vh] w-[100vw] bg-white px-5 py-[120px] flex flex-col items-center overflow-hidden">
         {/* Logo 部分 */}

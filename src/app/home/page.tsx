@@ -145,7 +145,7 @@ export default function HomePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.3 }}
+            transition={{ duration: 1 }}
         >
             <div className="w-full h-full bg-background overflow-hidden relative flex flex-col p-[37px_15px_30px]">
                 {/* Header section */}

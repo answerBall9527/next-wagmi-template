@@ -5,6 +5,7 @@ import { useAccount } from 'wagmi'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { message } from 'antd'
+import QRCode from 'qrcode'
 
 interface TelegramUser {
     id: number;
@@ -18,6 +19,7 @@ export default function ReceivePage() {
     const { address } = useAccount()
     const [copied, setCopied] = useState(false)
     const [user, setUser] = useState<TelegramUser | null>(null);
+    const [qrCodeSvg, setQrCodeSvg] = useState<string>('')
 
     useEffect(() => {
         const initTelegram = async () => {
@@ -49,6 +51,27 @@ export default function ReceivePage() {
         initTelegram();
     }, []);
 
+    // 生成二维码
+    useEffect(() => {
+        if (address) {
+            QRCode.toString(address, {
+                type: 'svg',
+                margin: 1,
+                width: 240,
+                color: {
+                    dark: '#000000',
+                    light: '#FFFFFF'
+                }
+            }, (err, string) => {
+                if (err) {
+                    console.error('生成二维码失败:', err)
+                    return
+                }
+                setQrCodeSvg(string)
+            })
+        }
+    }, [address])
+
     // 处理复制地址
     const handleCopyAddress = async () => {
         if (!address) return
@@ -64,7 +87,7 @@ export default function ReceivePage() {
 
     // 处理保存图片
     const handleSaveImage = () => {
-        // TODO: 实现保存二维码图片的逻辑 用downloadFile
+        // TODO: 实现保存二维码图片的逻辑 用 downloadFile
         message.info('保存图片功能开发中')
     }
 
@@ -94,7 +117,7 @@ export default function ReceivePage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.3 }}
+            transition={{ duration: 1 }}
             className="min-h-screen bg-white px-5 py-8"
         >
             {/* Header */}
@@ -136,14 +159,12 @@ export default function ReceivePage() {
 
             {/* QR Code Section */}
             <div className="flex flex-col items-center mb-[60px]">
-                <div className="w-[240px] h-[240px] mb-4">
-                    <Image
-                        src="/images/qr-placeholder.png"
-                        width={240}
-                        height={240}
-                        alt="QR Code"
-                    />
-                </div>
+                <div 
+                    className="w-[240px] h-[240px] mb-4"
+                    dangerouslySetInnerHTML={{ 
+                        __html: qrCodeSvg || `<div class="w-full h-full bg-gray-100 flex items-center justify-center">No Address</div>` 
+                    }}
+                />
                 <p className="text-[#9CA3AF] text-[15px] text-center">
                     Scan the QR code to send me payment
                 </p>
