@@ -13,7 +13,7 @@ const detailText = 'By checking the box, you confirm that you have read and agre
 const LoginPage = () => {
   const { isConnected } = useAccount()
   const [showTerms, setShowTerms] = useState(false)
-  const { connectors, connect } = useConnect()
+  const { connectors, connectAsync } = useConnect()
   const router = useRouter()
   
   const { isTermsAgreed, setTermsAgreed, setWalletConnected } = useGlobalStore()
@@ -25,7 +25,7 @@ const LoginPage = () => {
     }
     try {
       // TODO 这块无法正确判断出来链接是否成功
-      await connect({ connector: connectors[0] })
+      await connectAsync({ connector: connectors[0] })
       message.success('钱包连接成功')
       setWalletConnected(true)
       router.push('/home')
