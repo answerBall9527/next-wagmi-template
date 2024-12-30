@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>矩形</title>
+    <defs>
+        <circle id="path-1" cx="18" cy="18" r="18"></circle>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Activity" transform="translate(-20.000000, -238.000000)">
+            <g id="矩形" transform="translate(20.000000, 238.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="蒙版" fill="#F6F5FE" xlink:href="#path-1"></use>
+                <g id="默认头像" mask="url(#mask-2)" fill="#6D56F2" fill-rule="nonzero" opacity="0.600000024">
+                    <g transform="translate(10.500000, 9.000000)" id="形状">
+                        <path d="M11.9111901,4.73999999 C11.9111901,7.35449999 9.85598477,9.48000001 7.32973236,9.48000001 C4.80347996,9.48000001 2.74677446,7.35450001 2.74827378,4.73999999 C2.74827378,2.12549999 4.80347996,0 7.32973236,0 C9.85598477,0 11.9111901,2.12549999 11.9111901,4.73999999 Z M5.78307782,9.93749999 L9.21542077,9.93749999 C12.4032393,9.93749999 15,12.6225 15,15.9225 L15,16.2765 C15.0014989,18 12.3222312,18 9.21692092,18 L5.78457798,18 C2.55175496,18 0,18 0,16.275 L0,15.921 C0,12.621 2.59525931,9.936 5.78457798,9.936 L5.78457798,9.93749999 L5.78307782,9.93749999 Z"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

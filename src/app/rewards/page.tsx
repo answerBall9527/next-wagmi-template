@@ -30,20 +30,20 @@ export default function RewardsPage() {
             to: '@Shrimpgump',
             time: 'Today 07:33',
             amount: '5 USDT',
-            // avatar: 'https://via.placeholder.com/36x36'
+            avatar: 'https://via.placeholder.com/36x36'
         },
         {
             type: 'receive',
             from: '@Superfrankx',
             time: 'Yesterday 07:33',
             amount: '10.5 USDT',
-            // avatar: 'https://via.placeholder.com/36x36'
+            avatar: 'https://via.placeholder.com/36x36'
         },
         {
             type: 'deposit',
             time: '2024-10-2 07:33',
             amount: '22131 USDT',
-            // icon: '/images/tether.svg'
+            icon: '/images/tether.svg'
         },
         {
             type: 'group',
@@ -65,9 +65,9 @@ export default function RewardsPage() {
         }
     ]
 
-    const hasTransactions = transactions.length > 0
+    // const hasTransactions = transactions.length > 0
 
-    // const hasTransactions = false
+    const hasTransactions = false
 
     // 根据 activeTab 筛选交易列表
     const filteredTransactions = useMemo(() => {
@@ -133,26 +133,26 @@ export default function RewardsPage() {
                             <div key={index} className="flex items-center justify-between">
                                 <div className="flex items-center">
                                     {transaction.type === 'group' ? (
-                                        <div className="w-[36px] h-[36px] rounded-full flex items-center justify-center">
+                                        <div className="w-[36px] h-[36px] rounded-full bg-[#F3F4F6] flex items-center justify-center">
                                             <Image 
-                                                src="/images/activity/group-icon.svg" 
-                                                width={36} 
-                                                height={36} 
+                                                src="/images/group.svg" 
+                                                width={20} 
+                                                height={20} 
                                                 alt="Group" 
                                             />
                                         </div>
                                     ) : transaction.type === 'deposit' ? (
-                                        <div className="w-[36px] h-[36px] rounded-full flex items-center justify-center">
+                                        <div className="w-[36px] h-[36px] rounded-full bg-[#F3F4F6] flex items-center justify-center">
                                             <Image 
-                                                src={transaction.icon || '/images/activity/vault-icon.svg'} 
-                                                width={36} 
-                                                height={36} 
+                                                src={transaction.icon!} 
+                                                width={20} 
+                                                height={20} 
                                                 alt="Token" 
                                             />
                                         </div>
-                                    ) : (transaction.type === 'send' || transaction.type === 'receive') && (
+                                    ) : (
                                         <Image 
-                                            src={transaction.avatar || '/images/activity/transaction-icon.svg'} 
+                                            src={transaction.avatar!} 
                                             width={36} 
                                             height={36} 
                                             alt="Avatar" 
