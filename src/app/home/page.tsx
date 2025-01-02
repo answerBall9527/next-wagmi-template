@@ -196,7 +196,10 @@ export default function HomePage() {
                 <div className="flex justify-between items-stretch mt-[] mb-[40px] relative">
                     {/* Send section - 50% width */}
                     <div className="flex-1 flex justify-center items-center">
-                        <div className="flex flex-col items-center">
+                        <div 
+                            className="flex flex-col items-center cursor-pointer"
+                            onClick={() => router.push('/payment')}
+                        >
                             <Image
                                 src="https://lanhu-oss.lanhuapp.com/SketchPng1e28a1e494501a6ccee0be170375512a7b1a520cd3e67eb10858221837935d62"
                                 width={30}
