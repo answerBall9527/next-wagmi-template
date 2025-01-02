@@ -20,21 +20,35 @@ interface Transaction {
 
 export default function RewardsPage() {
     const [activeTab, setActiveTab] = useState<TabType>('All')
-    // 判断用户是否有任何交易数据
+    const [searchQuery, setSearchQuery] = useState('')
 
     const tabs: TabType[] = ['All', 'Transaction', 'Deposit', 'Withdraw']
 
     const transactions: Transaction[] = [
         {
             type: 'send',
-            to: '@Shrimpgump',
+            to: '@Jimmy',
+            time: 'Today 07:33',
+            amount: '5 ETH',
+            // avatar: 'https://via.placeholder.com/36x36'
+        },
+        {
+            type: 'send',
+            to: '@ETHjimmy',
             time: 'Today 07:33',
             amount: '5 USDT',
             // avatar: 'https://via.placeholder.com/36x36'
         },
         {
             type: 'receive',
-            from: '@Superfrankx',
+            from: '@Charles',
+            time: 'Yesterday 07:33',
+            amount: '10.5 USDT',
+            // avatar: 'https://via.placeholder.com/36x36'
+        },
+        {
+            type: 'receive',
+            from: '@Sue',
             time: 'Yesterday 07:33',
             amount: '10.5 USDT',
             // avatar: 'https://via.placeholder.com/36x36'
@@ -69,19 +83,46 @@ export default function RewardsPage() {
 
     // const hasTransactions = false
 
-    // 根据 activeTab 筛选交易列表
+    // 更新 filteredTransactions 的逻辑
     const filteredTransactions = useMemo(() => {
+        let filtered = transactions;
+        
+        // 首先根据 tab 筛选
         switch (activeTab) {
             case 'Transaction':
-                return transactions.filter(t => t.type === 'send' || t.type === 'receive')
+                filtered = filtered.filter(t => t.type === 'send' || t.type === 'receive')
+                break
             case 'Deposit':
-                return transactions.filter(t => t.type === 'deposit')
+                filtered = filtered.filter(t => t.type === 'deposit')
+                break
             case 'Withdraw':
-                return transactions.filter(t => t.type === 'withdraw')
-            default:
-                return transactions
+                filtered = filtered.filter(t => t.type === 'withdraw')
+                break
         }
-    }, [activeTab, transactions])
+        
+        // 如果有搜索关键词，进行搜索过滤
+        if (searchQuery.trim()) {
+            const query = searchQuery.toLowerCase().trim()
+            filtered = filtered.filter(transaction => {
+                // 搜索币种（所有交易类型都适用）
+                if (transaction.amount.toLowerCase().includes(query)) {
+                    return true
+                }
+
+                // 对于 send 和 receive 类型的交易，搜索 from 和 to
+                if (transaction.type === 'send' || transaction.type === 'receive') {
+                    return (
+                        (transaction.to?.toLowerCase().includes(query) || false) ||
+                        (transaction.from?.toLowerCase().includes(query) || false)
+                    )
+                }
+
+                return false
+            })
+        }
+
+        return filtered
+    }, [activeTab, transactions, searchQuery])
 
     return (
         <motion.div
@@ -105,6 +146,8 @@ export default function RewardsPage() {
                         </div>
                         <input
                             type="text"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                             placeholder="Search for Transaction by details"
                             className="w-full h-[46px] bg-[#F2F2F2] rounded-[10px] pl-12 pr-4 text-[15px] placeholder-[#9CA3AF] focus:outline-none focus:ring-2 focus:ring-[#6D56F2]/20"
                         />
