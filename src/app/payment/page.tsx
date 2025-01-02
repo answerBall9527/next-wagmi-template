@@ -14,7 +14,10 @@ const PaymentPage = () => {
         </h2>
 
         {/* Telegram Contact Option */}
-        <button className="w-full h-[80px] rounded-[12px] border border-[#E7E4E8] flex items-center justify-between p-4">
+        <button 
+          className="w-full h-[80px] rounded-[12px] border border-[#E7E4E8] flex items-center justify-between p-4"
+          onClick={() => router.push('/payment/contact')}
+        >
           <div className="flex items-center space-x-3 flex-1 min-w-0">
             <div className="w-10 h-10 relative flex-shrink-0">
               <Image 
