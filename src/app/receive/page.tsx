@@ -40,8 +40,9 @@ export default function ReceivePage() {
 
                 const webApp = window.Telegram.WebApp;
                 const initData = webApp.initDataUnsafe;
+                console.log('999before query user', user)
                 if (initData.user) {
-                    console.log('Telegram user:', initData.user);
+                    console.log('999Telegram user:', initData.user);
                     setUser(initData.user);
                 }
             } catch (error) {
@@ -60,7 +61,7 @@ export default function ReceivePage() {
             paymentUrl.searchParams.set('type', 'sendToContectFromScan')
             paymentUrl.searchParams.set('receiverId', user.id.toString())
             paymentUrl.searchParams.set('receiverName', user.username || user.first_name)
-
+            console.log('paymentUrl', paymentUrl)
             QRCode.toString(paymentUrl.toString(), {
                 type: 'svg',
                 margin: 1,
@@ -124,6 +125,24 @@ export default function ReceivePage() {
         }
     }
 
+    // 处理分享
+    const handleShare = () => {
+        if (!user) return
+
+        const paymentUrl = new URL('/payment/contact', window.location.origin)
+        paymentUrl.searchParams.set('type', 'sendToContectFromScan')
+        paymentUrl.searchParams.set('receiverId', user.id.toString())
+        paymentUrl.searchParams.set('receiverName', user.username || user.first_name)
+
+        const encodedUrl = encodeURIComponent(paymentUrl.toString())
+        const shareText = 'Send me payment via StakeStone' // 可以根据需要修改分享文本
+        const encodedText = encodeURIComponent(shareText)
+        
+        window.Telegram.WebApp.openTelegramLink(
+            `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact`
+        )
+    }
+
     return (
         <div className="h-full bg-white flex flex-col items-center">
             <div className="px-5 py-4 space-y-5 w-full max-w-[375px]">
@@ -146,7 +165,7 @@ export default function ReceivePage() {
                             {user?.username ? `@${user.username}` : user?.first_name || '@User'}
                         </h2>
                         <p className="text-[#9CA3AF] text-[12px]">
-                            Address: {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'Not connected'}
+                            ID: {user?.id || 'Not connected'}
                         </p>
                     </div>
                 </div>
@@ -180,10 +199,10 @@ export default function ReceivePage() {
                             Scan
                         </button>
                         <button
-                            onClick={handleSaveImage}
+                            onClick={handleShare}
                             className="flex-1 border border-[#6D56F2] text-[#6D56F2] py-4 rounded-lg text-base font-medium transition-colors hover:bg-[#6D56F2] hover:text-white"
                         >
-                            Save Image
+                            Share URL
                         </button>
                     </div>
                 </div>
