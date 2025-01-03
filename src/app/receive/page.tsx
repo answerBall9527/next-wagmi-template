@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { message } from 'antd'
 import QRCode from 'qrcode'
+import Header from '@/components/Header'
 
 interface TelegramUser {
     id: number;
@@ -53,8 +54,14 @@ export default function ReceivePage() {
 
     // 生成二维码
     useEffect(() => {
-        if (address) {
-            QRCode.toString(address, {
+        if (user) {
+            // 构建支付链接
+            const paymentUrl = new URL('/payment/contact', window.location.origin)
+            paymentUrl.searchParams.set('type', 'sendToContectFromScan')
+            paymentUrl.searchParams.set('receiverId', user.id.toString())
+            paymentUrl.searchParams.set('receiverName', user.username || user.first_name)
+
+            QRCode.toString(paymentUrl.toString(), {
                 type: 'svg',
                 margin: 1,
                 width: 240,
@@ -70,14 +77,19 @@ export default function ReceivePage() {
                 setQrCodeSvg(string)
             })
         }
-    }, [address])
+    }, [user])
 
     // 处理复制地址
     const handleCopyAddress = async () => {
-        if (!address) return
+        if (!user) return
         try {
-            await navigator.clipboard.writeText(address)
-            message.success('地址已复制')
+            const paymentUrl = new URL('/payment/contact', window.location.origin)
+            paymentUrl.searchParams.set('type', 'sendToContectFromScan')
+            paymentUrl.searchParams.set('receiverId', user.id.toString())
+            paymentUrl.searchParams.set('receiverName', user.username || user.first_name)
+
+            await navigator.clipboard.writeText(paymentUrl.toString())
+            message.success('链接已复制')
             setCopied(true)
             setTimeout(() => setCopied(false), 2000)
         } catch (err) {
@@ -113,86 +125,69 @@ export default function ReceivePage() {
     }
 
     return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-            className="min-h-screen bg-white px-5 py-8"
-        >
-            {/* Header */}
-            <div className="flex items-center mb-[30px]">
-                <button onClick={() => window.history.back()} className="flex items-center text-black">
-                    <Image 
-                        src="/images/general/back.svg" 
-                        width={22} 
-                        height={22} 
-                        alt="Back" 
-                        className="mr-2"
-                    />
-                    <span className="text-[17px]">My QR Code</span>
-                </button>
-            </div>
-
-            {/* Profile Section */}
-            <div className="flex items-start mb-[40px] items-center">
-                {/* Left side - Avatar */}
-                <div className="w-[36px] h-[36px] rounded-full overflow-hidden bg-[#F3F4F6]">
-                    <Image
-                        src={user?.photo_url || "https://via.placeholder.com/36x36"}
-                        width={36}
-                        height={36}
-                        alt="Profile"
-                        className="w-full h-full object-cover"
-                    />
+        <div className="h-full bg-white flex flex-col items-center">
+            <div className="px-5 py-4 space-y-5 w-full max-w-[375px]">
+                <Header title="My QR Code" />
+                {/* Profile Section */}
+                <div className="flex items-start mb-[40px] items-center">
+                    {/* Left side - Avatar */}
+                    <div className="w-[36px] h-[36px] rounded-full overflow-hidden bg-[#F3F4F6]">
+                        <Image
+                            src={user?.photo_url || "https://via.placeholder.com/36x36"}
+                            width={36}
+                            height={36}
+                            alt="Profile"
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                    {/* Right side - Name and Address */}
+                    <div className="flex flex-col ml-[10px]">
+                        <h2 className="text-[18px] font-medium text-black mb-[2px]">
+                            {user?.username ? `@${user.username}` : user?.first_name || '@User'}
+                        </h2>
+                        <p className="text-[#9CA3AF] text-[12px]">
+                            Address: {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'Not connected'}
+                        </p>
+                    </div>
                 </div>
-                {/* Right side - Name and Address */}
-                <div className="flex flex-col ml-[10px]">
-                    <h2 className="text-[18px] font-medium text-black mb-[2px]">
-                        {user?.username ? `@${user.username}` : user?.first_name || '@User'}
-                    </h2>
-                    <p className="text-[#9CA3AF] text-[12px]">
-                        Address: {address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'Not connected'}
+
+                {/* QR Code Section */}
+                <div className="flex flex-col items-center mb-[60px]">
+                    <div 
+                        className="w-[240px] h-[240px] mb-4"
+                        dangerouslySetInnerHTML={{ 
+                            __html: qrCodeSvg || `<div class="w-full h-full bg-gray-100 flex items-center justify-center">No Address</div>` 
+                        }}
+                    />
+                    <p className="text-[#9CA3AF] text-[15px] text-center">
+                        Scan the QR code to send me payment
                     </p>
                 </div>
-            </div>
 
-            {/* QR Code Section */}
-            <div className="flex flex-col items-center mb-[60px]">
-                <div 
-                    className="w-[240px] h-[240px] mb-4"
-                    dangerouslySetInnerHTML={{ 
-                        __html: qrCodeSvg || `<div class="w-full h-full bg-gray-100 flex items-center justify-center">No Address</div>` 
-                    }}
-                />
-                <p className="text-[#9CA3AF] text-[15px] text-center">
-                    Scan the QR code to send me payment
-                </p>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="space-y-4">
-                <button
-                    onClick={handleCopyAddress}
-                    className="w-full bg-[#6D56F2] text-white py-4 rounded-lg text-base font-medium transition-colors hover:bg-[#5842d8]"
-                >
-                    Copy My ID
-                </button>
-                <div className="flex gap-4">
+                {/* Action Buttons */}
+                <div className="space-y-4">
                     <button
-                        onClick={handleScan}
-                        className="flex-1 border border-[#6D56F2] text-[#6D56F2] py-4 rounded-lg text-base font-medium transition-colors hover:bg-[#6D56F2] hover:text-white"
+                        onClick={handleCopyAddress}
+                        className="w-full bg-[#6D56F2] text-white py-4 rounded-lg text-base font-medium transition-colors hover:bg-[#5842d8]"
                     >
-                        Scan
+                        Copy My ID
                     </button>
-                    <button
-                        onClick={handleSaveImage}
-                        className="flex-1 border border-[#6D56F2] text-[#6D56F2] py-4 rounded-lg text-base font-medium transition-colors hover:bg-[#6D56F2] hover:text-white"
-                    >
-                        Save Image
-                    </button>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={handleScan}
+                            className="flex-1 border border-[#6D56F2] text-[#6D56F2] py-4 rounded-lg text-base font-medium transition-colors hover:bg-[#6D56F2] hover:text-white"
+                        >
+                            Scan
+                        </button>
+                        <button
+                            onClick={handleSaveImage}
+                            className="flex-1 border border-[#6D56F2] text-[#6D56F2] py-4 rounded-lg text-base font-medium transition-colors hover:bg-[#6D56F2] hover:text-white"
+                        >
+                            Save Image
+                        </button>
+                    </div>
                 </div>
             </div>
-        </motion.div>
+        </div>
     )
 } 

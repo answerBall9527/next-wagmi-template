@@ -1,8 +1,9 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
+import Header from '@/components/Header'
 
 interface TokenOption {
   value: string
@@ -11,13 +12,24 @@ interface TokenOption {
   network?: string
 }
 
+interface ReceiverInfo {
+  id: string
+  username: string
+  photoUrl: string
+}
+
+type PaymentType = 'sendToContactFromHome' | 'sendToContectFromScan'
+
 const PaymentContactPage = () => {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [isOpen, setIsOpen] = useState(false)
   const [selectedToken, setSelectedToken] = useState<string>('USDT')
   const dropdownRef = useRef<HTMLDivElement>(null)
   const [amount, setAmount] = useState<string>('')
   const [description, setDescription] = useState<string>('')
+  const [receiver, setReceiver] = useState<ReceiverInfo | null>(null)
+  const [paymentType, setPaymentType] = useState<PaymentType>('sendToContactFromHome')
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -29,6 +41,34 @@ const PaymentContactPage = () => {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  useEffect(() => {
+    const type = searchParams.get('type') as PaymentType
+    if (type) {
+      setPaymentType(type)
+    }
+
+    // 只有在 sendToContectFromScan 类型时才初始化接收人信息
+    if (type === 'sendToContectFromScan') {
+      const initReceiver = () => {
+        const receiverId = searchParams.get('receiverId')
+        const receiverName = searchParams.get('receiverName')
+        
+        if (receiverId && receiverName) {
+          setReceiver({
+            id: receiverId,
+            username: receiverName,
+            photoUrl: '/images/avatar-placeholder.svg'
+          })
+        } else {
+          // 如果是 scan 类型但没有接收人信息，可能需要返回上一页
+          router.back()
+        }
+      }
+
+      initReceiver()
+    }
+  }, [searchParams, router])
 
   const handleTokenSelect = (value: string) => {
     setSelectedToken(value)
@@ -101,6 +141,36 @@ const PaymentContactPage = () => {
   return (
     <div className="h-full bg-white flex flex-col items-center">
       <div className="px-5 py-4 space-y-5 w-full max-w-[375px]">
+        <Header title="Pay to a Contact" />
+        
+        {/* Receiver Info - 只在 sendToContectFromScan 类型时显示 */}
+        {paymentType === 'sendToContectFromScan' && receiver && (
+          <div>
+            <h2 className="h-[22px] font-gilroy font-bold text-[18px] text-[#2A1731] leading-[22px] text-left">
+              Pay to:
+            </h2>
+            <div className="mt-4 flex items-center">
+              <div className="w-[36px] h-[36px] rounded-full overflow-hidden bg-[#F3F4F6]">
+                <Image
+                  src={receiver.photoUrl}
+                  width={36}
+                  height={36}
+                  alt="Receiver"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="ml-3 flex flex-col">
+                <span className="text-[18px] font-gilroy font-bold text-[#2A1731]">
+                  @{receiver.username}
+                </span>
+                <span className="text-[14px] font-gilroy text-[#9D95A0]">
+                  {receiver.id}
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div>
           <h2 className="h-[22px] font-gilroy font-bold text-[18px] text-[#2A1731] leading-[22px] text-left">
             Pay with:
