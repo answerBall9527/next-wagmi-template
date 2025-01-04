@@ -18,7 +18,7 @@ interface ReceiverInfo {
   photoUrl: string
 }
 
-type PaymentType = 'sendToContactFromHome' | 'sendToContectFromScan'
+type PaymentType = 'sendToContactFromHome' | 'sendToContectFromScan' | 'external_wallet'
 
 const PaymentContactPage = () => {
   const router = useRouter()
@@ -141,7 +141,7 @@ const PaymentContactPage = () => {
   return (
     <div className="h-full bg-white flex flex-col items-center">
       <div className="px-5 py-4 space-y-5 w-full max-w-[375px]">
-        <Header title="Pay to a Contact" />
+        <Header title="Pay" />
         
         {/* Receiver Info - 只在 sendToContectFromScan 类型时显示 */}
         {paymentType === 'sendToContectFromScan' && receiver && (
@@ -170,6 +170,7 @@ const PaymentContactPage = () => {
             </div>
           </div>
         )}
+
 
         <div>
           <h2 className="h-[22px] font-gilroy font-bold text-[18px] text-[#2A1731] leading-[22px] text-left">
@@ -250,6 +251,25 @@ const PaymentContactPage = () => {
             </div>
           </div>
         </div>
+
+
+        {/* Address Input - 只在 external_wallet 类型时显示 */}
+        {paymentType === 'external_wallet' && (
+          <div>
+            <h2 className="h-[22px] font-gilroy font-bold text-[18px] text-[#2A1731] leading-[22px] text-left">
+              Enter Address
+            </h2>
+            <div className="mt-4 w-full rounded-[12px] border border-[#E7E4E8] p-4">
+              <div className="flex flex-col">
+                <textarea 
+                  placeholder="Enter wallet address"
+                  rows={3}
+                  className="w-full font-gilroy text-[14px] leading-[16px] bg-transparent outline-none text-[#2A1731] placeholder:text-[#9D95A0] resize-none align-top pt-0"
+                />
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Description section */}
         <div>
