@@ -153,7 +153,7 @@ export default function HomePage() {
                     <div className="flex justify-between items-center">
                         <div className="flex items-center w-[122px]">
                             <Image
-                                src={user?.photo_url || "https://via.placeholder.com/36x36"}
+                                src={user?.photo_url || "/images/pay/icon-contact.svg"}
                                 width={36}
                                 height={36}
                                 alt="Profile Picture"
@@ -201,7 +201,7 @@ export default function HomePage() {
                             onClick={() => router.push('/payment')}
                         >
                             <Image
-                                src="https://lanhu-oss.lanhuapp.com/SketchPng1e28a1e494501a6ccee0be170375512a7b1a520cd3e67eb10858221837935d62"
+                                src="/images/home/pay.svg"
                                 width={30}
                                 height={30}
                                 alt="Send Icon"
@@ -216,11 +216,11 @@ export default function HomePage() {
                     {/* Request section - 50% width */}
                     <div className="flex-1 flex justify-center items-center">
                         <div className="flex flex-col items-center">
-                            <Image
-                                src="https://lanhu-oss.lanhuapp.com/SketchPngf4ac3a7970cf56c2fc89e6718e14ca49de41da9bab4883dd293a7b6defd21765"
+                        <Image
+                                src="/images/home/getPaid.svg"
                                 width={30}
                                 height={30}
-                                alt="Request Icon"
+                                alt="Send Icon"
                             />
                             <span className="text-secondary text-16px font-bold mt-2">Request</span>
                         </div>

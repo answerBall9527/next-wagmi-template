@@ -4,29 +4,31 @@ import { FC, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import icon42 from '@/assets/42x42.png'
-
 
 const navItems = [
   {
     label: 'Home',
     path: '/home',
-    icon: icon42
+    icon: '/images/home/home.svg',
+    inactiveIcon: '/images/home/home-inactive.svg'
   },
   {
     label: 'Activity',
     path: '/activity',
-    icon: icon42
+    icon: '/images/home/activity.svg',
+    inactiveIcon: '/images/home/activity-inactive.svg'
   },
   {
     label: 'Rewards',
     path: '/rewards',
-    icon: icon42
+    icon: '/images/home/rewards.svg',
+    inactiveIcon: '/images/home/rewards-inactive.svg'
   },
   {
     label: 'Me',
     path: '/me',
-    icon: icon42
+    icon: '/images/home/me.svg',
+    inactiveIcon: '/images/home/me-inactive.svg'
   }
 ]
 
@@ -68,7 +70,7 @@ const BottomNav: FC = () => {
           <Link key={item.path} href={item.path}>
             <div className="flex flex-col items-center">
               <Image 
-                src={item.icon} 
+                src={pathname === item.path ? item.icon : item.inactiveIcon} 
                 width={24} 
                 height={24} 
                 alt={item.label} 

@@ -44,7 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <WagmiConfigProvider>
           <Web3Modal>
-            <main className="min-h-screen relative">
+            <main className={`min-h-screen relative ${shouldShowBottomNav ? 'pb-[100px]' : ''}`}>
               <AnimatePresence mode="wait">
                 {children}
               </AnimatePresence>

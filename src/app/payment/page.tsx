@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import Header from '@/components/Header'
 
 const PaymentPage = () => {
   const router = useRouter()
@@ -17,6 +18,8 @@ const PaymentPage = () => {
   return (
     <div className="h-full bg-white flex flex-col items-center">
       <div className="px-5 py-4 space-y-5 w-full max-w-[375px]">
+        <Header title="Pay" />
+
         <h2 className="h-[22px] font-gilroy font-bold text-[18px] text-[#2A1731] leading-[22px] text-left">
           Pay to a Contact
         </h2>

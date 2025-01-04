@@ -81,7 +81,7 @@ export default function ReceivePage() {
     }, [user])
 
     // 处理复制地址
-    const handleCopyAddress = async () => {
+    const handleCopyLink = async () => {
         if (!user) return
         try {
             const paymentUrl = new URL('/payment/contact', window.location.origin)
@@ -186,10 +186,10 @@ export default function ReceivePage() {
                 {/* Action Buttons */}
                 <div className="space-y-4">
                     <button
-                        onClick={handleCopyAddress}
+                        onClick={handleCopyLink}
                         className="w-full bg-[#6D56F2] text-white py-4 rounded-lg text-base font-medium transition-colors hover:bg-[#5842d8]"
                     >
-                        Copy My ID
+                        Copy My Link
                     </button>
                     <div className="flex gap-4">
                         <button

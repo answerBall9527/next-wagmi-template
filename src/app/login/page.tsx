@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { message } from 'antd'
 import { useGlobalStore } from '@/store'
 import { motion } from 'framer-motion'
+import Header from '@/components/Header'
 
 const detailText = 'By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use. By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use. By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.By checking the box, you confirm that you have read and agreed to the Terms of Use. Please click on the link to view the detailed Terms of Use.'
 
@@ -38,23 +39,15 @@ const LoginPage = () => {
   const TermsModal = () => (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="w-full max-w-[375px] mx-auto bg-white h-screen flex flex-col">
-        {/* 头部返回按钮 */}
-        <div className="flex items-center p-5">
-          <button 
-            onClick={() => setShowTerms(false)}
-            className="flex items-center text-black"
-          >
-            <span className="text-2xl mr-2">←</span>
-            <span className="text-base">Back</span>
-          </button>
-        </div>
+        <Header 
+          title="Back"
+          onClose={() => setShowTerms(false)} 
+        />
 
-        {/* 标题 */}
         <h1 className="text-center text-2xl font-bold mb-6">
           Term of Use
         </h1>
 
-        {/* 内容 - 添加滚动 */}
         <div className="flex-1 overflow-y-auto">
           <div className="px-5 pb-[80px]">
             <p className="text-[#867B8A] text-center leading-[1.6]">
