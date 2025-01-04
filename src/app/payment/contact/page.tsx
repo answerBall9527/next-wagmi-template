@@ -18,7 +18,9 @@ interface ReceiverInfo {
   photoUrl: string
 }
 
-type PaymentType = 'sendToContactFromHome' | 'sendToContectFromScan' | 'external_wallet'
+type PaymentType = 'sendToContactFromHome' | 'sendToContectFromScan' | 'external_wallet' | 'group'
+
+type SplitType = 'evenly' | 'randomly'
 
 const PaymentContactPage = () => {
   const router = useRouter()
@@ -30,6 +32,8 @@ const PaymentContactPage = () => {
   const [description, setDescription] = useState<string>('')
   const [receiver, setReceiver] = useState<ReceiverInfo | null>(null)
   const [paymentType, setPaymentType] = useState<PaymentType>('sendToContactFromHome')
+  const [splitType, setSplitType] = useState<SplitType>('evenly')
+  const [recipients, setRecipients] = useState<string>('5')
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -43,9 +47,16 @@ const PaymentContactPage = () => {
   }, [])
 
   useEffect(() => {
-    const type = searchParams.get('type') as PaymentType
-    if (type) {
-      setPaymentType(type)
+    const type = searchParams.get('type')
+    console.log('URL type parameter:', type)
+    
+    if (type && (
+      type === 'sendToContactFromHome' || 
+      type === 'sendToContectFromScan' || 
+      type === 'external_wallet' || 
+      type === 'group'
+    )) {
+      setPaymentType(type as PaymentType)
     }
 
     // 只有在 sendToContectFromScan 类型时才初始化接收人信息
@@ -137,6 +148,8 @@ const PaymentContactPage = () => {
       `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact`
     )
   }
+
+  console.log('Current paymentType:', paymentType)
 
   return (
     <div className="h-full bg-white flex flex-col items-center">
@@ -271,8 +284,58 @@ const PaymentContactPage = () => {
           </div>
         )}
 
+        {/* Group Payment Options - 只在 group 类型时显示 */}
+        {paymentType === 'group' && (
+          <>
+            {/* Number of recipients */}
+            <div>
+              <h2 className="h-[22px] font-gilroy font-bold text-[18px] text-[#2A1731] leading-[22px] text-left">
+                Number of recipients
+              </h2>
+              <div className="mt-4 w-full rounded-[12px] border border-[#E7E4E8] p-4">
+                <input 
+                  type="text"
+                  value={recipients}
+                  onChange={(e) => setRecipients(e.target.value)}
+                  placeholder="5 People"
+                  className="w-full font-gilroy text-[14px] leading-[16px] bg-transparent outline-none text-[#2A1731] placeholder:text-[#9D95A0]"
+                />
+              </div>
+            </div>
+
+            {/* Split Payment Options */}
+            <div>
+              <h2 className="font-gilroy font-bold text-[18px] text-[#2A1731] leading-[22px] text-left">
+                How do you want to split the payment?
+              </h2>
+              <div className="mt-4 flex gap-4">
+                <button
+                  onClick={() => setSplitType('evenly')}
+                  className={`w-[160px] h-[48px] rounded-[8px] border transition-colors font-gilroy font-[500] text-[16px] leading-[19px] ${
+                    splitType === 'evenly'
+                      ? 'text-[#6D56F2] border-[#6D56F2]'
+                      : 'bg-white text-[#9D95A0] border-[#E7E4E8]'
+                  }`}
+                >
+                  Share Evenly
+                </button>
+                <button
+                  onClick={() => setSplitType('randomly')}
+                  className={`w-[160px] h-[48px] rounded-[8px] border transition-colors font-gilroy font-[500] text-[16px] leading-[19px] ${
+                    splitType === 'randomly'
+                      ? 'text-[#6D56F2] border-[#6D56F2]'
+                      : 'bg-white text-[#9D95A0] border-[#E7E4E8]'
+                  }`}
+                >
+                  Share Randomly
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+
         {/* Description section */}
-        <div>
+                <div>
           <h2 className="h-[22px] font-gilroy font-bold text-[18px] text-[#2A1731] leading-[22px] text-left">
             Description:
           </h2>
@@ -289,7 +352,7 @@ const PaymentContactPage = () => {
         </div>
 
         {/* Pay button */}
-        <div className="fixed bottom-0 left-0 right-0 bg-white px-5 pb-[31px]">
+        <div className="bg-white px-5 pb-[31px]">
           <button 
             className="w-full h-[48px] bg-[#6D56F2] rounded-[8px] text-white font-gilroy font-[500] text-[16px] leading-[19px]"
             onClick={handleShare}

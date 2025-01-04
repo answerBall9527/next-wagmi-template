@@ -6,6 +6,14 @@ import Image from 'next/image'
 const PaymentPage = () => {
   const router = useRouter()
 
+  const handleGroupPayment = () => {
+    router.push('/payment/contact?type=group')
+  }
+
+  const handleExternalWallet = () => {
+    router.push('/payment/contact?type=external_wallet')
+  }
+
   return (
     <div className="h-full bg-white flex flex-col items-center">
       <div className="px-5 py-4 space-y-5 w-full max-w-[375px]">
@@ -42,7 +50,10 @@ const PaymentPage = () => {
         </button>
 
         {/* External Wallet Option */}
-        <button className="w-full h-[80px] rounded-[12px] border border-[#E7E4E8] flex items-center justify-between p-4">
+        <button 
+          onClick={handleExternalWallet}
+          className="w-full h-[80px] rounded-[12px] border border-[#E7E4E8] flex items-center justify-between p-4"
+        >
           <div className="flex items-center space-x-3 flex-1 min-w-0">
             <div className="w-10 h-10 relative flex-shrink-0">
               <Image 
@@ -69,7 +80,10 @@ const PaymentPage = () => {
         <h2 className="h-[22px] font-gilroy font-bold text-[18px] text-[#2A1731] leading-[22px] text-left">Pay to Group</h2>
 
         {/* Tipping Option */}
-        <button className="w-full h-[80px] rounded-[12px] border border-[#E7E4E8] flex items-center justify-between p-4">
+        <button 
+          onClick={handleGroupPayment}
+          className="w-full h-[80px] rounded-[12px] border border-[#E7E4E8] flex items-center justify-between p-4"
+        >
           <div className="flex items-center space-x-3 flex-1 min-w-0">
             <div className="w-10 h-10 relative flex-shrink-0">
               <Image 
@@ -94,7 +108,10 @@ const PaymentPage = () => {
         </button>
 
         {/* Airdrop Option */}
-        <button className="w-full h-[80px] rounded-[12px] border border-[#E7E4E8] flex items-center justify-between p-4">
+        <button 
+          onClick={handleGroupPayment}
+          className="w-full h-[80px] rounded-[12px] border border-[#E7E4E8] flex items-center justify-between p-4"
+        >
           <div className="flex items-center space-x-3 flex-1 min-w-0">
             <div className="w-10 h-10 relative flex-shrink-0">
               <Image 
@@ -119,7 +136,10 @@ const PaymentPage = () => {
         </button>
 
         {/* Red Pocket Option */}
-        <button className="w-full h-[80px] rounded-[12px] border border-[#E7E4E8] flex items-center justify-between p-4">
+        <button 
+          onClick={handleGroupPayment}
+          className="w-full h-[80px] rounded-[12px] border border-[#E7E4E8] flex items-center justify-between p-4"
+        >
           <div className="flex items-center space-x-3 flex-1 min-w-0">
             <div className="w-10 h-10 relative flex-shrink-0">
               <Image 
