@@ -15,31 +15,15 @@ interface ShareUrlParams {
     };
 }
 
+interface TelegramWebApp {
+  openTelegramLink: (url: string) => void;
+  // 其他 Telegram WebApp 相关的类型定义...
+}
+
 declare global {
     interface Window {
         Telegram: {
-            WebApp: {
-                viewportHeight: number;
-                isExpanded: boolean;
-                expand: () => void;
-                setBackgroundColor: (color: string) => void;
-                setHeaderColor: (color: string) => void;
-                showScanQrPopup(params: ScanQrPopupParams, callback?: (data: string) => boolean): void
-                closeScanQrPopup: () => void;
-                sendData(data: string): void;
-                openTelegramLink(url: string): void;
-                colorScheme: 'dark' | 'light';
-                initDataUnsafe: {
-                    user?: {
-                        id: number;
-                        first_name: string;
-                        last_name?: string;
-                        username?: string;
-                        photo_url?: string;
-                    };
-                    // ... 其他 initData 属性
-                };
-            };
+            WebApp: TelegramWebApp;
         };
     }
 }

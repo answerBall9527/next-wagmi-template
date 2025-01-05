@@ -4,6 +4,8 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
 import Header from '@/components/Header'
+import { PaymentType } from "@/types/payment";
+
 
 interface TokenOption {
   value: string
@@ -18,7 +20,6 @@ interface ReceiverInfo {
   photoUrl: string
 }
 
-type PaymentType = 'sendToContactFromHome' | 'sendToContectFromScan' | 'external_wallet' | 'group'
 
 type SplitType = 'evenly' | 'randomly'
 
@@ -52,15 +53,15 @@ const PaymentContactPage = () => {
     
     if (type && (
       type === 'sendToContactFromHome' || 
-      type === 'sendToContectFromScan' || 
+      type === 'sendToContactFromScan' || 
       type === 'external_wallet' || 
       type === 'group'
     )) {
       setPaymentType(type as PaymentType)
     }
 
-    // 只有在 sendToContectFromScan 类型时才初始化接收人信息
-    if (type === 'sendToContectFromScan') {
+    // 只有在 sendToContactFromScan 类型时才初始化接收人信息
+    if (type === 'sendToContactFromScan') {
       const initReceiver = () => {
         const receiverId = searchParams.get('receiverId')
         const receiverName = searchParams.get('receiverName')
@@ -139,7 +140,7 @@ const PaymentContactPage = () => {
   }
 
   const handleShare = () => {
-    const shareUrl = 't.me/stakestone_activity_bot/redpacket'
+    const shareUrl = 't.me/stakestone_activity_bot/redpocket'
     const shareText = description || 'Best wishes to your friend!' // 如果没有描述，使用默认文本
     const encodedUrl = encodeURIComponent(shareUrl)
     const encodedText = encodeURIComponent(shareText)
@@ -156,8 +157,8 @@ const PaymentContactPage = () => {
       <div className="px-5 py-4 space-y-5 w-full max-w-[375px]">
         <Header title="Pay" />
         
-        {/* Receiver Info - 只在 sendToContectFromScan 类型时显示 */}
-        {paymentType === 'sendToContectFromScan' && receiver && (
+        {/* Receiver Info - 只在 sendToContactFromScan 类型时显示 */}
+        {paymentType === 'sendToContactFromScan' && receiver && (
           <div>
             <h2 className="h-[22px] font-gilroy font-bold text-[18px] text-[#2A1731] leading-[22px] text-left">
               Pay to:

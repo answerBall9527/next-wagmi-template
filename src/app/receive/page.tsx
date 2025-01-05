@@ -58,7 +58,7 @@ export default function ReceivePage() {
         if (user) {
             // 构建支付链接
             const paymentUrl = new URL('/payment/contact', window.location.origin)
-            paymentUrl.searchParams.set('type', 'sendToContectFromScan')
+            paymentUrl.searchParams.set('type', 'sendToContactFromScan')
             paymentUrl.searchParams.set('receiverId', user.id.toString())
             paymentUrl.searchParams.set('receiverName', user.username || user.first_name)
             console.log('paymentUrl', paymentUrl)
@@ -85,7 +85,7 @@ export default function ReceivePage() {
         if (!user) return
         try {
             const paymentUrl = new URL('/payment/contact', window.location.origin)
-            paymentUrl.searchParams.set('type', 'sendToContectFromScan')
+            paymentUrl.searchParams.set('type', 'sendToContactFromScan')
             paymentUrl.searchParams.set('receiverId', user.id.toString())
             paymentUrl.searchParams.set('receiverName', user.username || user.first_name)
 
@@ -130,7 +130,7 @@ export default function ReceivePage() {
         if (!user) return
 
         const paymentUrl = new URL('/payment/contact', window.location.origin)
-        paymentUrl.searchParams.set('type', 'sendToContectFromScan')
+        paymentUrl.searchParams.set('type', 'sendToContactFromScan')
         paymentUrl.searchParams.set('receiverId', user.id.toString())
         paymentUrl.searchParams.set('receiverName', user.username || user.first_name)
 

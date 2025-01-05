@@ -2,14 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-
-interface TelegramUser {
-    id: number;
-    first_name: string;
-    last_name?: string;
-    username?: string;
-    photo_url?: string;
-}
+import { PaymentType } from "@/types/payment";
+import { TelegramUser } from "@/types/telegram";
 
 interface DonatorInfo {
     username: string;
@@ -27,7 +21,7 @@ export default function RedPacketPage() {
             const vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
             
-            const container = document.querySelector('.redpacket-container');
+            const container = document.querySelector('.redpocket-container');
             if (container) {
                 (container as HTMLElement).style.height = `${window.innerHeight}px`;
             }
@@ -94,17 +88,32 @@ export default function RedPacketPage() {
     }
 
     return (
-        <div className="redpacket-container overflow-y-auto bg-white text-[var(--text-color)] min-h-screen h-full">
-            <div className="fixed top-4 right-4 z-50">
+        <div className="redpocket-container overflow-y-auto bg-white text-[var(--text-color)] min-h-screen h-full">
+            {/* <div className="fixed top-4 right-4 z-50">
                 <div className="mt-2 text-sm">
                     Theme: {'Light'}
                 </div>
-            </div>
+            </div> */}
             
             <div className="flex flex-col p-6 max-w-md mx-auto">
+                <div className="flex items-center bg-white mb-10">
+                    <div className="w-9 h-9 rounded-full overflow-hidden">
+                        <Image 
+                            src="/images/pay/icon-contact.svg" 
+                            alt="Avatar"
+                            width={36}
+                            height={36}
+                        />
+                    </div>
+                    <div className="ml-3">
+                        <div className="h-[21px] font-[Gilroy] text-[18px] leading-[21px] font-medium text-[#2A1731]">@Jimmy has sent you:</div>
+                        <div className="h-[14px] font-[Gilroy] text-[12px] leading-[14px] font-normal text-[#867B8A]">Transaction ID: 123456789</div>
+                    </div>
+                </div>
+                
                 <div className="text-center mb-8">
-                    <h1 className="text-xl font-medium mb-2 text-[var(--text-color)]">Donate/Tip For</h1>
-                    <div className="flex items-center justify-center gap-3 mb-4">
+                    {/* <h1 className="text-xl font-medium mb-2 text-[var(--text-color)]">Donate/Tip For</h1> */}
+                    {/* <div className="flex items-center justify-center gap-3 mb-4">
                         <Image
                             src={user?.photo_url || "https://via.placeholder.com/40x40"}
                             width={40}
@@ -118,44 +127,44 @@ export default function RedPacketPage() {
                             </div>
                             <div className="text-sm text-gray-500">{user?.username ? user?.id : donator.handle }</div>
                         </div>
-                    </div>
+                    </div> */}
                     
-                    <div className="text-center mb-4">
-                        <span className="text-4xl font-bold">{amount.value}</span>
-                        <span className="text-lg ml-2">{amount.currency}</span>
+                    <div className="text-center">
+                        <span className="font-[Gilroy-Bold] text-[36px] leading-[43px] text-[#2A1731] text-center">{amount.value}</span>
+                        <span className="font-[Gilroy] text-[14px] leading-[43px] text-[#867B8A] ml-2">{amount.currency}</span>
                     </div>
-                    <p className="text-sm text-gray-500">To help stop the climate change</p>
+                    <p className="h-[14px] font-[Gilroy] text-[12px] leading-[14px] font-normal text-[#6D56F2] text-center">It has been saved into your balance</p>
                 </div>
 
+                <button className="w-[335px] h-[48px] bg-[#6D56F2] rounded-[8px] text-white font-[Gilroy] text-[18px] leading-[21px] font-medium mb-[30px]">
+                    Donate
+                </button>
+
                 <div className="mb-8">
-                    <h2 className="text-lg font-medium mb-4 text-[var(--text-color)]">Members who already donated</h2>
+                    <h2 className="h-[22px] font-[Gilroy] text-[18px] leading-[22px] font-bold text-[#2A1731] text-left mb-5">Members who already donated</h2>
                     <div className="space-y-4">
                         {donators.map((donator, index) => (
                             <div key={index} className="flex items-center justify-between">
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-center gap-[10px]">
                                     <Image
-                                        src="https://via.placeholder.com/36x36"
+                                        src="/images/pay/icon-contact.svg"
                                         width={36}
                                         height={36}
                                         alt="Donator"
                                         className="rounded-full"
                                     />
                                     <div>
-                                        <div className="font-medium">{donator.username}</div>
-                                        <div className="text-sm text-gray-500">{donator.timestamp}</div>
+                                        <div className="h-[17px] font-[Gilroy] text-[14px] leading-[17px] font-bold text-[#2A1731] text-left">{donator.username}</div>
+                                        <div className="h-[14px] font-[Gilroy] text-[12px] leading-[14px] font-medium text-[#9D95A0] text-left">{donator.timestamp}</div>
                                     </div>
                                 </div>
-                                <div className="font-medium">
+                                <div className="h-[19px] font-[Gilroy] text-[16px] leading-[19px] font-bold text-[#2A1731] text-right">
                                     {donator.amount} {amount.currency}
                                 </div>
                             </div>
                         ))}
                     </div>
                 </div>
-
-                <button className="w-full bg-[#7C5CFC] text-white py-4 rounded-xl text-lg font-medium">
-                    Donate
-                </button>
             </div>
         </div>
     );

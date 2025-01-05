@@ -84,7 +84,7 @@ export default function HomePage() {
     };
 
     const handleShareClick = () => {
-        const shareUrl = 't.me/stakestone_activity_bot/redpacket';
+        const shareUrl = 't.me/stakestone_activity_bot/redpocket';
         const shareText = 'shareText11111';
         const encodedUrl = encodeURIComponent(shareUrl);
         const encodedText = encodeURIComponent(shareText);
