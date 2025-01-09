@@ -214,7 +214,7 @@ export default function HomePage() {
                     <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-10 w-px bg-[#E7E4E8]"></div>
                     
                     {/* Request section - 50% width */}
-                    <div className="flex-1 flex justify-center items-center">
+                    <div className="flex-1 flex justify-center items-center" onClick={() => router.push('/getpaid')}>
                         <div className="flex flex-col items-center">
                         <Image
                                 src="/images/home/getPaid.svg"
