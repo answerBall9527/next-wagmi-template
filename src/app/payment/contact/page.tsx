@@ -140,13 +140,14 @@ const PaymentContactPage = () => {
   }
 
   const handleShare = () => {
-    const shareUrl = 't.me/stakestone_activity_bot/redpocket'
-    const shareText = description || 'Best wishes to your friend!' // 如果没有描述，使用默认文本
+    const baseUrl = 't.me/stakestone_activity_bot/redpocket'
+    const shareUrl = paymentType === 'group' ? `${baseUrl}?type=group` : baseUrl
+    const shareText = description || 'Best wishes to your friend!'
     const encodedUrl = encodeURIComponent(shareUrl)
     const encodedText = encodeURIComponent(shareText)
     
-    window.Telegram.WebApp.openTelegramLink(
-      `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact`
+    window.Telegram?.WebApp?.openTelegramLink(
+        `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact`
     )
   }
 

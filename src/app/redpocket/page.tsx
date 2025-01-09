@@ -14,6 +14,7 @@ interface DonatorInfo {
 export default function RedPacketPage() {
     const [user, setUser] = useState<TelegramUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [paymentType, setPaymentType] = useState<PaymentType | null>(null);
 
     useEffect(() => {
         // 解决夜间模式黑底问题
@@ -61,6 +62,11 @@ export default function RedPacketPage() {
         };
 
         initTelegram();
+
+        // 获取 URL 参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const type = urlParams.get('type');
+        setPaymentType(type);
 
         return () => window.removeEventListener('resize', setHeight);
     }, []);
@@ -138,12 +144,15 @@ export default function RedPacketPage() {
 
                 <button className="w-[335px] h-[48px] bg-[#6D56F2] rounded-[8px] text-white font-[Gilroy] text-[18px] leading-[21px] font-medium mb-[30px]">
                     Donate
-                </button>
+                </button>   
+                
 
                 <div className="mb-8">
-                    <h2 className="h-[22px] font-[Gilroy] text-[18px] leading-[22px] font-bold text-[#2A1731] text-left mb-5">Members who already donated</h2>
+                    {paymentType === 'group' && (
+                        <h2 className="h-[22px] font-[Gilroy] text-[18px] leading-[22px] font-bold text-[#2A1731] text-left mb-5">Members who already donated</h2>
+                    )}
                     <div className="space-y-4">
-                        {donators.map((donator, index) => (
+                        {(paymentType === 'group' ? donators : donators.slice(0, 1)).map((donator, index) => (
                             <div key={index} className="flex items-center justify-between">
                                 <div className="flex items-center gap-[10px]">
                                     <Image
