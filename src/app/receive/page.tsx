@@ -152,7 +152,7 @@ export default function ReceivePage() {
                     {/* Left side - Avatar */}
                     <div className="w-[36px] h-[36px] rounded-full overflow-hidden bg-[#F3F4F6]">
                         <Image
-                            src={user?.photo_url || "https://via.placeholder.com/36x36"}
+                            src={user?.photo_url || "/images/pay/icon-contact.svg"}
                             width={36}
                             height={36}
                             alt="Profile"
