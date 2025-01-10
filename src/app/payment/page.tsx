@@ -39,7 +39,7 @@ const PaymentPage = () => {
               />
             </div>
             <div className="min-w-0 flex-1 flex flex-col items-start gap-[8px]">
-              <div className="font-[14px] text-[#2A1731] leading-[17px] font-bold font-gilroy text-left truncate w-full">Your Telegram Contact</div>
+              <div className="font-[14px] text-[#2A1731] leading-[18px] font-bold font-gilroy text-left truncate w-full">Your Telegram Contact</div>
               <div className="h-[14px] text-[12px] text-[#9D95A0] leading-[14px] font-[500] font-gilroy text-left truncate w-full">send money by contact</div>
             </div>
           </div>
@@ -67,7 +67,7 @@ const PaymentPage = () => {
               />
             </div>
             <div className="min-w-0 flex-1 flex flex-col items-start gap-[8px]">
-              <div className="font-[14px] text-[#2A1731] leading-[17px] font-bold font-gilroy text-left truncate w-full">External Wallet</div>
+              <div className="font-[14px] text-[#2A1731] leading-[18px] font-bold font-gilroy text-left truncate w-full">External Wallet</div>
               <div className="h-[14px] text-[12px] text-[#9D95A0] leading-[14px] font-[500] font-gilroy text-left truncate w-full">Enter a phone number to Pay</div>
             </div>
           </div>
@@ -97,7 +97,7 @@ const PaymentPage = () => {
               />
             </div>
             <div className="min-w-0 flex-1 flex flex-col items-start gap-[8px]">
-              <div className="font-[14px] text-[#2A1731] leading-[17px] font-bold font-gilroy text-left truncate w-full">Tipping</div>
+              <div className="font-[14px] text-[#2A1731] leading-[18px] font-bold font-gilroy text-left truncate w-full">Tipping</div>
               <div className="h-[14px] text-[12px] text-[#9D95A0] leading-[14px] font-[500] font-gilroy text-left truncate w-full">Tip to specific person</div>
             </div>
           </div>
@@ -125,7 +125,7 @@ const PaymentPage = () => {
               />
             </div>
             <div className="min-w-0 flex-1 flex flex-col items-start gap-[8px]">
-              <div className="font-[14px] text-[#2A1731] leading-[17px] font-bold font-gilroy text-left truncate w-full">Airdrop</div>
+              <div className="font-[14px] text-[#2A1731] leading-[18px] font-bold font-gilroy text-left truncate w-full">Airdrop</div>
               <div className="h-[14px] text-[12px] text-[#9D95A0] leading-[14px] font-[500] font-gilroy text-left truncate w-full">Anyone with the link will get portion of the payment</div>
             </div>
           </div>
@@ -153,7 +153,7 @@ const PaymentPage = () => {
               />
             </div>
             <div className="min-w-0 flex-1 flex flex-col items-start gap-[8px]">
-              <div className="font-[14px] text-[#2A1731] leading-[17px] font-bold font-gilroy text-left truncate w-full">Red Pocket</div>
+              <div className="font-[14px] text-[#2A1731] leading-[18px] font-bold font-gilroy text-left truncate w-full">Red Pocket</div>
               <div className="h-[14px] text-[12px] text-[#9D95A0] leading-[14px] font-[500] font-gilroy text-left truncate w-full">Group Members can claim the payment</div>
             </div>
           </div>

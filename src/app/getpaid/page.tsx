@@ -47,7 +47,7 @@ const GetPaidPage = () => {
                 />
               </div>
               <div className="min-w-0 flex-1 flex flex-col items-start gap-[8px]">
-                <div className="font-[14px] text-[#2A1731] leading-[17px] font-bold font-gilroy text-left truncate w-full">
+                <div className="font-[14px] text-[#2A1731] leading-[18px] font-bold font-gilroy text-left truncate w-full">
                   Your Telegram Contact
                 </div>
                 <div className="h-[14px] text-[12px] text-[#9D95A0] leading-[14px] font-[500] font-gilroy text-left truncate w-full">
@@ -78,7 +78,7 @@ const GetPaidPage = () => {
                 />
               </div>
               <div className="min-w-0 flex-1 flex flex-col items-start gap-[8px]">
-                <div className="font-[14px] text-[#2A1731] leading-[17px] font-bold font-gilroy text-left truncate w-full">
+                <div className="font-[14px] text-[#2A1731] leading-[18px] font-bold font-gilroy text-left truncate w-full">
                   Display My QR Code
                 </div>
                 <div className="h-[14px] text-[12px] text-[#9D95A0] leading-[14px] font-[500] font-gilroy text-left truncate w-full">
@@ -115,7 +115,7 @@ const GetPaidPage = () => {
                 />
               </div>
               <div className="min-w-0 flex-1 flex flex-col items-start gap-[8px]">
-                <div className="font-[14px] text-[#2A1731] leading-[17px] font-bold font-gilroy text-left truncate w-full">
+                <div className="font-[14px] text-[#2A1731] leading-[18px] font-bold font-gilroy text-left truncate w-full">
                   Receive Donation
                 </div>
                 <div className="h-[14px] text-[12px] text-[#9D95A0] leading-[14px] font-[500] font-gilroy text-left truncate w-full">
@@ -146,7 +146,7 @@ const GetPaidPage = () => {
                 />
               </div>
               <div className="min-w-0 flex-1 flex flex-col items-start gap-[8px]">
-                <div className="font-[14px] text-[#2A1731] leading-[17px] font-bold font-gilroy text-left truncate w-full">
+                <div className="font-[14px] text-[#2A1731] leading-[18px] font-bold font-gilroy text-left truncate w-full">
                   Collecting Tips
                 </div>
                 <div className="h-[14px] text-[12px] text-[#9D95A0] leading-[14px] font-[500] font-gilroy text-left truncate w-full">

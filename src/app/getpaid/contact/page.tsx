@@ -9,7 +9,6 @@ import { PaymentType } from "@/types/payment";
 interface TokenOption {
   value: string
   label: React.ReactNode
-  balance: string
   network?: string
 }
 
@@ -70,7 +69,6 @@ const GetPaidContactPage = () => {
           <span className="font-gilroy font-bold text-[#2A1731]">ETH</span>
         </div>
       ),
-      balance: '55.38',
       network: 'On MegaEth Network'
     },
     {
@@ -86,7 +84,6 @@ const GetPaidContactPage = () => {
           <span className="font-gilroy font-bold text-[#2A1731]">USDT</span>
         </div>
       ),
-      balance: '0.0',
       network: 'On MegaEth Network'
     }
   ]
@@ -97,19 +94,12 @@ const GetPaidContactPage = () => {
     const value = e.target.value
     // 只允许输入数字和小数点
     if (!/^\d*\.?\d*$/.test(value)) return
-
-    // 如果输入的数值大于余额，则不更新
-    const numValue = parseFloat(value || '0')
-    const balance = parseFloat(selectedTokenInfo?.balance || '0')
-    
-    if (numValue <= balance) {
-      setAmount(value)
-    }
+    setAmount(value)
   }
 
   const handleShare = () => {
     // 构建预览页面的完整 URL，添加群组相关参数
-    const baseUrl = window.location.origin
+    const baseUrl = 't.me/stakestone_activity_bot/redpocket'
     const previewUrl = `${baseUrl}/getpaid/contact/preview?amount=${amount}&token=${selectedToken}&description=${encodeURIComponent(description)}${
       paymentType === 'group' 
         ? `&type=group&splitType=${splitType}&recipients=${recipients}` 
@@ -139,7 +129,7 @@ const GetPaidContactPage = () => {
             <div className="relative" ref={dropdownRef}>
               <div className="h-[50px] flex items-center justify-between px-3 border-b border-[#E7E4E8] rounded-t-[12px]">
                 <button 
-                  className="w-full h-full flex items-center justify-between"
+                  className="w-full h-full flex items-center"
                   onClick={() => setIsOpen(!isOpen)}
                 >
                   <div className="flex items-center">
@@ -160,11 +150,6 @@ const GetPaidContactPage = () => {
                         borderTop: '6px solid #2A1731'
                       }}
                     />
-                  </div>
-                  <div className="flex items-center text-[14px] leading-[16px]">
-                    <span className="text-[#9D95A0] font-gilroy font-[500]">Balance: </span>
-                    <span className="text-[#2A1731] font-gilroy font-bold ml-[4px]">{selectedTokenInfo?.balance}</span>
-                    <span className="text-[#9D95A0] font-gilroy font-[500] ml-[4px]">{selectedToken}</span>
                   </div>
                 </button>
               </div>
