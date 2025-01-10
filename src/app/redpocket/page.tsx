@@ -15,6 +15,7 @@ export default function RedPacketPage() {
     const [user, setUser] = useState<TelegramUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [paymentType, setPaymentType] = useState<PaymentType | null>(null);
+    const [showSuccess, setShowSuccess] = useState(false);
 
     useEffect(() => {
         // 解决夜间模式黑底问题
@@ -87,6 +88,13 @@ export default function RedPacketPage() {
         { username: '@sunshaine', amount: 5, timestamp: '2024-09-06 13:21' }
     ];
 
+    const handleDonateClick = () => {
+        setShowSuccess(true);
+        setTimeout(() => {
+            setShowSuccess(false);
+        }, 3000); // 3秒后自动隐藏
+    };
+
     if (isLoading) {
         return <div className="flex items-center justify-center min-h-screen">
             <div>Loading...</div>
@@ -142,10 +150,18 @@ export default function RedPacketPage() {
                     <p className="h-[14px] font-[Gilroy] text-[12px] leading-[14px] font-normal text-[#6D56F2] text-center">It has been saved into your balance</p>
                 </div>
 
-                <button className="w-[335px] h-[48px] bg-[#6D56F2] rounded-[8px] text-white font-[Gilroy] text-[18px] leading-[21px] font-medium mb-[30px]">
+                <button 
+                    onClick={handleDonateClick}
+                    className="w-[335px] h-[48px] bg-[#6D56F2] rounded-[8px] text-white font-[Gilroy] text-[18px] leading-[21px] font-medium mb-[30px]"
+                >
                     Donate
                 </button>   
                 
+                {showSuccess && (
+                    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-70 text-white px-6 py-3 rounded-lg">
+                        捐赠成功!
+                    </div>
+                )}
 
                 <div className="mb-8">
                     {paymentType === 'group' && (
