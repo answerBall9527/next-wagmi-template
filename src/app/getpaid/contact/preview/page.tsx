@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState,  } from 'react'
 
 interface DonationRecord {
   username: string
@@ -19,6 +19,13 @@ const PreviewPage = () => {
   const token = searchParams.get('token') || 'USDT'
   console.log('searchParams', searchParams, token, splitType)
   const [amount, setAmount] = useState<string>('')
+
+  useEffect(() => {
+    console.log('start', window)
+    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+      console.log('Telegram WebApp initData:', window.Telegram.WebApp.initData)
+    }
+  }, [])
 
   // 模拟的捐赠记录数据
   const donationRecords: DonationRecord[] = [
