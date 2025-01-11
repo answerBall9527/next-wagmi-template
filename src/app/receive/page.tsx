@@ -138,8 +138,13 @@ export default function ReceivePage() {
         const shareText = 'Send me payment via StakeStone' // 可以根据需要修改分享文本
         const encodedText = encodeURIComponent(shareText)
         
+        // window.Telegram.WebApp.openTelegramLink(
+        //     `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact`
+        // )
+
+        // TODO 临时实验
         window.Telegram.WebApp.openTelegramLink(
-            `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact`
+            `https://t.me/redpocket?startattach=ABC`
         )
     }
 
