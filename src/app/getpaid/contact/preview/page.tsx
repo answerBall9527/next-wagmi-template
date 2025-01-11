@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation'
 import Image from 'next/image'
-import { useState,  } from 'react'
+import { useState, useEffect } from 'react'
 
 interface DonationRecord {
   username: string
