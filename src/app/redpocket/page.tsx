@@ -53,6 +53,8 @@ export default function RedPacketPage() {
                 const webApp = window.Telegram.WebApp;
                 const initData = webApp.initDataUnsafe;
                 console.log('initData', initData)
+                const startParam = initData.get('start_param'); // 提取 tgWebAppStartParam
+                console.log('Start Param:', startParam);
                 if (initData.user) {
                     console.log('Telegram user:', initData.user);
                     setUser(initData.user);
