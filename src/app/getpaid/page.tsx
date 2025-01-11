@@ -12,15 +12,15 @@ const GetPaidPage = () => {
   }
 
   const handleDisplayQR = () => {
-    router.push('/getpaid/qr')
+    router.push('/receive')
   }
 
   const handleReceiveDonation = () => {
-    router.push('/getpaid/donation')
+    router.push('/getpaid/contact/preview')
   }
 
   const handleCollectingTips = () => {
-    router.push('/getpaid/tips')
+    router.push('/getpaid/contact/preview')
   }
 
   return (
