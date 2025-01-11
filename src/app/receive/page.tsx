@@ -129,7 +129,7 @@ export default function ReceivePage() {
     const handleShare = () => {
         if (!user) return
 
-        const paymentUrl = new URL('/payment/contact', window.location.origin)
+        const paymentUrl = new URL('/payment/contact?startattach=ABC', window.location.origin)
         paymentUrl.searchParams.set('type', 'sendToContactFromScan')
         paymentUrl.searchParams.set('receiverId', user.id.toString())
         paymentUrl.searchParams.set('receiverName', user.username || user.first_name)
@@ -138,14 +138,14 @@ export default function ReceivePage() {
         const shareText = 'Send me payment via StakeStone' // 可以根据需要修改分享文本
         const encodedText = encodeURIComponent(shareText)
         
-        // window.Telegram.WebApp.openTelegramLink(
-        //     `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact`
-        // )
+        window.Telegram.WebApp.openTelegramLink(
+            `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact`
+        )
 
         // TODO 临时实验
-        window.Telegram.WebApp.openTelegramLink(
-            `https://t.me/redpocket?startattach=ABC`
-        )
+        // window.Telegram.WebApp.openTelegramLink(
+        //     `https://t.me/redpocket?startattach=ABC`
+        // )
     }
 
     return (
