@@ -17,6 +17,7 @@ const PreviewPage = () => {
   const isGroupPayment = searchParams.get('type') === 'group'
   const splitType = searchParams.get('splitType')
   const token = searchParams.get('token') || 'USDT'
+  console.log('searchParams', searchParams, token, splitType)
   const [amount, setAmount] = useState<string>('')
 
   // 模拟的捐赠记录数据
