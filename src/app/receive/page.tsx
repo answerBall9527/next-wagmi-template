@@ -130,7 +130,7 @@ export default function ReceivePage() {
         if (!user) return
 
         // const paymentUrl = new URL('/payment/contact?startattach=ABC', window.location.origin)
-        const paymentUrl = new URL('/redpocket?startattach=ABC', window.location.origin)
+        const paymentUrl = new URL('t.me/stakestone_activity_bot/redpocket?startattach=ABC', window.location.origin)
 
         paymentUrl.searchParams.set('type', 'sendToContactFromScan')
         paymentUrl.searchParams.set('receiverId', user.id.toString())
