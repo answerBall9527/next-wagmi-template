@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { PaymentType } from "@/types/payment";
+import { PaymentType, redpocketSourceType } from "@/types/payment";
 import { TelegramUser } from "@/types/telegram";
 
 interface DonatorInfo {
@@ -16,6 +16,7 @@ export default function RedPacketPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [paymentType, setPaymentType] = useState<PaymentType | null>(null);
     const [showSuccess, setShowSuccess] = useState(false);
+    const [sourceType, setSourceType] = useState<redpocketSourceType>('receive');
 
     useEffect(() => {
         // 解决夜间模式黑底问题
@@ -68,6 +69,11 @@ export default function RedPacketPage() {
         const urlParams = new URLSearchParams(window.location.search);
         const type = urlParams.get('type');
         setPaymentType(type);
+
+        const source = urlParams.get('source');
+        if (source) {
+            setSourceType(source as redpocketSourceType);
+        }
 
         return () => window.removeEventListener('resize', setHeight);
     }, []);
@@ -154,7 +160,7 @@ export default function RedPacketPage() {
                     onClick={handleDonateClick}
                     className="w-[335px] h-[48px] bg-[#6D56F2] rounded-[8px] text-white font-[Gilroy] text-[18px] leading-[21px] font-medium mb-[30px]"
                 >
-                    Donate
+                    {sourceType === 'receive' ? 'Say Thank You' : 'Donate'}
                 </button>   
                 
                 {showSuccess && (

@@ -99,7 +99,7 @@ const GetPaidContactPage = () => {
 
   const handleShare = () => {
     // 构建预览页面的完整 URL，添加群组相关参数
-    const baseUrl = 't.me/stakestone_activity_bot/redpocket'
+    const baseUrl = 't.me/stakestone_activity_bot/getpaid'
     const previewUrl = `${baseUrl}/getpaid/contact/preview?amount=${amount}&token=${selectedToken}&description=${encodeURIComponent(description)}${
       paymentType === 'group' 
         ? `&type=group&splitType=${splitType}&recipients=${recipients}` 

@@ -43,7 +43,7 @@ const PaymentPage = () => {
               <div className="h-[14px] text-[12px] text-[#9D95A0] leading-[14px] font-[500] font-gilroy text-left truncate w-full">send money by contact</div>
             </div>
           </div>
-          <Image 
+          <Image
             src="/images/arrow-right.svg" 
             width={10} 
             height={10} 

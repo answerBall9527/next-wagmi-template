@@ -147,7 +147,7 @@ const PaymentContactPage = () => {
     const encodedText = encodeURIComponent(shareText)
     
     window.Telegram?.WebApp?.openTelegramLink(
-        `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact`
+        `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact&source=receive`
     )
   }
 
