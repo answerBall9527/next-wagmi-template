@@ -141,7 +141,7 @@ export default function ReceivePage() {
         const encodedText = encodeURIComponent(shareText)
         
         window.Telegram.WebApp.openTelegramLink(
-            `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact`
+            `https://t.me/share/url?url=${paymentUrl}&text=${encodedText}&startapp=command&mode=compact`
         )
 
         // TODO 临时实验
