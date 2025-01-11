@@ -16,11 +16,11 @@ const GetPaidPage = () => {
   }
 
   const handleReceiveDonation = () => {
-    router.push('/getpaid/contact/preview')
+    router.push('/getpaid/contact?type=group')
   }
 
   const handleCollectingTips = () => {
-    router.push('/getpaid/contact/preview')
+    router.push('/getpaid/contact?type=group')
   }
 
   return (
