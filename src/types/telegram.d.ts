@@ -17,7 +17,14 @@ interface ShareUrlParams {
 
 interface TelegramWebApp {
   openTelegramLink: (url: string) => void;
-  // 其他 Telegram WebApp 相关的类型定义...
+}
+
+interface Telegram {
+  WebApp?: TelegramWebApp;
+}
+
+interface Window {
+  Telegram?: Telegram;
 }
 
 declare global {

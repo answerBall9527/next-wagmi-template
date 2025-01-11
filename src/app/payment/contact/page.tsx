@@ -141,13 +141,12 @@ const PaymentContactPage = () => {
 
   const handleShare = () => {
     const baseUrl = 't.me/stakestone_activity_bot/redpocket'
-    const shareUrl = paymentType === 'group' ? `${baseUrl}?type=group` : baseUrl
     const shareText = description || 'Best wishes to your friend!'
-    const encodedUrl = encodeURIComponent(shareUrl)
+    const encodedUrl = encodeURIComponent(baseUrl)
     const encodedText = encodeURIComponent(shareText)
     
     window.Telegram?.WebApp?.openTelegramLink(
-        `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact&source=receive`
+        `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact&source=receive${paymentType === 'group' ? '&type=group' : ''}`
     )
   }
 
@@ -337,7 +336,7 @@ const PaymentContactPage = () => {
         )}
 
         {/* Description section */}
-                <div>
+        <div>
           <h2 className="h-[22px] font-gilroy font-bold text-[18px] text-[#2A1731] leading-[22px] text-left">
             Description:
           </h2>
