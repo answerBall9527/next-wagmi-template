@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { PaymentType, redpocketSourceType } from "@/types/payment";
 import { TelegramUser } from "@/types/telegram";
+import { useLaunchParams } from "@telegram-apps/sdk-react";
 
 interface DonatorInfo {
     username: string;
@@ -17,6 +18,7 @@ export default function RedPacketPage() {
     const [paymentType, setPaymentType] = useState<PaymentType | null>(null);
     const [showSuccess, setShowSuccess] = useState(false);
     const [sourceType, setSourceType] = useState<redpocketSourceType>('receive');
+    const lp = useLaunchParams();
 
     useEffect(() => {
         // 解决夜间模式黑底问题
@@ -57,6 +59,7 @@ export default function RedPacketPage() {
                 console.log('initData', initData)
                 let startParam = window.Telegram.WebApp.initDataUnsafe.start_param
                 console.log('startParam', startParam)
+                console.log('lp.startParam', lp.startParam)
                 // const startParam = initData.get('start_param'); // 提取 tgWebAppStartParam
                 // console.log('Start Param:', startParam);
                 if (initData.user) {
