@@ -78,6 +78,11 @@ export default function RedPacketPage() {
         return () => window.removeEventListener('resize', setHeight);
     }, []);
 
+    useEffect(() => {
+        console.log('Current URL:', window.location.href)
+        console.log('Search params:', window.location.search)
+    }, [])
+
     const donator = {
         username: 'User',
         handle: ''
