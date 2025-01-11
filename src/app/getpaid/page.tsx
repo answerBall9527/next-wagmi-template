@@ -9,7 +9,7 @@ const GetPaidPage = () => {
   const router = useRouter()
 
   useEffect(() => {
-    console.log('start')
+    console.log('start', window)
     if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
       console.log('Telegram WebApp initData:', window.Telegram.WebApp.initData)
     }
