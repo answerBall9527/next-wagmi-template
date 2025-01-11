@@ -129,7 +129,9 @@ export default function ReceivePage() {
     const handleShare = () => {
         if (!user) return
 
-        const paymentUrl = new URL('/payment/contact?startattach=ABC', window.location.origin)
+        // const paymentUrl = new URL('/payment/contact?startattach=ABC', window.location.origin)
+        const paymentUrl = new URL('/redpocket?startattach=ABC', window.location.origin)
+
         paymentUrl.searchParams.set('type', 'sendToContactFromScan')
         paymentUrl.searchParams.set('receiverId', user.id.toString())
         paymentUrl.searchParams.set('receiverName', user.username || user.first_name)
@@ -144,7 +146,7 @@ export default function ReceivePage() {
 
         // TODO 临时实验
         // window.Telegram.WebApp.openTelegramLink(
-        //     `https://t.me/redpocket?startattach=ABC`
+        //     `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact`
         // )
     }
 
