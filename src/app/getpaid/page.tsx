@@ -8,6 +8,12 @@ import { useEffect } from 'react'
 const GetPaidPage = () => {
   const router = useRouter()
 
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+      console.log('Telegram WebApp initData:', window.Telegram.WebApp.initData)
+    }
+  }, [])
+
   const handleRequestFromContact = () => {
     router.push('/getpaid/contact?type=requestFromContact')
   }

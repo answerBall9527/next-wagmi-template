@@ -17,10 +17,11 @@ interface ShareUrlParams {
 
 interface TelegramWebApp {
   openTelegramLink: (url: string) => void;
+  initData: string;
 }
 
 interface Telegram {
-  WebApp?: TelegramWebApp;
+  WebApp: TelegramWebApp;
 }
 
 interface Window {
