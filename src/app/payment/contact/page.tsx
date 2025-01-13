@@ -47,6 +47,51 @@ const PaymentContactPage = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+
+  useEffect(() => {
+    // 解决夜间模式黑底问题
+    const setHeight = () => {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+        
+        const container = document.querySelector('.redpocket-container');
+        if (container) {
+            (container as HTMLElement).style.height = `${window.innerHeight}px`;
+        }
+    };
+
+    setHeight();
+    window.addEventListener('resize', setHeight);
+
+    // 获取用户信息
+    const initTelegram = async () => {
+        try {
+            let startParam = window.Telegram.WebApp.initDataUnsafe.start_param
+            console.log('startParam', startParam)
+            // console.log('lp.startParam', lp.startParam)
+
+        } catch (error) {
+            console.error('Error initializing Telegram WebApp:', error);
+        } finally {
+            // setIsLoading(false);
+        }
+    };
+
+    initTelegram();
+
+    // 获取 URL 参数
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type');
+    setPaymentType(type);
+
+    const source = urlParams.get('source');
+    if (source) {
+        setSourceType(source as redpocketSourceType);
+    }
+
+    return () => window.removeEventListener('resize', setHeight);
+}, []);
+
   useEffect(() => {
     const type = searchParams.get('type')
     console.log('URL type parameter:', type)
