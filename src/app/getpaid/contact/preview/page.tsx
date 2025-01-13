@@ -14,18 +14,92 @@ interface DonationRecord {
 const PreviewPage = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const isGroupPayment = searchParams.get('type') === 'group'
-  const splitType = searchParams.get('splitType')
-  const token = searchParams.get('token') || 'USDT'
-  console.log('searchParams', searchParams, token, splitType)
-  const [amount, setAmount] = useState<string>('')
+  
+  // 状态管理
+  const [params, setParams] = useState({
+    isGroupPayment: false,
+    splitType: '',
+    token: 'USDT',
+    amount: '',
+    description: '',
+    isParamsSet: false  // 添加标志位来追踪参数是否已设置
+  })
 
   useEffect(() => {
-    console.log('start', window)
-    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-      console.log('Telegram WebApp initData:', window.Telegram.WebApp.initData)
-    }
-  }, [])
+    // 如果参数已经通过Telegram设置，则不再处理
+    if (params.isParamsSet) return;
+
+    const initTelegram = async () => {
+      try {
+        let attempts = 0;
+        const maxAttempts = 10;
+        
+        while (!window?.Telegram?.WebApp && attempts < maxAttempts) {
+          await new Promise(resolve => setTimeout(resolve, 500));
+          attempts++;
+        }
+
+        if (!window?.Telegram?.WebApp) {
+          console.error('Telegram WebApp not found after waiting');
+          return;
+        }
+
+        const startParam = window.Telegram?.WebApp?.initDataUnsafe?.start_param;
+        if (startParam) {
+          try {
+            // 解析Telegram参数
+            const telegramParams = startParam.split('-').reduce((acc, curr) => {
+              const [key, value] = curr.split('=');
+              acc[key] = value;
+              return acc;
+            }, {} as Record<string, string>);
+
+            // 如果成功获取到Telegram参数，设置参数并标记为已设置
+            if (Object.keys(telegramParams).length > 0) {
+              setParams(prev => ({
+                ...prev,
+                isGroupPayment: telegramParams.type === 'group',
+                splitType: telegramParams.splitType || '',
+                token: telegramParams.token || 'USDT',
+                amount: telegramParams.amount || '',
+                description: decodeURIComponent(telegramParams.description || ''),
+                isParamsSet: true  // 标记参数已设置
+              }));
+              return;  // 成功设置后直接返回，不再处理URL参数
+            }
+          } catch (e) {
+            console.log('Failed to parse Telegram params, falling back to URL params');
+          }
+        }
+
+        // 如果没有成功设置Telegram参数，则使用URL参数
+        const urlType = searchParams.get('type');
+        const urlSplitType = searchParams.get('splitType');
+        const urlToken = searchParams.get('token');
+        const urlAmount = searchParams.get('amount');
+        const urlDescription = searchParams.get('description');
+
+        if (urlType || urlSplitType || urlToken || urlAmount || urlDescription) {
+          setParams(prev => ({
+            ...prev,
+            isGroupPayment: urlType === 'group',
+            splitType: urlSplitType || '',
+            token: urlToken || 'USDT',
+            amount: urlAmount || '',
+            description: urlDescription || '',
+            isParamsSet: true  // 标记参数已设置
+          }));
+        }
+      } catch (error) {
+        console.error('Error initializing Telegram WebApp:', error);
+      }
+    };
+
+    initTelegram();
+  }, [searchParams, params.isParamsSet]);  // 添加 isParamsSet 到依赖数组
+
+  const { isGroupPayment, splitType, token, amount: initialAmount, description } = params;
+  const [amount, setAmount] = useState(initialAmount);
 
   // 模拟的捐赠记录数据
   const donationRecords: DonationRecord[] = [
@@ -105,7 +179,7 @@ const PreviewPage = () => {
                   </div>
                   <div className="flex items-center text-[14px] leading-[16px]">
                     <span className="text-[#9D95A0] font-gilroy font-[500]">Available Balance: </span>
-                    <span className="text-[#2A1731] font-gilroy font-bold ml-[4px]">55.38</span>
+                    <span className="text-[#2A1731] font-gilroy font-bold ml-[4px]">397655.38</span>
                     <span className="text-[#9D95A0] font-gilroy font-[500] ml-[4px]">{token}</span>
                   </div>
                 </div>

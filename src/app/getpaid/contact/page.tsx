@@ -98,17 +98,17 @@ const GetPaidContactPage = () => {
   }
 
   const handleShare = () => {
-    // 构建预览页面的完整 URL，添加群组相关参数
-    const baseUrl = 't.me/stakestone_activity_bot/getpaid/contact/preview'
-    const previewUrl = `${baseUrl}?amount=${amount}&token=${selectedToken}&description=${encodeURIComponent(description)}${
-      paymentType === 'group' 
-        ? `&type=group&splitType=${splitType}&recipients=${recipients}` 
-        : ''
-    }`
+    // preview页面
+    const baseUrl = 't.me/stakestone_activity_bot/redpocket_result'
+    const startappParams = `amount=${amount}-token=${selectedToken}-description=${encodeURIComponent(description)}-${paymentType === 'group' 
+      ? `&type=group&splitType=${splitType}&recipients=${recipients}` 
+      : ''}`
     
-    // 使用 Telegram 的分享功能
+    // 构建完整URL
+    const paymentUrl = `${baseUrl}?startapp=${startappParams}`
+    
     const shareText = description || 'Buy me a Coffee! Please'
-    const encodedUrl = encodeURIComponent(previewUrl)
+    const encodedUrl = encodeURIComponent(paymentUrl)
     const encodedText = encodeURIComponent(shareText)
     
     window.Telegram?.WebApp?.openTelegramLink(
