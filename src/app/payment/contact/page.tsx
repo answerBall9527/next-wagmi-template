@@ -42,7 +42,7 @@ const PaymentContactPage = () => {
         setIsOpen(false)
       }
     }
-
+    console.log('url: ', window.location.href)
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
