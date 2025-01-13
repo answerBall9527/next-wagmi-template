@@ -66,36 +66,65 @@ const PaymentContactPage = () => {
     // 获取用户信息
     const initTelegram = async () => {
         try {
-            const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
-            console.log('startParam', startParam);
+            // 尝试从 Telegram WebApp 获取并解析参数
+            const startParam = window.Telegram?.WebApp?.initDataUnsafe?.start_param;
+            console.log('startParam from Telegram:', startParam);
             
-            // 解析参数 (type=xxx-receiverId=xxx-recerverName=xxx)
-            const params = startParam.split('-').reduce((acc, curr) => {
-                const [key, value] = curr.split('=');
-                acc[key] = value;
-                return acc;
-            }, {} as Record<string, string>);
+            let params: Record<string, string | null> = {};
+            
+            if (startParam) {
+                try {
+                    // 尝试解析 Telegram 参数
+                    params = startParam.split('-').reduce((acc, curr) => {
+                        const [key, value] = curr.split('=');
+                        acc[key] = value;
+                        return acc;
+                    }, {} as Record<string, string>);
+                    
+                    console.log('parsed params from Telegram:', params);
+                } catch (e) {
+                    console.log('Failed to parse Telegram params, falling back to URL params');
+                }
+            }
+            
+            // 如果没有获取到必要参数，则从 URL 获取
+            if (!params.type || !params.receiverId) {
+                const type = searchParams.get('type');
+                const receiverId = searchParams.get('receiverId');
+                const receiverName = searchParams.get('receiverName');
+                
+                console.log('URL params:', { type, receiverId, receiverName });
 
-            console.log('parsed params:', params);
-
-            // 设置支付类型
-            if (params.type) {
-                console.log('params.type', params.type)
-                setPaymentType(params.type as PaymentType);
+                params = {
+                    type,
+                    receiverId,
+                    recerverName: receiverName
+                };
             }
 
-            // 如果有接收人信息，设置接收人
-            if (params.receiverId && params.recerverName) {
-                console.log('receiver', params.receiverId, params.recerverName)
-                setReceiver({
-                    id: params.receiverId,
-                    username: params.recerverName,
-                    photoUrl: '/images/avatar-placeholder.svg'
-                });
-            }
-
+            handleParams(params);
+            
         } catch (error) {
-            console.error('Error initializing Telegram WebApp:', error);
+            console.error('Error initializing:', error);
+        }
+    };
+
+    // 统一处理参数的函数
+    const handleParams = (params: Record<string, string | null>) => {
+        // 设置支付类型
+        if (params.type) {
+            console.log('params.type', params.type);
+            setPaymentType(params.type as PaymentType);
+        }
+
+        // 如果有接收人信息，设置接收人
+        if (params.receiverId && params.recerverName) {
+            console.log('receiver', params.receiverId, params.recerverName);
+            setReceiver({
+                id: params.receiverId,
+                username: params.recerverName,
+                photoUrl: '/images/pay/icon-contact.svg'
+            });
         }
     };
 
