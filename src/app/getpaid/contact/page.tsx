@@ -100,9 +100,14 @@ const GetPaidContactPage = () => {
   const handleShare = () => {
     // preview页面
     const baseUrl = 't.me/stakestone_activity_bot/redpocket_result'
-    const startappParams = `amount=${amount}-token=${selectedToken}-description=${encodeURIComponent(description)}-${paymentType === 'group' 
-      ? `&type=group&splitType=${splitType}&recipients=${recipients}` 
-      : ''}`
+    
+    // 生成交易ID
+    const transactionId = 'TX' + Date.now().toString()
+    
+    // 添加发送人名字和交易ID到参数中
+    const startappParams = `amount=${amount}-token=${selectedToken}-description=${encodeURIComponent(description)}-sender=${senderName}-txid=${transactionId}${
+      paymentType === 'group' ? `-type=group-splitType=${splitType}-recipients=${recipients}` : ''
+    }`
     
     // 构建完整URL
     const paymentUrl = `${baseUrl}?startapp=${startappParams}`

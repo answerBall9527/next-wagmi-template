@@ -84,9 +84,21 @@ export default function HomePage() {
     };
 
     const handleShareClick = () => {
-        const shareUrl = 't.me/stakestone_activity_bot/redpocket';
+        // 基础URL
+        const baseUrl = 't.me/stakestone_activity_bot/redpocket';
         const shareText = 'shareText11111';
-        const encodedUrl = encodeURIComponent(shareUrl);
+        
+        // 获取发送人信息
+        const senderName = window?.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'anonymous';
+        // 生成交易ID（使用时间戳作为示例）
+        const txId = 'TX' + Date.now().toString();
+        
+        // 构建startapp参数
+        const startappParams = `sender=${senderName}-txid=${txId}`;
+        const paymentUrl = `${baseUrl}?startapp=${startappParams}`;
+        
+        // 编码URL和文本
+        const encodedUrl = encodeURIComponent(paymentUrl);
         const encodedText = encodeURIComponent(shareText);
         
         window.Telegram.WebApp.openTelegramLink(

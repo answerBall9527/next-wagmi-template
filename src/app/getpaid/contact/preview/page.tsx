@@ -22,7 +22,9 @@ const PreviewPage = () => {
     token: 'USDT',
     amount: '',
     description: '',
-    isParamsSet: false  // 添加标志位来追踪参数是否已设置
+    sender: '',
+    txid: '',
+    isParamsSet: false
   })
 
   useEffect(() => {
@@ -63,7 +65,9 @@ const PreviewPage = () => {
                 token: telegramParams.token || 'USDT',
                 amount: telegramParams.amount || '',
                 description: decodeURIComponent(telegramParams.description || ''),
-                isParamsSet: true  // 标记参数已设置
+                sender: telegramParams.sender || '',
+                txid: telegramParams.txid || '',
+                isParamsSet: true
               }));
               return;  // 成功设置后直接返回，不再处理URL参数
             }
@@ -78,8 +82,10 @@ const PreviewPage = () => {
         const urlToken = searchParams.get('token');
         const urlAmount = searchParams.get('amount');
         const urlDescription = searchParams.get('description');
+        const urlSender = searchParams.get('sender');
+        const urlTxid = searchParams.get('txid');
 
-        if (urlType || urlSplitType || urlToken || urlAmount || urlDescription) {
+        if (urlType || urlSplitType || urlToken || urlAmount || urlDescription || urlSender || urlTxid) {
           setParams(prev => ({
             ...prev,
             isGroupPayment: urlType === 'group',
@@ -87,7 +93,9 @@ const PreviewPage = () => {
             token: urlToken || 'USDT',
             amount: urlAmount || '',
             description: urlDescription || '',
-            isParamsSet: true  // 标记参数已设置
+            sender: urlSender || '',
+            txid: urlTxid || '',
+            isParamsSet: true
           }));
         }
       } catch (error) {
