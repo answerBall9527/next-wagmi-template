@@ -212,8 +212,8 @@ const PreviewPage = () => {
         ) : (
           <div className="text-center">
             <div className="text-center">
-              <span className="font-[Gilroy-Bold] text-[36px] leading-[43px] text-[#2A1731] text-center">5</span>
-              <span className="font-[Gilroy] text-[14px] leading-[43px] text-[#867B8A] ml-2">USDT</span>
+              <span className="font-[Gilroy-Bold] text-[36px] leading-[43px] text-[#2A1731] text-center">{params.amount}</span>
+              <span className="font-[Gilroy] text-[14px] leading-[43px] text-[#867B8A] ml-2">{params.token}</span>
             </div>
             <p className="h-[14px] font-[Gilroy] text-[12px] leading-[14px] text-[#6D56F2] text-center font-normal">
               Tips for her/him
