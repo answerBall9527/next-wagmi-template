@@ -84,12 +84,11 @@ export default function ReceivePage() {
     const handleCopyLink = async () => {
         if (!user) return
         try {
-            const paymentUrl = new URL('/payment/contact', window.location.origin)
-            paymentUrl.searchParams.set('type', 'sendToContactFromScan')
-            paymentUrl.searchParams.set('receiverId', user.id.toString())
-            paymentUrl.searchParams.set('receiverName', user.username || user.first_name)
+            if (!user) return
+    
+            const paymentUrl = `t.me/stakestone_activity_bot/pay2contact?startapp=type=sendToContactFromScan-receiverId=${user.id}-recerverName=${user.username}`
 
-            await navigator.clipboard.writeText(paymentUrl.toString())
+            await navigator.clipboard.writeText(paymentUrl)
             message.success('链接已复制')
             setCopied(true)
             setTimeout(() => setCopied(false), 2000)
