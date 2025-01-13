@@ -15,29 +15,66 @@ interface ShareUrlParams {
     };
 }
 
+interface TelegramUser {
+    id: number;
+    first_name: string;
+    last_name?: string;
+    username?: string;
+    language_code?: string;
+}
+
+interface WebAppInitData {
+    query_id?: string;
+    user?: TelegramUser;
+    receiver?: TelegramUser;
+    start_param?: string;
+    auth_date?: string;
+    hash?: string;
+}
+
+interface WebApp {
+    initData: string;
+    initDataUnsafe: WebAppInitData;
+    version: string;
+    platform: string;
+    colorScheme: string;
+    themeParams: any;
+    isExpanded: boolean;
+    viewportHeight: number;
+    viewportStableHeight: number;
+    headerColor: string;
+    backgroundColor: string;
+    isClosingConfirmationEnabled: boolean;
+    BackButton: any;
+    MainButton: any;
+    HapticFeedback: any;
+    close: () => void;
+    expand: () => void;
+    openLink: (url: string) => void;
+    openTelegramLink: (url: string) => void;
+    ready: () => void;
+    sendData: (data: any) => void;
+    switchInlineQuery: (query: string, choose_chat_types?: string[]) => void;
+}
+
 interface TelegramWebApp {
-    WebApp: {
-        initDataUnsafe: {
-            user?: TelegramUser;
-            start_param?: string;
+    initDataUnsafe: {
+        user?: {
+            id: number;
+            first_name: string;
+            last_name?: string;
+            username?: string;
+            language_code?: string;
+            photo_url?: string;
         };
+        start_param?: string;
     };
 }
 
-interface Telegram {
-  WebApp: TelegramWebApp;
-}
-
 interface Window {
-  Telegram: TelegramWebApp;
-}
-
-declare global {
-    interface Window {
-        Telegram: {
-            WebApp: TelegramWebApp;
-        };
-    }
+    Telegram?: {
+        WebApp: TelegramWebApp;
+    };
 }
 
 export {}; 

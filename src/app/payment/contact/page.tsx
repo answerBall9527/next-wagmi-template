@@ -35,6 +35,7 @@ const PaymentContactPage = () => {
   const [paymentType, setPaymentType] = useState<PaymentType>('sendToContactFromHome')
   const [splitType, setSplitType] = useState<SplitType>('evenly')
   const [recipients, setRecipients] = useState<string>('5')
+  const [senderName, setSenderName] = useState<string>('')
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -66,6 +67,12 @@ const PaymentContactPage = () => {
     // 获取用户信息
     const initTelegram = async () => {
         try {
+            // 获取 Telegram 用户信息
+            const user = window.Telegram?.WebApp?.initDataUnsafe?.user;
+            if (user?.username) {
+                setSenderName(user.username);
+            }
+            
             // 尝试从 Telegram WebApp 获取并解析参数
             const startParam = window.Telegram?.WebApp?.initDataUnsafe?.start_param;
             console.log('startParam from Telegram:', startParam);
@@ -194,8 +201,9 @@ const PaymentContactPage = () => {
     const baseUrl = 't.me/stakestone_activity_bot/redpocket'
     const shareText = description || 'Best wishes to your friend!'
     
-    // 构建 startapp 参数
-    const startappParams = `type=${paymentType}-source=payment`
+    // 添加发送人名字和交易ID
+    const transactionId = 'TX' + Date.now().toString()  // 临时使用时间戳作为交易ID
+    const startappParams = `type=${paymentType}-source=payment-sender=${senderName}-txid=${transactionId}`
     const paymentUrl = `${baseUrl}?startapp=${startappParams}`
     
     const encodedUrl = encodeURIComponent(paymentUrl)

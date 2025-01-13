@@ -19,6 +19,8 @@ export default function RedPacketPage() {
     const [showSuccess, setShowSuccess] = useState(false);
     const [sourceType, setSourceType] = useState<redpocketSourceType>('receive');
     const lp = useLaunchParams();
+    const [senderName, setSenderName] = useState('Jimmy');
+    const [transactionId, setTransactionId] = useState('123456789');
 
     useEffect(() => {
         // 解决夜间模式黑底问题
@@ -67,21 +69,27 @@ export default function RedPacketPage() {
                             acc[key] = value;
                             return acc;
                         }, {} as Record<string, string>);
+
+                        // 设置发送者和交易ID
+                        if (params.sender) {
+                            setSenderName(params.sender);
+                        }
+                        if (params.txid) {
+                            setTransactionId(params.txid);
+                        }
                     } catch (e) {
                         console.log('Failed to parse Telegram params, falling back to URL params');
                     }
                 }
                 
-                // 如果没有获取到必要参数，则从 URL 获取
-                if (!params.type || !params.source) {
+                // 如果没有从 Telegram 获取到参数，则从 URL 获取
+                if (!params.sender || !params.txid) {
                     const urlParams = new URLSearchParams(window.location.search);
-                    const type = urlParams.get('type');
-                    const source = urlParams.get('source');
+                    const urlSender = urlParams.get('sender');
+                    const urlTxid = urlParams.get('txid');
                     
-                    params = {
-                        type: type,
-                        source: source
-                    };
+                    if (urlSender) setSenderName(urlSender);
+                    if (urlTxid) setTransactionId(urlTxid);
                 }
 
                 // 设置参数
@@ -172,8 +180,12 @@ export default function RedPacketPage() {
                         />
                     </div>
                     <div className="ml-3">
-                        <div className="h-[21px] font-[Gilroy] text-[18px] leading-[21px] font-medium text-[#2A1731]">@Jimmy has sent you:</div>
-                        <div className="h-[14px] font-[Gilroy] text-[12px] leading-[14px] font-normal text-[#867B8A]">Transaction ID: 123456789</div>
+                        <div className="h-[21px] font-[Gilroy] text-[18px] leading-[21px] font-medium text-[#2A1731]">
+                            @{senderName} has sent you:
+                        </div>
+                        <div className="h-[14px] font-[Gilroy] text-[12px] leading-[14px] font-normal text-[#867B8A]">
+                            Transaction ID: {transactionId}
+                        </div>
                     </div>
                 </div>
                 
