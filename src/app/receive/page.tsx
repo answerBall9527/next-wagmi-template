@@ -130,13 +130,13 @@ export default function ReceivePage() {
         if (!user) return
 
         // const paymentUrl = new URL('/payment/contact?startattach=ABC', window.location.origin)
-        const paymentUrl = 't.me/stakestone_activity_bot/redpocket?startapp=ABC'
+        const paymentUrl = `t.me/payment/contact?startapp=type|sendToContactFromHome&receiverId=${user.id}|recerverName=${user.username}`
 
         // paymentUrl.searchParams.set('type', 'sendToContactFromScan')
         // paymentUrl.searchParams.set('receiverId', user.id.toString())
         // paymentUrl.searchParams.set('receiverName', user.username || user.first_name)
 
-        const encodedUrl = encodeURIComponent(paymentUrl.toString())
+        // const encodedUrl = encodeURIComponent(paymentUrl)
         const shareText = 'Send me payment via StakeStone' // 可以根据需要修改分享文本
         const encodedText = encodeURIComponent(shareText)
         
