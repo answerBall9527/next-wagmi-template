@@ -78,11 +78,13 @@ const PaymentContactPage = () => {
 
             // 设置支付类型
             if (params.type) {
+                console.log('params.type', params.type)
                 setPaymentType(params.type as PaymentType);
             }
 
             // 如果有接收人信息，设置接收人
             if (params.receiverId && params.recerverName) {
+                console.log('receiver', params.receiverId, params.recerverName)
                 setReceiver({
                     id: params.receiverId,
                     username: params.recerverName,
