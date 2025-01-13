@@ -103,6 +103,7 @@ const GetPaidContactPage = () => {
     
     // 生成交易ID
     const transactionId = 'TX' + Date.now().toString()
+    const senderName = window?.Telegram?.WebApp?.initDataUnsafe?.user?.username || 'anonymous';
     
     // 添加发送人名字和交易ID到参数中
     const startappParams = `amount=${amount}-token=${selectedToken}-description=${encodeURIComponent(description)}-sender=${senderName}-txid=${transactionId}${
