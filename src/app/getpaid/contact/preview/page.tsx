@@ -158,7 +158,7 @@ const PreviewPage = () => {
             {/* Right side - Name and Address */}
             <div className="flex flex-col ml-[10px]">
               <h2 className="text-[18px] font-medium text-black mb-[2px]">
-                @Tristan
+                {params.sender || 'pebbles_user'}
               </h2>
               <p className="text-[#9CA3AF] text-[12px]">
                 tristan@stakestone.io
