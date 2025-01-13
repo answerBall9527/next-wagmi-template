@@ -160,7 +160,7 @@ const PaymentContactPage = () => {
           <span className="font-gilroy font-bold text-[#2A1731]">USDT</span>
         </div>
       ),
-      balance: '55.38',
+      balance: '290255.38',
       network: 'On MegaEth Network'
     },
     {
