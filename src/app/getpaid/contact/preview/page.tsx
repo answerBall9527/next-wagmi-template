@@ -161,7 +161,7 @@ const PreviewPage = () => {
                 {params.sender || 'pebbles_user'}
               </h2>
               <p className="text-[#9CA3AF] text-[12px]">
-                tristan@stakestone.io
+                jimmy95271@stakestone.io
               </p>
             </div>
           </div>
@@ -216,7 +216,7 @@ const PreviewPage = () => {
               <span className="font-[Gilroy] text-[14px] leading-[43px] text-[#867B8A] ml-2">USDT</span>
             </div>
             <p className="h-[14px] font-[Gilroy] text-[12px] leading-[14px] text-[#6D56F2] text-center font-normal">
-              It has been saved into your balance
+              Tips for her/him
             </p>
           </div>
         )}
