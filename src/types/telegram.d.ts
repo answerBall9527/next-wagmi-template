@@ -16,12 +16,12 @@ interface ShareUrlParams {
 }
 
 interface TelegramWebApp {
-  openTelegramLink: (url: string) => void;
-  initData: string;
-  initDataUnsafe: {
-    start_param: string;
-    // 其他可能的字段...
-  };
+    WebApp: {
+        initDataUnsafe: {
+            user?: TelegramUser;
+            start_param?: string;
+        };
+    };
 }
 
 interface Telegram {
@@ -29,7 +29,7 @@ interface Telegram {
 }
 
 interface Window {
-  Telegram?: Telegram;
+  Telegram: TelegramWebApp;
 }
 
 declare global {

@@ -193,11 +193,16 @@ const PaymentContactPage = () => {
   const handleShare = () => {
     const baseUrl = 't.me/stakestone_activity_bot/redpocket'
     const shareText = description || 'Best wishes to your friend!'
-    const encodedUrl = encodeURIComponent(baseUrl)
+    
+    // 构建 startapp 参数
+    const startappParams = `type=${paymentType}-source=payment`
+    const paymentUrl = `${baseUrl}?startapp=${startappParams}`
+    
+    const encodedUrl = encodeURIComponent(paymentUrl)
     const encodedText = encodeURIComponent(shareText)
     
     window.Telegram?.WebApp?.openTelegramLink(
-        `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact&source=receive${paymentType === 'group' ? '&type=group' : ''}`
+        `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}&startapp=command&mode=compact`
     )
   }
 

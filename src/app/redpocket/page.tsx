@@ -54,16 +54,45 @@ export default function RedPacketPage() {
 
                 const webApp = window.Telegram.WebApp;
                 const initData = webApp.initDataUnsafe;
+                
+                // 尝试从 Telegram WebApp 获取并解析参数
+                const startParam = window.Telegram?.WebApp?.initDataUnsafe?.start_param;
+                let params: Record<string, string | null> = {};
+                
+                if (startParam) {
+                    try {
+                        // 尝试解析 Telegram 参数
+                        params = startParam.split('-').reduce((acc, curr) => {
+                            const [key, value] = curr.split('=');
+                            acc[key] = value;
+                            return acc;
+                        }, {} as Record<string, string>);
+                    } catch (e) {
+                        console.log('Failed to parse Telegram params, falling back to URL params');
+                    }
+                }
+                
+                // 如果没有获取到必要参数，则从 URL 获取
+                if (!params.type || !params.source) {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const type = urlParams.get('type');
+                    const source = urlParams.get('source');
+                    
+                    params = {
+                        type: type,
+                        source: source
+                    };
+                }
 
+                // 设置参数
+                if (params.type) {
+                    setPaymentType(params.type as PaymentType);
+                }
+                if (params.source) {
+                    setSourceType(params.source as redpocketSourceType);
+                }
 
-                console.log('initData', initData)
-                let startParam = window.Telegram.WebApp.initDataUnsafe.start_param
-                console.log('startParam', startParam)
-                console.log('lp.startParam', lp.startParam)
-                // const startParam = initData.get('start_param'); // 提取 tgWebAppStartParam
-                // console.log('Start Param:', startParam);
                 if (initData.user) {
-                    console.log('Telegram user:', initData.user);
                     setUser(initData.user);
                 }
             } catch (error) {
@@ -77,12 +106,14 @@ export default function RedPacketPage() {
 
         // 获取 URL 参数
         const urlParams = new URLSearchParams(window.location.search);
-        const type = urlParams.get('type');
-        setPaymentType(type);
+        const urlType = urlParams.get('type');
+        if (urlType) {
+            setPaymentType(urlType as PaymentType);
+        }
 
-        const source = urlParams.get('source');
-        if (source) {
-            setSourceType(source as redpocketSourceType);
+        const urlSource = urlParams.get('source');
+        if (urlSource) {
+            setSourceType(urlSource as redpocketSourceType);
         }
 
         return () => window.removeEventListener('resize', setHeight);
