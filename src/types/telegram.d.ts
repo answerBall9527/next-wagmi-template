@@ -18,6 +18,10 @@ interface ShareUrlParams {
 interface TelegramWebApp {
   openTelegramLink: (url: string) => void;
   initData: string;
+  initDataUnsafe: {
+    start_param: string;
+    // 其他可能的字段...
+  };
 }
 
 interface Telegram {

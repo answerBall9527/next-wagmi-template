@@ -66,66 +66,39 @@ const PaymentContactPage = () => {
     // 获取用户信息
     const initTelegram = async () => {
         try {
-            let startParam = window.Telegram.WebApp.initDataUnsafe.start_param
-            console.log('startParam', startParam)
-            // console.log('lp.startParam', lp.startParam)
+            const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
+            console.log('startParam', startParam);
+            
+            // 解析参数
+            const params = startParam.split('_').reduce((acc, curr) => {
+                const [key, value] = curr.split('=');
+                acc[key] = value;
+                return acc;
+            }, {} as Record<string, string>);
+
+            // 设置支付类型
+            if (params.type) {
+                setPaymentType(params.type as PaymentType);
+            }
+
+            // 如果有接收人信息，设置接收人
+            if (params.receiverId && params.recerverName) {
+                setReceiver({
+                    id: params.receiverId,
+                    username: params.recerverName,
+                    photoUrl: '/images/avatar-placeholder.svg'
+                });
+            }
 
         } catch (error) {
             console.error('Error initializing Telegram WebApp:', error);
-        } finally {
-            // setIsLoading(false);
         }
     };
 
     initTelegram();
 
-    // 获取 URL 参数
-    const urlParams = new URLSearchParams(window.location.search);
-    const type = urlParams.get('type');
-    setPaymentType(type);
-
-    const source = urlParams.get('source');
-    if (source) {
-        setSourceType(source as redpocketSourceType);
-    }
-
     return () => window.removeEventListener('resize', setHeight);
 }, []);
-
-  useEffect(() => {
-    const type = searchParams.get('type')
-    console.log('URL type parameter:', type)
-    
-    if (type && (
-      type === 'sendToContactFromHome' || 
-      type === 'sendToContactFromScan' || 
-      type === 'external_wallet' || 
-      type === 'group'
-    )) {
-      setPaymentType(type as PaymentType)
-    }
-
-    // 只有在 sendToContactFromScan 类型时才初始化接收人信息
-    if (type === 'sendToContactFromScan') {
-      const initReceiver = () => {
-        const receiverId = searchParams.get('receiverId')
-        const receiverName = searchParams.get('receiverName')
-        
-        if (receiverId && receiverName) {
-          setReceiver({
-            id: receiverId,
-            username: receiverName,
-            photoUrl: '/images/avatar-placeholder.svg'
-          })
-        } else {
-          // 如果是 scan 类型但没有接收人信息，可能需要返回上一页
-          router.back()
-        }
-      }
-
-      initReceiver()
-    }
-  }, [searchParams, router])
 
   const handleTokenSelect = (value: string) => {
     setSelectedToken(value)
