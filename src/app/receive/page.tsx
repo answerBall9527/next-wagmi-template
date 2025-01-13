@@ -130,7 +130,7 @@ export default function ReceivePage() {
         if (!user) return
 
         // const paymentUrl = new URL('/payment/contact?startattach=ABC', window.location.origin)
-        const paymentUrl = `t.me/stakestone_activity_bot/pay2contact?startapp=type-sendToContactFromHome_receiverId=${user.id}-recerverName=${user.username}`
+        const paymentUrl = `t.me/stakestone_activity_bot/pay2contact?startapp=type-sendToContactFromScan_receiverId=${user.id}-recerverName=${user.username}`
 
         // paymentUrl.searchParams.set('type', 'sendToContactFromScan')
         // paymentUrl.searchParams.set('receiverId', user.id.toString())
