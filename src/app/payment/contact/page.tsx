@@ -69,12 +69,14 @@ const PaymentContactPage = () => {
             const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
             console.log('startParam', startParam);
             
-            // 解析参数
-            const params = startParam.split('_').reduce((acc, curr) => {
+            // 解析参数 (type=xxx-receiverId=xxx-recerverName=xxx)
+            const params = startParam.split('-').reduce((acc, curr) => {
                 const [key, value] = curr.split('=');
                 acc[key] = value;
                 return acc;
             }, {} as Record<string, string>);
+
+            console.log('parsed params:', params);
 
             // 设置支付类型
             if (params.type) {
