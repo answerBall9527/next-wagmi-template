@@ -187,7 +187,7 @@ const PreviewPage = () => {
                   </div>
                   <div className="flex items-center text-[14px] leading-[16px]">
                     <span className="text-[#9D95A0] font-gilroy font-[500]">Available Balance: </span>
-                    <span className="text-[#2A1731] font-gilroy font-bold ml-[4px]">3.23</span>
+                    <span className="text-[#2A1731] font-gilroy font-bold ml-[4px]">0</span>
                     <span className="text-[#9D95A0] font-gilroy font-[500] ml-[4px]">{token}</span>
                   </div>
                 </div>
