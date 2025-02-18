@@ -28,7 +28,7 @@ const LoginPage = () => {
       // TODO tomo tg wallet不可用了，所以这里hardcode成true，等接了新钱包再去掉
       setWalletConnected(true)
       // TODO 这块无法正确判断出来链接是否成功
-      await connectAsync({ connector: connectors[0] })
+      // await connectAsync({ connector: connectors[0] })
       message.success('钱包连接成功')
       setWalletConnected(true)
       router.push('/home')
